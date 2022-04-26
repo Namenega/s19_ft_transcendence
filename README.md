@@ -91,6 +91,9 @@ nest g controller <controller_name>
 
 #create Service
 nest g service <service_name>
+
+#install built-ins ValidationPipe
+npm i --save class-validator class-transformer
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
@@ -102,9 +105,7 @@ nest g service <service_name>
 
 #### Nest Theory
 - [Nest Module](https://docs.nestjs.com/modules)
-
 - [Nest Controller](https://docs.nestjs.com/controllers)
-
 - [Nest Service](https://docs.nestjs.com/providers)
 
 - [Config - .env - .forRoot()](https://docs.nestjs.com/techniques/configuration)
@@ -112,10 +113,14 @@ nest g service <service_name>
 - [.env file](https://malware.expert/general/what-is-env-files/)
 
 - [Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
+- [HTTP Requests](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html)
 
 - [TypeOrm Entity](https://typeorm.io/entities)
 
 - [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
+
+- [DTO](https://javascript.plainenglish.io/use-of-dto-for-validation-in-nestjs-application-d37ff55f0560)
+- [Validation](https://docs.nestjs.com/techniques/validation)
 
 
 #### Docker Compose Theory
