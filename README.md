@@ -53,3 +53,21 @@ SPA website where users are able to play the Pong game.
 
 #### Ideas / Features
 - [ ] Ban word list?
+
+## Docs
+
+#### Install
+[Install NestJs](https://docs.nestjs.com/)
+
+#### Full Tuto
+[Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
+[API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
+
+#### Nest Theory
+[Nest Module](https://docs.nestjs.com/modules)
+[Nest Controller](https://docs.nestjs.com/controllers)
+[Nest Service](https://docs.nestjs.com/providers)
+
+[Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
+
+[TypeOrm Entity](https://typeorm.io/entities)

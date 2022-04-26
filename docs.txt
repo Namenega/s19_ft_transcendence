@@ -62,6 +62,8 @@ install nestjs/typeorm
 
 crucial concept with TypeORM : @Entity
 
+https://typeorm.io/entities
+
 class that maps to a db table
 
 xx.entity.ts
