@@ -82,6 +82,7 @@ npm i --save @nestjs/config
 npm i --save @nestjs/typeorm typeorm
 
 --------------------------------
+
 #create Module
 nest g module <module_name>
 
