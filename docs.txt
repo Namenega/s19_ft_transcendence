@@ -1,0 +1,84 @@
+NestJs
+
+install nodejs, npm
+create nest project : nest new projectName
+
+module are used to organize the app
+root module = app.module.ts
+
+modules contain :
+- imports
+- controllers
+- providers (services)
+- export
+
+----------------
+Controllers
+
+handle incoming requests and returns responses to the client.
+
+----------------
+Services
+
+job is to separate the business logic from controllers, making it cleaner
+and more confortable to test.
+
+
+Resume:
+
+- src
+  - app.module.ts		// root module
+  - main.ts			// main
+  - user	//example
+    - dto
+      - createUser.dto.ts
+      - updateUser.dto.ts
+    - user.interface.ts
+    - user.module.ts		// organizer
+    - user.controller.ts	// handle request and routine
+    - user.service.ts		// business logic
+
+
+----------------
+Install docker & docker compose
+
+do : docker-compose.yml
+do : docker.env
+
+launch : docker-compose up
+
+-----------------
+
+do: .env file
+
+-----------------
+
+Connect Postgres with nestjs
+
+install nestjs/config
+install nestjs/typeorm
+
+-----------------
+
+crucial concept with TypeORM : @Entity
+
+class that maps to a db table
+
+xx.entity.ts
+
+@PrimaryGeneratedColumn : identify a row uniquely in a table (id column most)
+@Column : marks a property as a column
+
+-> check TypeORM doc
+
+----------------
+
+Authentification
+
+
+
+
+
+
+
+
