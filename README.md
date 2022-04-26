@@ -57,7 +57,33 @@ SPA website where users are able to play the Pong game.
 ## Docs
 
 #### Install
-[Install NestJs](https://docs.nestjs.com/)
+
+```
+#install Node JS
+sudo apt install nodejs
+
+#install NPM
+sudo apt install npm
+
+#install NestJS
+npm i -g @nestjs/cli
+
+#create new NestJS Project
+nest new <project_name>
+
+#run NestJS project
+npm run start
+npm run start:dev	//watch mode : recommended
+
+#install NestJS Config
+npm i --save @nestjs/config
+
+#install TypeOrm
+npm i --save @nestjs/typeorm typeorm
+```
+[Install Docker](https://docs.docker.com/engine/install/ubuntu/)
+[Install Docker compose](https://docs.docker.com/compose/install/)
+
 
 #### Full Tuto
 [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
@@ -68,6 +94,13 @@ SPA website where users are able to play the Pong game.
 [Nest Controller](https://docs.nestjs.com/controllers)
 [Nest Service](https://docs.nestjs.com/providers)
 
+[Config - .env - .forRoot()](https://docs.nestjs.com/techniques/configuration)
+[.env file](https://malware.expert/general/what-is-env-files/)
+
 [Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
 
 [TypeOrm Entity](https://typeorm.io/entities)
+
+
+#### Docker Compose Theory
+[File reference](https://docs.docker.com/compose/compose-file/)
