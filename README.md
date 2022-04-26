@@ -80,27 +80,42 @@ npm i --save @nestjs/config
 
 #install TypeOrm
 npm i --save @nestjs/typeorm typeorm
+
+--------------------------------
+#create Module
+nest g module <module_name>
+
+#create Controller
+nest g controller <controller_name>
+
+#create Service
+nest g service <service_name>
 ```
-[Install Docker](https://docs.docker.com/engine/install/ubuntu/)
-[Install Docker compose](https://docs.docker.com/compose/install/)
+- [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
+- [Install Docker compose](https://docs.docker.com/compose/install/)
 
 
 #### Full Tuto
-[Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
-[API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
+- [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
+- [API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
 
 #### Nest Theory
-[Nest Module](https://docs.nestjs.com/modules)
-[Nest Controller](https://docs.nestjs.com/controllers)
-[Nest Service](https://docs.nestjs.com/providers)
+- [Nest Module](https://docs.nestjs.com/modules)
 
-[Config - .env - .forRoot()](https://docs.nestjs.com/techniques/configuration)
-[.env file](https://malware.expert/general/what-is-env-files/)
+- [Nest Controller](https://docs.nestjs.com/controllers)
 
-[Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
+- [Nest Service](https://docs.nestjs.com/providers)
 
-[TypeOrm Entity](https://typeorm.io/entities)
+- [Config - .env - .forRoot()](https://docs.nestjs.com/techniques/configuration)
+
+- [.env file](https://malware.expert/general/what-is-env-files/)
+
+- [Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
+
+- [TypeOrm Entity](https://typeorm.io/entities)
+
+- [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
 
 
 #### Docker Compose Theory
-[File reference](https://docs.docker.com/compose/compose-file/)
+- [File reference](https://docs.docker.com/compose/compose-file/)
