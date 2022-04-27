@@ -97,6 +97,9 @@ SPA website where users are able to play the Pong game.
 
 # install bcrypt for password hashing
 >$ npm install @types/bcrypt bcrypt
+
+# install passport for abstraction over authentication
+>$ npm install @nestjs/passport passport @types/passport-local passport-local @types/express
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
@@ -116,6 +119,7 @@ SPA website where users are able to play the Pong game.
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
 - [Nest Service](https://docs.nestjs.com/providers)
+- [Nest Guards](https://docs.nestjs.com/guards)
 
 - [Config - .env - .forRoot()](https://docs.nestjs.com/techniques/configuration)
 
