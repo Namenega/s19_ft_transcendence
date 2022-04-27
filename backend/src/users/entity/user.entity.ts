@@ -18,7 +18,7 @@ class User {
 
 	@IsString()
 	@IsNotEmpty()
-	@Column({ unique: true })
+	@Column()
 	public password: string;
 }
 export default User;

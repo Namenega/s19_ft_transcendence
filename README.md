@@ -94,6 +94,9 @@ SPA website where users are able to play the Pong game.
 
 # install built-ins ValidationPipe
 >$ npm i --save class-validator class-transformer
+
+# install bcrypt for password hashing
+>$ npm install @types/bcrypt bcrypt
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)

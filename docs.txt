@@ -75,7 +75,12 @@ xx.entity.ts
 
 ----------------
 
-Authentification
+Encrypted password:
+
+1. Hash -> transform the string
+2. Salt -> prevent user that have the same password to have different hashed string
+
+Use the 'bcrypt' algo (bcrypt package)
 
 
 
