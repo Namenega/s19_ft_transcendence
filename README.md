@@ -100,6 +100,9 @@ SPA website where users are able to play the Pong game.
 
 # install passport for abstraction over authentication
 >$ npm install @nestjs/passport passport @types/passport-local passport-local @types/express
+
+# install JWT(JSON Web Tokens)
+npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/cookie-parser
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
@@ -129,8 +132,8 @@ SPA website where users are able to play the Pong game.
 - [HTTP Requests](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html)
 
 - [TypeOrm Entity](https://typeorm.io/entities)
-
 - [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
+- [JSON Web Token](https://jwt.io/introduction)
 
 - [DTO](https://javascript.plainenglish.io/use-of-dto-for-validation-in-nestjs-application-d37ff55f0560)
 - [Validation](https://docs.nestjs.com/techniques/validation)
