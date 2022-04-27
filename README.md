@@ -103,6 +103,12 @@ SPA website where users are able to play the Pong game.
 - [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
 - [API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
 
+
+#### Javascript Theory
+- [Arrow functions](https://www.javascripttutorial.net/es6/javascript-arrow-function/)
+- [ASync / Await functions](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/async_function)
+- [Promises](https://www.geeksforgeeks.org/javascript-promises/)
+
 #### Nest Theory
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
