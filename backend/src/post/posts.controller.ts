@@ -14,22 +14,26 @@ export default class PostController {
 		return this.postsService.getAllPosts();
 	}
 
-	@Get(':id')	// GET /post/{id}
+	/* A handler for a specific endpoint for HTTP requests. */
+	@Get(':id')
 	getPostById(@Param('id') id: string) {
 		return this.postsService.getPostById(Number(id));
 	}
 
-	@Post()		// POST /post
+	/* A handler for a specific endpoint for HTTP requests. */
+	@Post()
 	async createPost(@Body() post: CreatePostDto) {
 		return this.postsService.createPost(post);
 	}
 
-	@Put(':id')	// PUT /post/{id}
+	/* A handler for a specific endpoint for HTTP requests. */
+	@Put(':id')
 	async replacePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
 		return this.postsService.replacePost(Number(id), post);
 	}
 
-	@Delete(':id')	// DELETE /post/{id}
+	/* A handler for a specific endpoint for HTTP requests. */
+	@Delete(':id')
 	async deletePost(@Param('id') id: string) {
 		return this.postsService.deletePost(Number(id));
 	}

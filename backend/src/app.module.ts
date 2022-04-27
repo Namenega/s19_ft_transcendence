@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 
+/* Importing the modules and services. */
 @Module({
   imports: [
     PostsModule,

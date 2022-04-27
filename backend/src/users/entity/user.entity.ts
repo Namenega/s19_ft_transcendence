@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { IsString, IsEmail, IsNotEmpty } from "class-validator";
 
+/* It's a class that represents a user in our database */
 @Entity()
 class User {
 	@PrimaryGeneratedColumn()

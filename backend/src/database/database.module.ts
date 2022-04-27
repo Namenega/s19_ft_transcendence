@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
  
-//TypeOrmModule : define a connection between our app and the DB
 
+/* This class imports the TypeOrmModule and ConfigModule, and then uses the
+TypeOrmModule.forRootAsync() method to create a connection to the database */
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

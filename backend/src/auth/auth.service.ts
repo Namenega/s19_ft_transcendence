@@ -13,6 +13,12 @@ export class AuthService {
 		private readonly usersService: UsersService
 	) {}
 
+	/**
+	 * We hash the password, create a new user, and return the user
+	 * @param {RegisterDto} registrationData - RegisterDto - this is the data that the
+	 * user will send to the server when they register.
+	 * @returns The created user.
+	 */
 	public async register(registrationData: RegisterDto) {
 		const hashedPassword = await bcrypt.hash(registrationData.password, 10);
 		try {
@@ -32,6 +38,13 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * It gets a user by email, verifies the password, and returns the user
+	 * @param {string} email - The email of the user that is trying to log in.
+	 * @param {string} plainTextPassword - The password that the user entered in the
+	 * login form.
+	 * @returns The user object with the password property set to undefined.
+	 */
 	public async getAuthenticatedUser(email: string, plainTextPassword: string) {
 		try {
 			const user = await this.usersService.getByEmail(email);
@@ -44,6 +57,13 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * It takes a plain text password and a hashed password, and returns true if the
+	 * plain text password matches the hashed password
+	 * @param {string} plainTextPassword - The password that the user entered in the
+	 * login form.
+	 * @param {string} hashedPassword - The password that was stored in the database.
+	 */
 	private async verifyPassword(plainTextPassword: string, hashedPassword: string) {
 		const isPasswordMatching = await bcrypt.compare(
 			plainTextPassword,

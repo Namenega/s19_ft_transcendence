@@ -11,6 +11,11 @@ export class UsersService {
 		private usersRepository: Repository<User>
 	) {}
 
+	/**
+	 * It gets a user by email
+	 * @param {string} email - string - the email of the user we want to find
+	 * @returns The user object
+	 */
 	async getByEmail(email: string) {
 		const user = await this.usersRepository.findOne({ email });
 		if (user) {
@@ -20,6 +25,11 @@ export class UsersService {
 				HttpStatus.NOT_FOUND);
 	}
 
+	/**
+	 * It creates a new user and saves it to the database
+	 * @param {CreateUserDto} userData - CreateUserDto
+	 * @returns The new user that was created.
+	 */
 	async create(userData: CreateUserDto) {
 		const newUser = await this.usersRepository.create(userData);
 		await this.usersRepository.save(newUser);

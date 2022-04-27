@@ -10,11 +10,14 @@ export class AuthController {
 		private readonly authService: AuthService
 	) {}
 
+	/* A POST request to the /auth/register endpoint. It takes the body of the request
+	and passes it to the register function in the authService. */
 	@Post('register')
 	async register(@Body() registrationData: RegisterDto) {
 		return this.authService.register(registrationData);
 	}
 
+	/* A login route that uses the LocalAuthenticationGuard to authenticate the user. */
 	@HttpCode(200) // POST responds 201 so we change it
 	@UseGuards(LocalAuthenticationGuard)
 	@Post('log-in')
