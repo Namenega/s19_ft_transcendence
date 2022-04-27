@@ -59,41 +59,41 @@ SPA website where users are able to play the Pong game.
 #### Install
 
 ```
-#install Node JS
-sudo apt install nodejs
+# install Node JS
+>$ sudo apt install nodejs
 
-#install NPM
-sudo apt install npm
+# install NPM
+>$ sudo apt install npm
 
-#install NestJS
-npm i -g @nestjs/cli
+# install NestJS
+>$ npm i -g @nestjs/cli
 
-#create new NestJS Project
-nest new <project_name>
+# create new NestJS Project
+>$ nest new <project_name>
 
-#run NestJS project
-npm run start
-npm run start:dev	//watch mode : recommended
+# run NestJS project
+>$ npm run start
+>$ npm run start:dev	//watch mode : recommended
 
-#install NestJS Config
-npm i --save @nestjs/config
+# install NestJS Config
+>$ npm i --save @nestjs/config
 
-#install TypeOrm
-npm i --save @nestjs/typeorm typeorm
+# install TypeOrm
+>$ npm i --save @nestjs/typeorm typeorm
 
 --------------------------------
 
-#create Module
-nest g module <module_name>
+# create Module
+>$ nest g module <module_name>
 
-#create Controller
-nest g controller <controller_name>
+# create Controller
+>$ nest g controller <controller_name>
 
-#create Service
-nest g service <service_name>
+# create Service
+>$ nest g service <service_name>
 
-#install built-ins ValidationPipe
-npm i --save class-validator class-transformer
+# install built-ins ValidationPipe
+>$ npm i --save class-validator class-transformer
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
