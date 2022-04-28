@@ -6,26 +6,23 @@ This project is the final common core project of [19](http://www.s19.be/) (42 ne
 
 SPA website where users are able to play the Pong game.
 
-<p align="center">
-	![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
-	![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-	![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-	![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
-</p>
+![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Technologies
 
 - Back end : __NestJS__
-
-#### NestJS Roadmap
-
-![alt text](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png "Nest roadmap")
-
 - Front end : any __TS framework__ of our choice
 - Free to use any lib@latest
 - DB : __PostgreSQL__
 - Have to run on latest version of _Chrome_, _Firefox_ & _Safari_
 - Launch : ***docker-compose up --build***
+
+#### NestJS Roadmap
+
+![alt text](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png "Nest roadmap")
 
 ## TODO:
 
@@ -131,6 +128,9 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 - [Promises](https://www.geeksforgeeks.org/javascript-promises/)
 
 #### Nest Theory
+
+<details>
+<summary>"Click"</summary>
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
 - [Nest Service](https://docs.nestjs.com/providers)
@@ -152,6 +152,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 - [Authentication](https://docs.nestjs.com/security/authentication)
 - [Authentication Sample](https://github.com/nestjs/nest/tree/master/sample/19-auth-jwt)
+</details>
 
 
 #### Docker Compose Theory
