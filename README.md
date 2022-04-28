@@ -1,5 +1,7 @@
 <div style="font-style: italic; text-align: center;" markdown="1">
+
 #S19 - FT_TRANSCENDENCE
+
 </div>
 
 <p align="center">
