@@ -67,6 +67,9 @@ SPA website where users are able to play the Pong game.
 
 #### Install
 
+<details>
+<summary>"Click"</summary>
+
 ```
 # install Node JS
 >$ sudo apt install nodejs
@@ -116,16 +119,26 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
 
+</details>
 
 #### Full Tuto
+<details>
+<summary>"Click"</summary>
+
 - [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
 - [API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
 
+</details>
 
 #### Javascript Theory
+<details>
+<summary>"Click"</summary>
+
 - [Arrow functions](https://www.javascripttutorial.net/es6/javascript-arrow-function/)
 - [ASync / Await functions](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/async_function)
 - [Promises](https://www.geeksforgeeks.org/javascript-promises/)
+
+</details>
 
 #### Nest Theory
 
@@ -156,10 +169,19 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 </details>
 
-
 #### Docker Compose Theory
+<details>
+<summary>"Click"</summary>
+
 - [File reference](https://docs.docker.com/compose/compose-file/)
+
+</details>
 
 
 #### 42 API docs
+<details>
+<summary>"Click"</summary>
+
 - [42API](https://api.intra.42.fr/apidoc)
+
+</details>
