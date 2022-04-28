@@ -6,6 +6,10 @@ This project is the final common core project of [19](http://www.s19.be/) (42 ne
 
 SPA website where users are able to play the Pong game.
 
+![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
 ## Technologies
 
 - Back end : __NestJS__
@@ -16,7 +20,7 @@ SPA website where users are able to play the Pong game.
 
 - Front end : any __TS framework__ of our choice
 - Free to use any lib@latest
-- DB : __PostgreSQL__ ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+- DB : __PostgreSQL__
 - Have to run on latest version of _Chrome_, _Firefox_ & _Safari_
 - Launch : ***docker-compose up --build***
 
