@@ -12,7 +12,7 @@ SPA website where users are able to play the Pong game.
 
 #### NestJS Roadmap
 
-
+![alt text](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png "Nest roadmap")
 
 - Front end : any __TS framework__ of our choice
 - Free to use any lib@latest
