@@ -161,6 +161,7 @@ How NestJS concepts work?
 </p>
 
 ***Concepts***
+- [Overview by Creator](https://www.youtube.com/watch?v=f0qzBkAQ3mk)
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
 - [Nest Service](https://docs.nestjs.com/providers)
