@@ -1,4 +1,6 @@
-# S19 - FT_TRANSCENDENCE {style=text-align:center}
+<div style="font-style: italic; text-align: center;" markdown="1">
+# S19 - FT_TRANSCENDENCE
+</div>
 
 <p align="center">
   <img src="https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white">
