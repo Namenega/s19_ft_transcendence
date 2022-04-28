@@ -1,4 +1,6 @@
-# s19_ft_transcendence
+<p align="center">
+	# s19_ft_transcendence
+</p>
 
 This project is the final common core project of [19](http://www.s19.be/) (42 network).
 
