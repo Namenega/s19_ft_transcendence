@@ -88,4 +88,25 @@ Use the 'bcrypt' algo (bcrypt package)
 
 
 
+~~~~ Video ytb ~~~~
 
+Module : organize the code
+          split features into logical units
+          at least one module (root module) to bootstrap the app
+          ca rassemble les controllers, providers, imports et exports
+
+  ex:
+  -----
+    @Module({
+      imports: [CommonModule],
+      controllers: [AppController],
+      providers: [AppService],
+      exports: [],
+    })
+    export class AppModule {}
+  -----
+
+Controller : handle requests and respond
+
+Provider : instruction to the dependencie injection system
+            on how to obtain a value for dependencie
