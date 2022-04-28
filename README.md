@@ -65,7 +65,7 @@ SPA website where users are able to play the Pong game.
 
 ## Docs
 
-#### Install
+### Install
 
 <details>
 <summary>"Click"</summary>
@@ -121,7 +121,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 </details>
 
-#### Full Tuto
+### Full Tuto
 <details>
 <summary>"Click"</summary>
 
@@ -130,7 +130,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 </details>
 
-#### Javascript Theory
+### Javascript Theory
 <details>
 <summary>"Click"</summary>
 
@@ -140,7 +140,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 </details>
 
-#### Nest Theory
+### Nest Theory
 
 <details>
 <summary>"Click"</summary>
@@ -169,7 +169,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 </details>
 
-#### Docker Compose Theory
+### Docker Compose Theory
 <details>
 <summary>"Click"</summary>
 
@@ -178,7 +178,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 </details>
 
 
-#### 42 API docs
+### 42 API docs
 <details>
 <summary>"Click"</summary>
 
