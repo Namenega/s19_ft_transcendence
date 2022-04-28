@@ -1,5 +1,10 @@
 # S19 - FT_TRANSCENDENCE
-<h1 align="center" font-size="50px">Material Bread</h1>
+<h1 align="center">
+<style>
+h1 { 
+	font-size: 100px;
+   }
+</style>Material Bread</h1>
 
 ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
