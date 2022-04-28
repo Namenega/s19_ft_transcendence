@@ -138,6 +138,9 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 - [DTO](https://javascript.plainenglish.io/use-of-dto-for-validation-in-nestjs-application-d37ff55f0560)
 - [Validation](https://docs.nestjs.com/techniques/validation)
 
+- [Authentication](https://docs.nestjs.com/security/authentication)
+- [Authentication Sample](https://github.com/nestjs/nest/tree/master/sample/19-auth-jwt)
+
 
 #### Docker Compose Theory
 - [File reference](https://docs.docker.com/compose/compose-file/)

@@ -4,6 +4,13 @@ import { Injectable } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import User from "src/users/entity/user.entity";
 
+/* Strategies = mechanisms of authentication
+ *
+ * The first strategy that we want to implement is the passport-local strategy.
+ * It is a strategy for authenticating with a username and password.
+ * 
+ */
+
 /* "The LocalStrategy class extends the PassportStrategy class and overrides the
 validate method." */
 @Injectable()
