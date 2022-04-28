@@ -21,12 +21,6 @@ SPA website where users are able to play the Pong game.
 - Have to run on latest version of _Chrome_, _Firefox_ & _Safari_
 - Launch : ***docker-compose up --build***
 
-#### NestJS Roadmap
-
-<p align="center">
-  <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
-</p>
-
 <h1 align="center">TODO</h1>
 
 #### Security
@@ -143,9 +137,18 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 </details>
 
 ### Nest Theory
-<!-- <h1 align="center">Material Bread</h1> -->
 <details>
 <summary>"Click"</summary>
+
+Learn NestJS
+
+#### NestJS Roadmap
+
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
+</p>
+
+How NestJS concepts work?
 
 <p align="center">
   <img src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
