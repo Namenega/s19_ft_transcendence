@@ -141,3 +141,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 #### Docker Compose Theory
 - [File reference](https://docs.docker.com/compose/compose-file/)
+
+
+#### 42 API docs
+- [42API](https://api.intra.42.fr/apidoc)
