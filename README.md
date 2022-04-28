@@ -146,7 +146,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 <summary>"Click"</summary>
 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
+  <img src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
 </p>
 
 - [Nest Module](https://docs.nestjs.com/modules)
