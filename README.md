@@ -1,4 +1,8 @@
 # S19 - FT_TRANSCENDENCE
+![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 This project is the final common core project of [19](http://www.s19.be/) (42 network).
 
@@ -6,10 +10,6 @@ This project is the final common core project of [19](http://www.s19.be/) (42 ne
 
 SPA website where users are able to play the Pong game.
 
-![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 
 ## Technologies
 
@@ -24,9 +24,7 @@ SPA website where users are able to play the Pong game.
 
 <p align="center">
   <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
-  NestJS Roadmap
 </p>
-<!-- ![alt text](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png "Nest roadmap") -->
 
 ## TODO:
 
@@ -70,7 +68,6 @@ SPA website where users are able to play the Pong game.
 ## Docs
 
 ### Install
-
 <details>
 <summary>"Click"</summary>
 
@@ -145,9 +142,12 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 </details>
 
 ### Nest Theory
-
 <details>
 <summary>"Click"</summary>
+
+<p align="center">
+  <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
+</p>
 
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
