@@ -140,15 +140,17 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 <details>
 <summary>"Click"</summary>
 
+<p align="center">
 Learn NestJS
-
-#### NestJS Roadmap
+</p>
 
 <p align="center">
   <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
 </p>
 
+<p align="center">
 How NestJS concepts work?
+</p>
 
 <p align="center">
   <img src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
