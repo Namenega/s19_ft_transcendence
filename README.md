@@ -9,6 +9,11 @@ SPA website where users are able to play the Pong game.
 ## Technologies
 
 - Back end : __NestJS__
+
+#### NestJS Roadmap
+
+
+
 - Front end : any __TS framework__ of our choice
 - Free to use any lib@latest
 - DB : __PostgreSQL__
