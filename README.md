@@ -131,6 +131,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 <details>
 <summary>"Click"</summary>
+
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
 - [Nest Service](https://docs.nestjs.com/providers)
@@ -152,6 +153,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 - [Authentication](https://docs.nestjs.com/security/authentication)
 - [Authentication Sample](https://github.com/nestjs/nest/tree/master/sample/19-auth-jwt)
+
 </details>
 
 
