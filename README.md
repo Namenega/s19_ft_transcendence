@@ -144,7 +144,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 <summary>"Click"</summary>
 
 <p align="center">
-Learn NestJS
+- [Learn NestJS](https://javascript.plainenglish.io/nestjs-roadmap-for-beginners-4fee5be251b)
 </p>
 
 <p align="center">
