@@ -130,6 +130,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 <details>
 <summary>"Click"</summary>
 
+***Advanced JS***
 - [Arrow functions](https://www.javascripttutorial.net/es6/javascript-arrow-function/)
 - [ASync / Await functions](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/async_function)
 - [Promises](https://www.geeksforgeeks.org/javascript-promises/)
@@ -156,25 +157,32 @@ How NestJS concepts work?
   <img src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
 </p>
 
+***Concepts***
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Nest Controller](https://docs.nestjs.com/controllers)
 - [Nest Service](https://docs.nestjs.com/providers)
 - [Nest Guards](https://docs.nestjs.com/guards)
+- [Nest Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
 
+***Config***
 - [Config - .env - .forRoot()](https://docs.nestjs.com/techniques/configuration)
-
 - [.env file](https://malware.expert/general/what-is-env-files/)
 
-- [Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
+***Requests***
 - [HTTP Requests](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html)
 
+***Security***
 - [TypeOrm Entity](https://typeorm.io/entities)
 - [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
 - [JSON Web Token](https://jwt.io/introduction)
 
+***DTO***
 - [DTO](https://javascript.plainenglish.io/use-of-dto-for-validation-in-nestjs-application-d37ff55f0560)
+
+***Validation***
 - [Validation](https://docs.nestjs.com/techniques/validation)
 
+***Authentication***
 - [Authentication](https://docs.nestjs.com/security/authentication)
 - [Authentication Sample](https://github.com/nestjs/nest/tree/master/sample/19-auth-jwt)
 
