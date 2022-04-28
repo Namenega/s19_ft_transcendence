@@ -143,7 +143,11 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 <details>
 <summary>"Click"</summary>
 
-- [Learn NestJS](https://javascript.plainenglish.io/nestjs-roadmap-for-beginners-4fee5be251b)
+<p align="center">
+<a href="https://javascript.plainenglish.io/nestjs-roadmap-for-beginners-4fee5be251b">Learn NestJS</a>
+<!-- - [Learn NestJS](https://javascript.plainenglish.io/nestjs-roadmap-for-beginners-4fee5be251b) -->
+</p>
+
 <p align="center">
   <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
 </p>
