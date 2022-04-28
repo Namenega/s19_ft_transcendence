@@ -6,12 +6,12 @@
 
 This project is the final common core project of [19](http://www.s19.be/) (42 network).
 
-## Overview
+<h1 align="center">Overview</h1>
 
 SPA website where users are able to play the Pong game.
 
 
-## Technologies
+<!-- <h1 align="center">Technologies</h1> -->
 
 - Back end : __NestJS__
 - Front end : any __TS framework__ of our choice
@@ -26,7 +26,7 @@ SPA website where users are able to play the Pong game.
   <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
 </p>
 
-## TODO:
+<h1 align="center">TODO</h1>
 
 #### Security
 - [ ] password stored in db must be encrypted
@@ -65,7 +65,7 @@ SPA website where users are able to play the Pong game.
 #### Ideas / Features
 - [ ] Ban word list?
 
-## Docs
+<h1 align="center">Docs</h1>
 
 ### Install
 <details>
@@ -141,8 +141,8 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 </details>
 
-<!-- ### Nest Theory -->
-<h1 align="center">Material Bread</h1>
+### Nest Theory
+<!-- <h1 align="center">Material Bread</h1> -->
 <details>
 <summary>"Click"</summary>
 
