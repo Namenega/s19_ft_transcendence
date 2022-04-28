@@ -24,6 +24,7 @@ SPA website where users are able to play the Pong game.
 
 <p align="center">
   <img width="460" height="300" src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png">
+  NestJS Roadmap
 </p>
 <!-- ![alt text](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/NestJS_roadmap.png "Nest roadmap") -->
 
