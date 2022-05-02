@@ -125,6 +125,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 - [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
 - [API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
+- [Typescript & React tuto video](https://www.youtube.com/watch?v=FJDVKeh7RJI)
 
 </details>
 
@@ -139,10 +140,8 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 ***Typescript***
 - [Typescript tuto](https://www.typescripttutorial.net/)
-- [Typescript & React tuto video](https://www.youtube.com/watch?v=FJDVKeh7RJI)
 
 </details>
-
 
 
 ### Nest Theory
@@ -210,10 +209,12 @@ How NestJS concepts work?
 </details>
 
 
-### 42 API docs
+### Ressources
 <details>
 <summary>"Click"</summary>
 
 - [42API](https://api.intra.42.fr/apidoc)
+- [Full-Stack Step-by-step](https://moustafamm.medium.com/how-to-plan-step-by-step-a-full-stack-application-ee4e842d55f2)
+
 
 </details>
