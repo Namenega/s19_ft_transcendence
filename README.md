@@ -137,7 +137,13 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 - [ASync / Await functions](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/async_function)
 - [Promises](https://www.geeksforgeeks.org/javascript-promises/)
 
+***Typescript***
+- [Typescript tuto](https://www.typescripttutorial.net/)
 </details>
+
+
+
+
 
 ### Nest Theory
 <details>
