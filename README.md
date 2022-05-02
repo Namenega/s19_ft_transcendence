@@ -160,9 +160,7 @@ How NestJS concepts work?
   <img src="https://github.com/Namenega/s19_ft_transcendence/blob/main/random/map_nest.png">
 </p>
 
-<p align="center">
-	[Project Linked Graph](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/Roadmap_transcendence.pdf)
-</p>
+[Project Linked Graph](https://github.com/Namenega/s19_ft_transcendence/blob/main/random/Roadmap_transcendence.pdf)
 
 
 ***Concepts***
