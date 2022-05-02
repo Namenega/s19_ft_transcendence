@@ -139,9 +139,9 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 ***Typescript***
 - [Typescript tuto](https://www.typescripttutorial.net/)
+- [Typescript & React tuto video](https://www.youtube.com/watch?v=FJDVKeh7RJI)
+
 </details>
-
-
 
 
 
