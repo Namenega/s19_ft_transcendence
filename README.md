@@ -215,6 +215,14 @@ How NestJS concepts work?
 
 - [42API](https://api.intra.42.fr/apidoc)
 - [Full-Stack Step-by-step](https://moustafamm.medium.com/how-to-plan-step-by-step-a-full-stack-application-ee4e842d55f2)
+- [Full-Stack approach](https://dzone.com/articles/get-better-result-full-stack-project)
 
 
 </details>
+
+
+### TODO for next meeting
+
+- Check [Full tuto/Typescript & react tuto video]
+- Check [Javascripttheroy/Advanced JS/.]
+- Check [Ressources/Full-Stack approach & step-by-step]
