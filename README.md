@@ -214,6 +214,7 @@ How NestJS concepts work?
 <summary>"Click"</summary>
 
 - [42API](https://api.intra.42.fr/apidoc)
+- [42API Tuto](https://api.intra.42.fr/apidoc/guides/web_application_flow)
 - [Full-Stack Step-by-step](https://moustafamm.medium.com/how-to-plan-step-by-step-a-full-stack-application-ee4e842d55f2)
 - [Full-Stack approach](https://dzone.com/articles/get-better-result-full-stack-project)
 
