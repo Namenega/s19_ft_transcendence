@@ -69,49 +69,49 @@ Singe Page Application website where users are able to play the Pong game.
 <summary>"Click"</summary>
 
 ```
-# install Node JS
+### install Node JS ###
 >$ sudo apt install nodejs
 
-# install NPM
+### install NPM ###
 >$ sudo apt install npm
 
-# install NestJS
+### install NestJS ###
 >$ npm i -g @nestjs/cli
 
-# create new NestJS Project
+### create new NestJS Project ###
 >$ nest new <project_name>
 
-# run NestJS project
+### run NestJS project ###
 >$ npm run start
 >$ npm run start:dev	//watch mode : recommended
 
-# install NestJS Config
+### install NestJS Config ###
 >$ npm i --save @nestjs/config
 
-# install TypeOrm
+### install TypeOrm ###
 >$ npm i --save @nestjs/typeorm typeorm
 
 --------------------------------
 
-# create Module
+### create Module ###
 >$ nest g module <module_name>
 
-# create Controller
+### create Controller ###
 >$ nest g controller <controller_name>
 
-# create Service
+### create Service ###
 >$ nest g service <service_name>
 
-# install built-ins ValidationPipe
+### install built-ins ValidationPipe ###
 >$ npm i --save class-validator class-transformer
 
-# install bcrypt for password hashing
+### install bcrypt for password hashing ###
 >$ npm install @types/bcrypt bcrypt
 
-# install passport for abstraction over authentication
+### install passport for abstraction over authentication ###
 >$ npm install @nestjs/passport passport @types/passport-local passport-local @types/express
 
-# install JWT(JSON Web Tokens)
+### install JWT(JSON Web Tokens) ###
 npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/cookie-parser
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
