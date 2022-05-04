@@ -171,7 +171,9 @@ How NestJS concepts work?
 ***Concepts***
 - [Overview by Creator](https://www.youtube.com/watch?v=f0qzBkAQ3mk)
 - [Nest Module](https://docs.nestjs.com/modules)
+- [Angular Module (complementary Module theory)](https://angular-training-guide.rangle.io/modules/introduction)
 - [Nest Controller](https://docs.nestjs.com/controllers)
+- [Angular Routes (complementary Controller theory)](https://angular-training-guide.rangle.io/routing)
 - [Nest Service](https://docs.nestjs.com/providers)
 - [Nest Guards](https://docs.nestjs.com/guards)
 - [Nest Decorator](https://medium.com/google-developers/exploring-es7-decorators-76ecb65fb841)
