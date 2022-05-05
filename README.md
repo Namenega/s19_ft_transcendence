@@ -200,6 +200,9 @@ How NestJS concepts work?
 - [Authentication](https://docs.nestjs.com/security/authentication)
 - [Authentication Sample](https://github.com/nestjs/nest/tree/master/sample/19-auth-jwt)
 
+***Chat***
+- [Chat](https://gabrieltanner.org/blog/nestjs-realtime-chat)
+
 </details>
 
 ### Docker Compose Theory
