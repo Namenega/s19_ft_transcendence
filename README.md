@@ -125,11 +125,10 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 - [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
 - [API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
-- [Typescript & React tuto video](https://www.youtube.com/watch?v=FJDVKeh7RJI)
 
 </details>
 
-### Javascript Theory
+### Javascript & Typescript/React Theory
 <details>
 <summary>"Click"</summary>
 
@@ -140,6 +139,13 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 ***Typescript***
 - [Typescript tuto](https://www.typescripttutorial.net/)
+
+***React JS***
+- [Typescript & React tuto video](https://www.youtube.com/watch?v=FJDVKeh7RJI)
+- [Create React App](https://create-react-app.dev/docs/getting-started/)
+- [React Tab](https://react.semantic-ui.com/modules/tab/#types-basic)
+- [State & Lifecycle](https://reactjs.org/docs/state-and-lifecycle.html)
+- [Hook Lib](https://reactjs.org/docs/hooks-intro.html)
 
 </details>
 
