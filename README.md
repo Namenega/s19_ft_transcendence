@@ -125,6 +125,7 @@ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/co
 
 - [Learn NestJs ytb](https://www.youtube.com/watch?v=GHTA143_b-s&t=3537s)
 - [API with NestJS](https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/)
+- [Full-stack app w/ Nest & React](https://blog.logrocket.com/full-stack-app-tutorial-nestjs-react/)
 
 </details>
 
@@ -176,6 +177,7 @@ How NestJS concepts work?
 
 ***Concepts***
 - [Overview by Creator](https://www.youtube.com/watch?v=f0qzBkAQ3mk)
+- [NestJS For Beginner](https://tkssharma.com/Learning-nestjs-as-beginner-developer/)
 - [Nest Module](https://docs.nestjs.com/modules)
 - [Angular Module (complementary Module theory)](https://angular-training-guide.rangle.io/modules/introduction)
 - [Nest Controller](https://docs.nestjs.com/controllers)
