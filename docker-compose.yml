@@ -11,20 +11,42 @@ services:
     - docker.env
     networks:
     - postgres
+    restart: always
 
-  pgadmin:
-    links:
-    - postgres:postgres
-    container_name: pgadmin
-    image: dpage/pgadmin4
+  # pgadmin:
+  #   links:
+  #   - postgres:postgres
+  #   container_name: pgadmin
+  #   image: dpage/pgadmin4
+  #   ports:
+  #   - "8080:80"
+  #   volumes:
+  #   - /data/pgadmin:/root/.pgadmin
+  #   env_file:
+  #   - docker.env
+  #   networks:
+  #   - postgres
+
+  frontend:
+    container_name: frontend
+    build: ./frontend/.
+    image: frontend
+    restart: always
+    depends_on:
+      - backend
     ports:
-    - "8080:80"
-    volumes:
-    - /data/pgadmin:/root/.pgadmin
-    env_file:
-    - docker.env
-    networks:
-    - postgres
+      - '3000:3000'
+
+  backend:
+    container_name: backend
+    build: ./backend/.
+    image: backend
+    depends_on:
+      - postgres
+    restart: always
+    ports:
+      - '3001:3001'
+      - '80:80'
 
 networks:
   postgres:

@@ -25,6 +25,7 @@ export interface ReadJsonAsync {
 export declare function fileExistsSync(path: string): boolean;
 /**
  * Reads package.json from disk
+ *
  * @param file Path to package.json
  */
 export declare function readJsonFromDiskSync(packageJsonPath: string): any | undefined;
