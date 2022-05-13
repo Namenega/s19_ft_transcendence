@@ -112,7 +112,10 @@ Singe Page Application website where users are able to play the Pong game.
 >$ npm install @nestjs/passport passport @types/passport-local passport-local @types/express
 
 ### install JWT(JSON Web Tokens) ###
-npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/cookie-parser
+>$ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/cookie-parser
+
+### install Mapped-Types
+>$ npm i --save @nestjs/mapped-types
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
