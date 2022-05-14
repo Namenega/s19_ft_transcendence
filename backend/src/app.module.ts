@@ -5,10 +5,12 @@ import * as Joi from '@hapi/joi';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import { MatchHistoryService } from './match-history/match-history.service';
+import { MatchHistoryModule } from './match-history/match-history.module';
 
 @Module({
-  imports: [UsersModule],
+  imports: [UsersModule, MatchHistoryModule],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, MatchHistoryService],
 })
 export class AppModule { }
