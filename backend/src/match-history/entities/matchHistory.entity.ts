@@ -4,7 +4,7 @@ import { ValidateNested, IsInt, IsPositive, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
 @Entity()
-export class MatchHistory {
+export class MatchHistoryEntity {
 	@PrimaryColumn()
 	id: number;
 

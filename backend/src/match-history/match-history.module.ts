@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MatchHistoryEntity])],
-  controllers: [MatchHistoryController]
+  controllers: [MatchHistoryController],
   providers: [MatchHistoryService]
 })
 export class MatchHistoryModule {}
