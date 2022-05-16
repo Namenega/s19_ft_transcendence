@@ -44,7 +44,7 @@ services:
       - '3001:3001'
       - '80:80'
     env_file:
-    - .env
+    - ./backend/.env
 
 networks:
   postgres:

@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
+
 const speakeasy = require('speakeasy');
 const bcrypt = require('bcrypt');
 
@@ -35,7 +36,7 @@ export class UsersService {
 	}
 
 	async findAllRank(): Promise<UserEntity[]> {
-		return await this.UserRepo.find({order: {nbrVictory: "DESC"}});
+		return await this.UserRepo.find({order: {numberOfWin: "DESC"}});
 	}
 
 	/**

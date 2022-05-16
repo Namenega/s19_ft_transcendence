@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
-// import { MatchHistoryEntity } from "../../match-history/entities/match_history.entity";
+import { MatchHistoryEntity } from "src/match-history/entities/matchHistory.entity";
 // import { FriendsEntity } from "../../friends/entities/friends.entity";
 // import { ChannelsEntity } from "../../channels/entities/channels.entity";
 // import { ChannelsUsersEntity } from "../../channels/entities/channels_users.entity";
@@ -68,12 +68,12 @@ export class UserEntity {
     @Min(0)
     numberOfLoss: number;
 
-    // @OneToMany(type => MatchHistoryEntity, MatchHistoryEntity => MatchHistoryEntity.me)
-    // @IsOptional()
-    // @IsArray()
-    // @ValidateNested({ each: true })
-    // @Type(() => MatchHistoryEntity)
-    // matchHistory: MatchHistoryEntity[]
+    @OneToMany(type => MatchHistoryEntity, MatchHistoryEntity => MatchHistoryEntity.user)
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => MatchHistoryEntity)
+    matchHistory: MatchHistoryEntity[]
 
     // @OneToMany(type => FriendsEntity, FriendsEntity => FriendsEntity.me)
     // @IsOptional()

@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { UserEntity } from '../../user/entities/user.entity';
+import { UserEntity } from 'src/users/entities/user.entity';
 import { ValidateNested, IsInt, IsPositive, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
