@@ -210,6 +210,7 @@ How NestJS concepts work?
 - [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
 - [LIB : JSON Web Token](https://jwt.io/introduction)
 - [LIB : SpeakEasy](https://github.com/speakeasyjs/speakeasy)
+- [LIB : Bcrypt](https://heynode.com/blog/2020-04/salt-and-hash-passwords-bcrypt/)
 
 ***DTO***
 - [DTO](https://javascript.plainenglish.io/use-of-dto-for-validation-in-nestjs-application-d37ff55f0560)
