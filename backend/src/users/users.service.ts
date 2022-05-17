@@ -5,7 +5,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 
+/* Importing the speakeasy library. */
 const speakeasy = require('speakeasy');
+/* Importing the bcrypt library. */
 const bcrypt = require('bcrypt');
 
 

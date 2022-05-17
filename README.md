@@ -122,6 +122,9 @@ Singe Page Application website where users are able to play the Pong game.
 
 ### install express
 npm install express --save
+
+### install speakeasy
+npm install --save speakeasy
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
@@ -203,9 +206,10 @@ How NestJS concepts work?
 - [HTTP Requests](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html)
 
 ***Security***
-- [TypeOrm Entity](https://typeorm.io/entities)
+- [LIB : TypeOrm Entity](https://typeorm.io/entities)
 - [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
-- [JSON Web Token](https://jwt.io/introduction)
+- [LIB : JSON Web Token](https://jwt.io/introduction)
+- [LIB : SpeakEasy](https://github.com/speakeasyjs/speakeasy)
 
 ***DTO***
 - [DTO](https://javascript.plainenglish.io/use-of-dto-for-validation-in-nestjs-application-d37ff55f0560)
