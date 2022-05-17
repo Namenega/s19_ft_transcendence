@@ -13,6 +13,11 @@ const bcrypt = require('bcrypt');
 
 @Injectable()
 export class UsersService {
+	/**
+	 * The constructor function is a special function that is called when a new
+	 * instance of the class is created
+	 * @param UserRepo - Repository<UserEntity>
+	 */
 	constructor(
 		@InjectRepository(UserEntity)
 		private UserRepo: Repository<UserEntity>
@@ -57,7 +62,7 @@ export class UsersService {
 	 */
 	async findCompleteOne(id: number): Promise<UserEntity> {
 		return await this.UserRepo.findOne(id, {
-		relations: ['matchHistory', 'friends', 'dms', 'channels']
+			relations: ['matchHistory', 'friends', 'dms', 'channels']
 		});
 	}
 
@@ -113,9 +118,9 @@ export class UsersService {
 	 */
 	verifyTwoFactorAuthentication(secret: string, token: string): boolean {
 		const res = speakeasy.totp.verify({
-		secret: secret,
-		encoding: 'ascii',
-		token: token
+			secret: secret,
+			encoding: 'ascii',
+			token: token
 		});
 		return res;
 	}

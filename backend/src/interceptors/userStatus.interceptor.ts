@@ -19,7 +19,7 @@ export interface Response<T> {
 const verifyUserStatus: (user: UserEntity) => UserEntity = (user) => {
   var currentTime = Number(Math.round(new Date().getTime() / 1000).toString());
   if (user.status !== 'Offline' && (currentTime - Number(user.latestTimeOnline)) > 4) {
-      user.status = 'Offline';
+    user.status = 'Offline';
   }
   return user;
 }
@@ -62,10 +62,10 @@ export class setUserStatusInterceptor<T> implements NestInterceptor<T, Response<
 	 * @returns The data is being returned.
 	 */
 	intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
-        return next.handle().pipe(map(data => {
-          if (data === undefined || data === null) return data;
-          data = findUserObj(data);
-          return data;
-         }));
+    return next.handle().pipe(map(data => {
+      if (data === undefined || data === null) return data;
+        data = findUserObj(data);
+        return data;
+    }));
   }
 }
