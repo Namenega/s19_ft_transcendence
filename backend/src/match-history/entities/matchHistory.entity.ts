@@ -3,6 +3,7 @@ import { UserEntity } from 'src/users/entities/user.entity';
 import { ValidateNested, IsInt, IsPositive, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
+/* It's a class that represents a match history entry for a user */
 @Entity()
 export class MatchHistoryEntity {
 	@PrimaryColumn()

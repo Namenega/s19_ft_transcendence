@@ -116,6 +116,12 @@ Singe Page Application website where users are able to play the Pong game.
 
 ### install Mapped-Types
 >$ npm i --save @nestjs/mapped-types
+
+### install RxJS
+>$ npm install rxjs
+
+### install express
+npm install express --save
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)

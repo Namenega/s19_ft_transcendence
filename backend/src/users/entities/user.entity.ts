@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { MatchHistoryEntity } from "src/match-history/entities/matchHistory.entity";
-// import { FriendsEntity } from "../../friends/entities/friends.entity";
-// import { ChannelsEntity } from "../../channels/entities/channels.entity";
-// import { ChannelsUsersEntity } from "../../channels/entities/channels_users.entity";
-// import { ChannelsMessagesEntity } from "../../channels/entities/channels_messages.entity";
-// import { DmsEntity } from "../../dms/entities/dms.entity";
-// import { DmsMessagesEntity } from "../../dms/entities/dms_messages.entity";
+// import { FriendsEntity } from "src/friends/entities/friends.entity";
+// import { ChannelsEntity } from "src/channels/entities/channels.entity";
+// import { ChannelsUsersEntity } from "src/channels/entities/channels_users.entity";
+// import { ChannelsMessagesEntity } from "src/channels/entities/channels_messages.entity";
+// import { DmsEntity } from "src/dms/entities/dms.entity";
+// import { DmsMessagesEntity } from "src/dms/entities/dms_messages.entity";
 import { ValidateNested, IsNotEmpty, IsString, IsBoolean, IsInt, Min, IsArray, IsOptional, IsNumberString, IsIn } from "class-validator";
 import { Type } from 'class-transformer';
 

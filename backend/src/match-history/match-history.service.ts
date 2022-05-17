@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MatchHistoryEntity } from './entities/matchHistory.entity';
 
+/* It's a service class that
+provides methods to create, read, update, and delete match history records */
 @Injectable()
 export class MatchHistoryService {
 	/**
@@ -23,7 +25,7 @@ export class MatchHistoryService {
 	 * @param {CreateMatchHistoryDto} createMatchHistoryDto - CreateMatchHistoryDto
 	 */
 	async create(createMatchHistoryDto: CreateMatchHistoryDto): Promise<void> {
-	await this.MatchHistoryRepo.save(createMatchHistoryDto);
+		await this.MatchHistoryRepo.save(createMatchHistoryDto);
 	}
 	
 	/**
@@ -31,7 +33,7 @@ export class MatchHistoryService {
 	 * @returns An array of MatchHistoryEntity objects.
 	 */
 	async findAll(): Promise<MatchHistoryEntity[]>  {
-	return await this.MatchHistoryRepo.find();
+		return await this.MatchHistoryRepo.find();
 	}
 
 	/**
@@ -42,9 +44,10 @@ export class MatchHistoryService {
 	 * @returns An array of MatchHistoryEntity objects.
 	 */
 	async findMatchHistoryOfUser(login: string): Promise<MatchHistoryEntity[]> {
-	return await this.MatchHistoryRepo.find({
-		relations: ['me'],
-		where: { me: {login: login} }});
+		return await this.MatchHistoryRepo.find({
+			relations: ['me'],
+			where: { me: {login: login} }}
+		);
 	}
 
 	/**
@@ -54,7 +57,7 @@ export class MatchHistoryService {
 	 * @returns The MatchHistoryEntity
 	 */
 	async findOne(id: number): Promise<MatchHistoryEntity> {
-	return await this.MatchHistoryRepo.findOne(id);;
+		return await this.MatchHistoryRepo.findOne(id);;
 	}
 
 	/**
@@ -64,7 +67,7 @@ export class MatchHistoryService {
 	 * we created earlier.
 	 */
 	async update(id: number, updateMatchHistoryDto: UpdateMatchHistoryDto): Promise<void>  {
-	await this.MatchHistoryRepo.update(id, updateMatchHistoryDto);
+		await this.MatchHistoryRepo.update(id, updateMatchHistoryDto);
 	}
 
 	/**
@@ -72,6 +75,6 @@ export class MatchHistoryService {
 	 * @param {number} id - number - The id of the match history to delete
 	 */
 	async remove(id: number): Promise<void> {
-	await this.MatchHistoryRepo.delete(id);
+		await this.MatchHistoryRepo.delete(id);
 	}
 }
