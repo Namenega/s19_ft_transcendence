@@ -6,7 +6,7 @@ import { FriendsEntity } from "src/friends/entities/friends.entity";
 // import { ChannelsMessagesEntity } from "src/channels/entities/channels_messages.entity";
 // import { DmsEntity } from "src/dms/entities/dms.entity";
 // import { DmsMessagesEntity } from "src/dms/entities/dms_messages.entity";
-import { ValidateNested, IsNotEmpty, IsString, IsBoolean, IsInt, Min, IsArray, IsOptional, IsNumberString, IsIn } from "class-validator";
+import { ValidateNested, IsNotEmpty, IsString, IsBoolean, IsInt, Min, IsArray, IsOptional, IsNumberString, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 
 /* It creates a table in the database called UserEntity, and it has a primary key
