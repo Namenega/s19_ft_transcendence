@@ -8,9 +8,10 @@ import { UsersService } from './users/users.service';
 import { MatchHistoryService } from './match-history/match-history.service';
 import { MatchHistoryModule } from './match-history/match-history.module';
 import { MatchHistoryController } from './match-history/match-history.controller';
+import { FriendsModule } from './friends/friends.module';
 
 @Module({
-  imports: [UsersModule, MatchHistoryModule],
+  imports: [UsersModule, MatchHistoryModule, FriendsModule],
   controllers: [UsersController, MatchHistoryController],
   providers: [UsersService, MatchHistoryService],
 })
