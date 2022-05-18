@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { MatchHistoryEntity } from "src/match-history/entities/matchHistory.entity";
-// import { FriendsEntity } from "src/friends/entities/friends.entity";
+import { FriendsEntity } from "src/friends/entities/friends.entity";
 // import { ChannelsEntity } from "src/channels/entities/channels.entity";
 // import { ChannelsUsersEntity } from "src/channels/entities/channels_users.entity";
 // import { ChannelsMessagesEntity } from "src/channels/entities/channels_messages.entity";
@@ -68,6 +68,8 @@ export class UserEntity {
     @Min(0)
     numberOfLoss: number;
 
+   /* Creating a one to many relationship between the UserEntity and the
+   MatchHistoryEntity. */
     @OneToMany(type => MatchHistoryEntity, MatchHistoryEntity => MatchHistoryEntity.user)
     @IsOptional()
     @IsArray()
@@ -75,12 +77,14 @@ export class UserEntity {
     @Type(() => MatchHistoryEntity)
     matchHistory: MatchHistoryEntity[]
 
-    // @OneToMany(type => FriendsEntity, FriendsEntity => FriendsEntity.me)
-    // @IsOptional()
-    // @IsArray()
-    // @ValidateNested({ each: true })
-    // @Type(() => FriendsEntity)
-    // friends: FriendsEntity[]
+    /* Creating a one to many relationship between the UserEntity and the
+    FriendsEntity. */
+    @OneToMany(type => FriendsEntity, FriendsEntity => FriendsEntity.user)
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => FriendsEntity)
+    friends: FriendsEntity[]
 
     // @ManyToMany(type => DmsEntity, DmsEntity => DmsEntity.users)
     // @IsOptional()
