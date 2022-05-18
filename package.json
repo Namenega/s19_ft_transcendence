@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.9",
     "@nestjs/typeorm": "^8.0.3",
+    "bcrypt": "^5.0.1",
     "typeorm": "^0.2.45"
   }
 }
