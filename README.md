@@ -121,10 +121,10 @@ Singe Page Application website where users are able to play the Pong game.
 >$ npm install rxjs
 
 ### install express
-npm install express --save
+>$ npm install express --save
 
 ### install speakeasy
-npm install --save speakeasy
+>$ npm install --save speakeasy
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)

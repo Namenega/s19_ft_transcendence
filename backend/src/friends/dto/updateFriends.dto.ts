@@ -1,4 +1,4 @@
-import { OmitType } from "@nestjs/mapped-types";
-import { FriendsEntity } from "../entities/friends.entity";
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateFriendsDto } from "./createFriends.dto";
 
-export class UpdateFriendsDto extends OmitType(FriendsEntity, ["id"]) {}
+export class UpdateFriendsDto extends PartialType(CreateFriendsDto) {}

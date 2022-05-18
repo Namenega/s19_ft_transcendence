@@ -84,7 +84,7 @@ export class FriendsService {
 	 * @param {UpdateFriendsDto} updateFriendsDto - This is the DTO that we created
 	 * earlier.
 	 */
-	async remove(id: number, updateFriendsDto: UpdateFriendsDto): Promise<void> {
+	async remove(id: number): Promise<void> {
 		await this.FriendsRepo.delete(id);
 	}
 }

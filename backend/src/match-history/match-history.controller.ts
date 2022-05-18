@@ -24,7 +24,7 @@ export class MatchHistoryController {
   
 	/* This is a get request that takes in a login and returns the match history of
 	the user with that login. */
-	@Get('/user/:login')
+	@Get('/users/:login')
 	findMatchHistoryOfUser(@Param('login') login: string) {
 	  return this.matchHistoryService.findMatchHistoryOfUser(login);
 	}

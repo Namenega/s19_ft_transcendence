@@ -1,18 +1,23 @@
-import { Module } from '@nestjs/common';
-// import { ConfigModule } from '@nestjs/config';
-// import * as Joi from '@hapi/joi';
+/*  Lib modules */
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersController } from './users/users.controller';
+
+/*  Src/modules */
 import { UsersModule } from './users/users.module';
-import { UsersService } from './users/users.service';
-import { MatchHistoryService } from './match-history/match-history.service';
 import { MatchHistoryModule } from './match-history/match-history.module';
-import { MatchHistoryController } from './match-history/match-history.controller';
 import { FriendsModule } from './friends/friends.module';
+// import { channelPasswordEncryptionMiddleware, userPasswordEncryptionMiddleware } from './middleware/pwEncryption.middleware';
+
+/*  Gateway */
+
+/*  Middleware */
 
 @Module({
-  imports: [UsersModule, MatchHistoryModule, FriendsModule],
-  controllers: [UsersController, MatchHistoryController],
-  providers: [UsersService, MatchHistoryService],
+  imports: [TypeOrmModule.forRoot(), UsersModule, MatchHistoryModule, FriendsModule],
+  providers: [],
 })
-export class AppModule { }
+export class AppModule {
+  // async configure(consumer: MiddlewareConsumer) {
+  //   await consumer.apply(userPasswordEncryptionMiddleware).forRoutes('/users');
+  // }
+}
