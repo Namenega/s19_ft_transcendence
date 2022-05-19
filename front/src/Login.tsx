@@ -1,109 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
-import { useSearchParams } from 'react-router-dom'
-import axios from 'axios'
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
-interface State {
-    id: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const Login = (props) => {
 
     const axios = require('axios').default;
 
-    const { setIsLoggedIn } = props
+    const { setIsLoggedIn } = props;
 
     const [searchParams] = useSearchParams()
 
-    const AUTH_CODE = searchParams.get('code');
+    let AUTH_CODE = searchParams.get('code');
 
     useEffect(() => {
+        if (AUTH_CODE)
+        {
+            const data = new FormData();
 
-        const data = new FormData();
+            data.append('grant_type', 'authorization_code');
+            data.append('client_id', '4fdbf2cda36c892bc525ad74e2b75188d936e8750b098515903aaf7e8a511daf');
+            data.append('client_secret', 'ed1533e5bc5827832dd37bab7a4eb050b831b07e868d4475e47bd88e13197432');
+            data.append('code', AUTH_CODE);
+            data.append('redirect_uri', 'http://localhost:3000');
 
-        data.append('grant_type', 'authorization_code');
-        data.append('client_id', '4fdbf2cda36c892bc525ad74e2b75188d936e8750b098515903aaf7e8a511daf');
-        data.append('client_secret', 'ed1533e5bc5827832dd37bab7a4eb050b831b07e868d4475e47bd88e13197432');
-        data.append('code', AUTH_CODE);
-        data.append('redirect_uri', 'http://localhost:3000');
-
-        //axios.post('http://httpbin.org/post', data);
-         axios.post('https://api.intra.42.fr/oauth/token', data)
-        //     headers: {'grant_type': 'authorization_code',
-        //     'client_id': '4fdbf2cda36c892bc525ad74e2b75188d936e8750b098515903aaf7e8a511daf',
-        //     'client_secret': 'ed1533e5bc5827832dd37bab7a4eb050b831b07e868d4475e47bd88e13197432',
-        //     'code': AUTH_CODE}
-        // })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        setIsLoggedIn(AUTH_CODE)
+            axios.post('https://api.intra.42.fr/oauth/token', data)
+            .then(function (response) {
+                setIsLoggedIn(response.data.access_token)
+                console.log(response.data.access_token);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }, [AUTH_CODE])
 
-    // const [values, setValues] = React.useState<State>({
-    //     id: '',
-    //     password: '',
-    //     showPassword: false,
-    // });
-
-    // const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    //   setValues({ ...values, [prop]: event.target.value });
-    // };
-
-    // const handleClickShowPassword = () => {
-    //     setValues({
-    //       ...values,
-    //       showPassword: !values.showPassword,
-    //     });
-    // };
-    
-    // const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //     event.preventDefault();
-    // };
-
-    // return (
-    //     <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-    //         <div>
-    //             <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
-    //             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-    //             <Input
-    //                 id="standard-adornment-password"
-    //                 type={values.showPassword ? 'text' : 'password'}
-    //                 value={values.password}
-    //                 onChange={handleChange('password')}
-    //                 endAdornment={
-    //                 <InputAdornment position="end">
-    //                     <IconButton
-    //                     aria-label="toggle password visibility"
-    //                     onClick={handleClickShowPassword}
-    //                     onMouseDown={handleMouseDownPassword}
-    //                     >
-    //                     {values.showPassword ? <VisibilityOff /> : <Visibility />}
-    //                     </IconButton>
-    //                 </InputAdornment>
-    //                 }
-    //             />
-    //             </FormControl>
-    //         </div>
-    //         </Box>
-    // )
 
     const loginWithApi = async () => {
         window.location.href = "https://api.intra.42.fr/oauth/authorize?client_id=4fdbf2cda36c892bc525ad74e2b75188d936e8750b098515903aaf7e8a511daf&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=code"

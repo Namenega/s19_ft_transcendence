@@ -10,7 +10,7 @@ const App = () => {
 
   if (isLoggedIn)
     return (
-      <Home />
+      <Home setIsLoggedIn={setIsLoggedIn}/>
     )
   else
     return (

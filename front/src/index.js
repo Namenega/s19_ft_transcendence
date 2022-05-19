@@ -11,9 +11,11 @@ import { green, orange } from '@mui/material/colors';
 const outerTheme = createTheme({
   palette: {
     primary: {
-      main: green[500],
+      main: green[400],
       dark: green[800]
     },
+    secondary: {
+      main: green[600]},
   },
 });
 
