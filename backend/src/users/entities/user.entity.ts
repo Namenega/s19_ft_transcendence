@@ -4,7 +4,7 @@ import { FriendsEntity } from "src/friends/entities/friends.entity";
 // import { ChannelsEntity } from "src/channels/entities/channels.entity";
 // import { ChannelsUsersEntity } from "src/channels/entities/channels_users.entity";
 // import { ChannelsMessagesEntity } from "src/channels/entities/channels_messages.entity";
-// import { DmsEntity } from "src/dms/entities/dms.entity";
+import { DirectMessageEntity } from "src/direct-message/entities/directMessage.entity";
 // import { DmsMessagesEntity } from "src/dms/entities/dms_messages.entity";
 import { ValidateNested, IsNotEmpty, IsString, IsBoolean, IsInt, Min, IsArray, IsOptional, IsNumberString, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -86,12 +86,12 @@ export class UserEntity {
     @Type(() => FriendsEntity)
     friends: FriendsEntity[]
 
-    // @ManyToMany(type => DmsEntity, DmsEntity => DmsEntity.users)
-    // @IsOptional()
-    // @IsArray()
-    // @ValidateNested({ each: true })
-    // @Type(() => DmsEntity)
-    // dms: DmsEntity[]
+    @ManyToMany(type => DirectMessageEntity, DirectMessageEntity => DirectMessageEntity.users)
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => DirectMessageEntity)
+    directMessage: DirectMessageEntity[]
 
     // @ManyToMany(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.users)
     // @JoinTable()
