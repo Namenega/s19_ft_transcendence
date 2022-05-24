@@ -2,8 +2,20 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+/**
+ * If the object exists and has a property called `__esModule` that is true, return the object.
+ * Otherwise, return the object's `default` property
+ * @param {any} obj - any - The object to be checked.
+ * @returns The default export of the module.
+ */
 function _interopRequireDefault(obj: any) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+/**
+ * Define a property on an object, and make it enumerable, configurable, and writable.
+ * @param {any} obj - The object to define the property on.
+ * @param {string} key - The name of the property to be defined or modified.
+ * @param {string} value - The value of the property.
+ */
 function _defineProperty(obj: any, key: string, value: string) { return Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); }
 
 var _react = require('react');
@@ -27,6 +39,7 @@ exports['default'] = _react2['default'].createClass({
     paddleWidth: _react2['default'].PropTypes.number,
     paddleSpeed: _react2['default'].PropTypes.number
   },
+  /* Getting the default props for the component. */
   getDefaultProps: function getDefaultProps() {
     return {
       height: 600,
@@ -39,6 +52,7 @@ exports['default'] = _react2['default'].createClass({
       ballSize: 10
     };
   },
+  /* Getting the initial state of the game. */
   getInitialState: function getInitialState() {
     return {
       ballx: 100,
@@ -54,11 +68,13 @@ exports['default'] = _react2['default'].createClass({
       aiScore: 0
     };
   },
+  /* This is the function that is called when the component is mounted. */
   componentDidMount: function componentDidMount() {
     this._setupCanvas();
     this._context.font = '30px Arial';
     this._context.fillText('Starting Game', this.props.width / 2, this.props.height / 2);
 
+	/* This is setting up the game to start after 1 second. */
     setTimeout(this._startGame, 1000);
   },
   _keystate: {},
@@ -77,6 +93,7 @@ exports['default'] = _react2['default'].createClass({
     left: '0',
     right: '0'
   },
+  /* Setting up the game. */
   _startGame: function _startGame() {
     var _this = this;
 
@@ -84,6 +101,7 @@ exports['default'] = _react2['default'].createClass({
       return;
     }
 
+	/* This is setting up the keyboard and touch events. */
     var keystate = this._keystate;
     document.addEventListener('keydown', function (evt) {
       keystate[evt.keyCode] = true;
@@ -98,12 +116,14 @@ exports['default'] = _react2['default'].createClass({
       e.preventDefault();
     }, false);
 
+	/* This is setting up the game loop. */
     this._loop = setInterval(function () {
       _this._update();
       _this._draw();
     }, 1);
     this._ball().serve(1);
   },
+  /* Stopping the game. */
   _stopGame: function _stopGame() {
     var _this2 = this;
 
@@ -113,10 +133,12 @@ exports['default'] = _react2['default'].createClass({
       _this2._context.clearRect(0, 0, _this2._canvas.width, _this2._canvas.height);
     }, 0);
   },
+  /* Setting up the canvas. */
   _setupCanvas: function _setupCanvas() {
     this._canvas = this.getDOMNode();
     this._context = this._canvas.getContext('2d');
   },
+  /* A function that is called when a player scores. */
   _score: function _score(name: string) {
     var _this3 = this;
 
@@ -124,36 +146,39 @@ exports['default'] = _react2['default'].createClass({
     var scorer = ({ player: 'ai', ai: 'player' } as any)[name];
     this.setState(_defineProperty({}, scorer + 'Score', state[scorer + 'Score'] + 1));
     this._stopGame();
+	/* Setting the font and text to be displayed when a player scores. */
     setTimeout(function () {
       _this3._context.font = '30px Arial';
       _this3._context.fillText(scorer + ' score!', _this3.props.width / 2, _this3.props.height / 2);
       _this3._context.restore();
     }, 0);
 
+	/* Setting up the canvas and starting the game after 1 second. */
     setTimeout(function () {
       _this3._setupCanvas();
       _this3._startGame();
     }, 1000);
   },
   _draw: function _draw() {
-    // draw background
+    /* Setting the background color to white. */
     var state = this.state;
     this._context.fillRect(0, 0, this.props.width, this.props.height);
     this._context.save();
     this._context.fillStyle = '#fff';
 
-    // draw scoreboard
+    /* This is setting the font and text to be displayed when a player scores. */
     this._context.font = '10px Arial';
     this._context.fillText('Player: ' + state.playerScore, 10, 10);
     this._context.fillText('CPU: ' + state.aiScore, 500, 10);
 
-    //draw ball
+    /* Calling the draw function in the ball.ts file. */
     this._ball().draw();
 
-    //draw paddles
+    /* This is calling the draw function in the player.ts and ai.ts files. */
     this._player().draw();
     this._ai().draw();
-    // draw the net
+
+    /* This is drawing the net in the middle of the canvas. */
     var w = 4;
     var x = (this.props.width - w) * 0.5;
     var y = 0;
@@ -163,18 +188,22 @@ exports['default'] = _react2['default'].createClass({
       y += step;
     }
 
+	/* This is restoring the canvas to its original state. */
     this._context.restore();
   },
+  /* This is updating the position of the player and ai. */
   _update: function _update() {
     this._player().update();
     this._ai().update();
     this._ball().update();
   },
+  /* This is a function that is called when the user touches the screen. */
   _touch: function _touch(evt: any) {
     console.log(evt);
     var yPos = (evt as any).touches[0].pageY - evt.touches[0].target.offsetTop - this.props.paddleHeight / 2;
     this._player().position(yPos);
   },
+  /* Returning the canvas element. */
   render: function render() {
     return _react2['default'].createElement('canvas', {
       onTouchStart: this._touch,

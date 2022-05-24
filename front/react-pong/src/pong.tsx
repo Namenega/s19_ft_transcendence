@@ -13,6 +13,7 @@ export default React2.createClass({
     paddleWidth: React2.PropTypes.number,
     paddleSpeed: React2.PropTypes.number
   },
+  /* Getting the default props for the component. */
   getDefaultProps() {
     return {
       height: 600,
@@ -25,6 +26,7 @@ export default React2.createClass({
       ballSize: 10
     }
   },
+  /* Getting the initial state of the game. */
   getInitialState(){
     return {
       ballx: 100,
@@ -40,6 +42,7 @@ export default React2.createClass({
       aiScore: 0
     }
   },
+  /* This is the function that is called when the component is mounted. */
   componentDidMount: function() {
     this._setupCanvas();
     this._context.font = '30px Arial';
@@ -47,7 +50,8 @@ export default React2.createClass({
       this.props.width/2,
       this.props.height/2 );
 
-    setTimeout(this._startGame, 1000);
+    /* This is setting up the game to start after 1 second. */
+	setTimeout(this._startGame, 1000);
   },
   _keystate: {},
   _canvas: undefined,
@@ -65,12 +69,13 @@ export default React2.createClass({
     left: '0',
     right: '0'
   },
+  /* Setting up the game. */
   _startGame() {
-
-    if(this._loop){
+	if(this._loop){
       return;
     }
 
+	/* This is setting up the keyboard and touch events. */
     const keystate = this._keystate;
     document.addEventListener('keydown', function(evt) {
       keystate[evt.keyCode] = true;
@@ -81,12 +86,14 @@ export default React2.createClass({
     document.addEventListener('ontouchstart', function(e) {e.preventDefault()}, false);
     document.addEventListener('ontouchmove', function(e) {e.preventDefault()}, false);
 
-    this._loop = setInterval( () => {
+    /* This is setting up the game loop. */
+	this._loop = setInterval( () => {
       this._update();
       this._draw();
     },1);
     this._ball().serve(1);
   },
+  /* Stopping the game. */
   _stopGame() {
     clearInterval(this._loop);
     this._loop = null;
@@ -95,10 +102,12 @@ export default React2.createClass({
     }, 0);
 
   },
+  /* Setting up the canvas. */
   _setupCanvas: function() {
     this._canvas = this.getDOMNode();
     this._context = this._canvas.getContext('2d');
   },
+  /* A function that is called when a player scores. */
   _score(name: any) {
     const state = this.state;
     const scorer = ({player: 'ai', ai: 'player'} as any)[name];
@@ -106,7 +115,8 @@ export default React2.createClass({
       [scorer+'Score']: state[scorer+'Score'] + 1
     });
     this._stopGame();
-    setTimeout(()=>{
+    /* Setting the font and text to be displayed when a player scores. */
+	setTimeout(()=>{
       this._context.font = '30px Arial';
       this._context.fillText(scorer + ' score!',
         this.props.width/2,
@@ -114,31 +124,33 @@ export default React2.createClass({
       this._context.restore();
     }, 0);
 
-    setTimeout(()=>{
+    /* Setting up the canvas and starting the game after 1 second. */
+	setTimeout(()=>{
       this._setupCanvas();
       this._startGame();
     }, 1000);
   },
   _draw() {
-    // draw background
-    const state = this.state;
+    /* Setting the background color to white. */
+	const state = this.state;
     this._context.fillRect(0, 0, this.props.width, this.props.height);
     this._context.save();
     this._context.fillStyle = "#fff";
 
-    // draw scoreboard
+   /* This is setting the font and text to be displayed when a player scores. */
     this._context.font = '10px Arial';
     this._context.fillText('Player: ' + state.playerScore , 10, 10 );
     this._context.fillText('CPU: ' + state.aiScore , 500, 10  );
 
-    //draw ball
-    this._ball().draw();
+    /* Calling the draw function in the ball.ts file. */
+	this._ball().draw();
 
-    //draw paddles
-    this._player().draw();
+    /* This is calling the draw function in the player.ts and ai.ts files. */
+	this._player().draw();
     this._ai().draw();
-    // draw the net
-    const w = 4;
+
+    /* This is drawing the net in the middle of the canvas. */
+	const w = 4;
     const x = (this.props.width - w)*0.5;
     let y = 0;
     const step = this.props.height/20; // how many net segments
@@ -147,18 +159,22 @@ export default React2.createClass({
       y += step;
     }
 
-    this._context.restore();
+    /* This is restoring the canvas to its original state. */
+	this._context.restore();
   },
+  /* This is updating the position of the player and ai. */
   _update(){
     this._player().update();
     this._ai().update();
     this._ball().update();
   },
+  /* This is a function that is called when the user touches the screen. */
   _touch(evt: any) {
     console.log( evt );
     var yPos = evt.touches[0].pageY - evt.touches[0].target.offsetTop - this.props.paddleHeight/2;
     this._player().position(yPos);
   },
+  /* Returning the canvas element. */
   render() {
     return <canvas
             onTouchStart={this._touch}

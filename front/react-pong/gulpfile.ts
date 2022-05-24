@@ -1,6 +1,3 @@
-/**
- * Created by Oakley Hall on 6/16/15.
- */
 'use strict';
 
 var gulp = require('gulp');
