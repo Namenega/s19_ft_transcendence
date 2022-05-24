@@ -3,7 +3,7 @@ services:
   postgres:
     container_name: postgres
     image: 'postgres:latest'
-    env_file: .env
+    env_file: ./backend/.env
     ports:
       - '5432:5432'
     restart: always
