@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: 'postgres:latest'
+    env_file: .env
+    ports:
+      - '5432:5432'
+    restart: always
+  frontend:
+    container_name: frontend
+    build: ./front/.
+    image: frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - '3000:3000'
+  backend:
+    container_name: backend
+    build: ./backend/.
+    image: backend
+    depends_on:
+      - postgres
+    restart: always
+    ports:
+      - '3001:3001'
+      - '80:80'
