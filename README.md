@@ -85,7 +85,7 @@ Singe Page Application website where users are able to play the Pong game.
 >$ npm run start
 >$ npm run start:dev	//watch mode : recommended
 
-### install NestJS Config ###
+### install NestJS Config ### [NO NEED]
 >$ npm i --save @nestjs/config
 
 ### install TypeOrm ###
@@ -111,7 +111,7 @@ Singe Page Application website where users are able to play the Pong game.
 ### install passport for abstraction over authentication ###
 >$ npm install @nestjs/passport passport @types/passport-local passport-local @types/express
 
-### install JWT(JSON Web Tokens) ###
+### install JWT(JSON Web Tokens) ### [NO NEED]
 >$ npm install @nestjs/jwt passport-jwt @types/passport-jwt cookie-parser @types/cookie-parser
 
 ### install Mapped-Types
