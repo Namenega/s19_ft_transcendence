@@ -1,3 +1,7 @@
+/* ****************************************************** */
+/* ******************** Login Screen ******************** */
+/* ****************************************************** */
+
 .login-main-ctn {
   width: 100%;
   height: 100vh;
@@ -25,6 +29,10 @@
   margin-bottom: 10px;
 }
 
+/* ****************************************************** */
+/* ******************** Home Screen ********************* */
+/* ****************************************************** */
+
 .home-main-ctn {
   width: 100%;
   height: 100vh;
@@ -35,6 +43,10 @@
   width: 100%;
   height: 100%;
 }
+
+/* ******************************************************** */
+/* ******************** Profile Screen ******************** */
+/* ******************************************************** */
 
 .profile-main-ctn {
   width: 100%;
@@ -116,6 +128,10 @@
   display: flex;
 }
 
+/* ****************************************************** */
+/* ******************** Game Screen ********************* */
+/* ****************************************************** */
+
 .game-main-ctn {
   width: 100%;
   height: 100%;
@@ -138,27 +154,40 @@
 
 .game-banner-live-watch-ctn {
   width: 33%;
-  height: 80%;
+  height: 75%;
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
   background-color: #66bb6a;
 }
 
+.game-button-text {
+  text-align: center;
+  color: #1f4e60;
+  position: absolute;
+  top: 100px;
+  width: 340px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
 .game-banner-start-ctn {
   width: 33%;
-  height: 80%;
+  height: 75%;
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
   background-color: #66bb6a;
 }
 
 .game-banner-custom-option-ctn {
   width: 33%;
-  height: 80%;
+  height: 75%;
   margin-top: 10px;
   margin-left: 10px;
+  margin-bottom: 10px;
   margin-right: 10px;
   border-radius: 10px;
   background-color: #66bb6a;
@@ -175,6 +204,10 @@
   background-color: #1f4e60;
   display: flex;
 }
+
+/* ****************************************************** */
+/* ******************** Chat Screen ********************* */
+/* ****************************************************** */
 
 .chat-main-ctn {
   width: 100%;
