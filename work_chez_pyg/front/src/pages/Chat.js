@@ -1,7 +1,9 @@
 const Chat = () => {
 
     return (
-        <div className="game-main-ctn">
+        <div className="chat-main-ctn">
+            <div className="chat-messages-ctn"></div>
+            <div className="chat-conversation-ctn"></div>
         </div>
     )
 }
