@@ -25,7 +25,7 @@ export default function ButtonAppBar(props) {
       <AppBar position="static">
         <Toolbar >
           <Typography variant="h6" component="div">
-            Transadance
+            Transcendence - Pong Game
           </Typography>
           <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
             <Button variant="contained" color={currentPage === "chat" ? "secondary" : "primary" } sx={{marginRight: '10px'}} onClick={() => changePage("chat")}>CHAT</Button>
