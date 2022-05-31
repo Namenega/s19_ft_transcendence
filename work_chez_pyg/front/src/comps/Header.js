@@ -30,7 +30,7 @@ export default function ButtonAppBar(props) {
           <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
             <Button variant="contained" color={currentPage === "chat" ? "secondary" : "primary" } sx={{marginRight: '10px'}} onClick={() => changePage("chat")}>CHAT</Button>
             <Button variant="contained" color={currentPage === "game" ? "secondary" : "primary" } sx={{marginRight: '10px'}} onClick={() => changePage("game")}>GAME</Button>
-            <Button variant="contained" color={currentPage === "profil" ? "secondary" : "primary" } onClick={() => changePage("profil")}>PROFIL</Button>
+            <Button variant="contained" color={currentPage === "profil" ? "secondary" : "primary" } onClick={() => changePage("profil")}>PROFILE</Button>
           </Box>
           <Button color="inherit" onClick={() => isLogout()}>Logout</Button>
           <Avatar alt="Remy Sharp" src="url('')" />

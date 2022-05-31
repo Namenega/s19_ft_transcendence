@@ -15,7 +15,12 @@ const outerTheme = createTheme({
       dark: green[800]
     },
     secondary: {
-      main: green[600]},
+      main: green[600]
+    },
+    game_color: {
+      main: "#66bb6a",
+      //writing: "#1f4e60"
+    },
   },
 });
 

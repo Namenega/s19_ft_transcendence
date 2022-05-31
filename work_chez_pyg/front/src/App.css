@@ -142,7 +142,7 @@
 
 .game-banner-ctn {
   width: 99%;
-  height: 10%;
+  height: 8%;
   margin-top: 25px;
   margin-left: 10px;
   margin-right: 25px;
@@ -150,6 +150,8 @@
   /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
   background-color: #1f4e60;
   display: flex;
+  justify-content: center; /*position horizontale */
+  align-items: center;  /*position verticale */
 }
 
 .game-banner-live-watch-ctn {
@@ -163,12 +165,12 @@
 }
 
 .game-button-text {
-  text-align: center;
+  /*text-align: center;*/
   color: #1f4e60;
-  position: absolute;
+  /* position: absolute;
   top: 100px;
   width: 340px;
-  font-size: 40px;
+  font-size: 40px;*/
   font-weight: bold;
 }
 
