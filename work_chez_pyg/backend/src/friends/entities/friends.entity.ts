@@ -4,6 +4,7 @@ import { ValidateNested, IsInt, IsPositive } from "class-validator";
 import { Type } from "class-transformer";
 
 
+/* The FriendsEntity class is a database entity that represents a friendship between two users */
 @Entity()
 export class FriendsEntity {
 

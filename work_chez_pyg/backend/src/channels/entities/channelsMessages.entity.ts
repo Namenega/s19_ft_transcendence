@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { ChannelsEntity } from "./channels.entity";
-import { UsersEntity } from "../../users/entities/user.entity";
+import { UserEntity } from "../../users/entities/user.entity";
 import { IsString, ValidateNested, IsInt, Min } from "class-validator";
 import { Type } from 'class-transformer';
 
 @Entity({ orderBy: { order: "DESC" } })
 export class ChannelsMessagesEntity {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: number
 
 	@ManyToOne(() => UserEntity, {eager: true})
@@ -16,7 +16,7 @@ export class ChannelsMessagesEntity {
 	user: UserEntity
 
 	@ManyToOne(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.messages, { onDelete: "CASCADE" })
-	@JoinColum()
+	@JoinColumn()
 	@ValidateNested()
 	@Type(() => ChannelsEntity)
 	channel: ChannelsEntity

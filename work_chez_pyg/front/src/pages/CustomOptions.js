@@ -1,9 +1,9 @@
-const LiveWatch = () => {
+const CustomOptions = () => {
     return (
         <div className="profile-main-ctn">
-			YO SALUT
+            XD
         </div>
     )
 }
 
-export default LiveWatch
+export default CustomOptions

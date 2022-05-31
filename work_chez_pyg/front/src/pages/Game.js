@@ -45,10 +45,10 @@ const Game = (props) => {
 							<Button className="game-banner-live-watch-ctn" variant="contained" size="large" color={gamePage === "LiveWatch" ? "secondary" : "game_color" } sx={{marginRight: '10px'}} onClick={() => changePage("LiveWatch")}>
 									Live watch
 							</Button>
-							<Button className="game-banner-live-watch-ctn" variant="contained" size="large" color={gamePage === "start" ? "secondary" : "game_color" } sx={{marginRight: '10px'}} onClick={() => changePage("start")}>
+							<Button className="game-banner-live-watch-ctn" variant="contained" size="large" color={gamePage === "Start" ? "secondary" : "game_color" } sx={{marginRight: '10px'}} onClick={() => changePage("Start")}>
 									Start
 							</Button>
-							<Button className="game-banner-live-watch-ctn" variant="contained" size="large" color={gamePage === "custom_options" ? "secondary" : "game_color" } onClick={() => changePage("custom_options")}>
+							<Button className="game-banner-live-watch-ctn" variant="contained" size="large" color={gamePage === "CustomOptions" ? "secondary" : "game_color" } onClick={() => changePage("CustomOptions")}>
 									Custom options
 							</Button>
 					</Box>

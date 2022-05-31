@@ -15,7 +15,7 @@ export class ChannelsUsersEntity {
 	@Type(() => UserEntity)
 	user: UserEntity
 
-	@ManyToOne(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.channes_users)
+	@ManyToOne(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.channel_users)
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => ChannelsEntity)
@@ -25,7 +25,7 @@ export class ChannelsUsersEntity {
 	@IsBoolean()
 	channelOwner: boolean
 
-	@Colum()
+	@Column()
 	@IsBoolean()
 	channelAdministrator: boolean
 

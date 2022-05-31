@@ -11,20 +11,20 @@ export class ChannelsEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 	
-	@ManytoMany(type => UserEntity, UserEntity => UserEntity.channels, {eager: true})
+	@ManyToMany(type => UserEntity, UserEntity => UserEntity.channels, {eager: true})
 	@IsArray()
 	@ValidateNested({ each: true })
-	@Type(() = UserEntity)
+	@Type(() => UserEntity)
 	users: UserEntity[]
 
-	@OnetoMany(type => ChannelsUsersEntity, ChannelsUsersEntity => ChannelsUsersEntity.channel,
-		   {eager: true, cascade: true})
+	@OneToMany(type => ChannelsUsersEntity, ChannelsUsersEntity => ChannelsUsersEntity.channel,
+		{eager: true, cascade: true})
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => ChannelsUsersEntity)
-	messages: ChannelsUsersEntity[]
+	channel_users: ChannelsUsersEntity[]
 
-	@OneToMany(type => ChannelsMessagesEntity, ChannelsMessagesEntity = ChannelsMessagesEntity.channel,
+	@OneToMany(type => ChannelsMessagesEntity, ChannelsMessagesEntity => ChannelsMessagesEntity.channel,
 		   {eager: true, cascade: true})
 	@IsArray()
 	@ValidateNested({ each: true })
