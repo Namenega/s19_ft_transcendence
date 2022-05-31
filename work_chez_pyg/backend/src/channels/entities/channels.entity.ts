@@ -17,7 +17,15 @@ export class ChannelsEntity {
 	@Type(() = UserEntity)
 	users: UserEntity[]
 
-	@OneToMany(type => ChannelsUsersEntity, ChannelsUsersEntity = ChannelsUsersEntity.channel, {eager: true, cascade: true})
+	@OnetoMany(type => ChannelsUsersEntity, ChannelsUsersEntity => ChannelsUsersEntity.channel,
+		   {eager: true, cascade: true})
+	@IsArray()
+	@ValidateNested({ each: true })
+	@Type(() => ChannelsUsersEntity)
+	messages: ChannelsUsersEntity[]
+
+	@OneToMany(type => ChannelsMessagesEntity, ChannelsMessagesEntity = ChannelsMessagesEntity.channel,
+		   {eager: true, cascade: true})
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => ChannelsMessagesEntity)
