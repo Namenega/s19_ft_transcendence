@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Login from './Login.tsx';
+import Login from './Login';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
@@ -17,19 +17,19 @@ const outerTheme = createTheme({
     secondary: {
       main: green[600]
     },
-    game_color: {
+    error: {
       main: "#66bb6a",
       //writing: "#1f4e60"
     },
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as Element);
 root.render(
   <ThemeProvider theme={outerTheme}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>    
+  	<BrowserRouter>
+	  	<App />
+	</BrowserRouter>
   </ThemeProvider>
 );
 

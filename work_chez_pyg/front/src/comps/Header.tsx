@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
 
-export default function ButtonAppBar(props) {
+export default function ButtonAppBar(props: any) {
 
   const { setIsLoggedIn, setCurrentPage, currentPage } = props;
 
@@ -17,7 +17,7 @@ export default function ButtonAppBar(props) {
     setIsLoggedIn(false)
   }
 
-  const changePage = (page) => {
+  const changePage = (page: string) => {
     setCurrentPage(page)
   }
   return (

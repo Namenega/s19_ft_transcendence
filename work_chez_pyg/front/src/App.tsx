@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
-import Login from './Login.tsx';
+import Login from './Login';
 import Home from './Home';
 
 const App = () => {

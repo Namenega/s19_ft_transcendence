@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 
-const Login = (props) => {
+const Login = (props: any) => {
 
     const axios = require('axios').default;
 
@@ -26,11 +26,11 @@ const Login = (props) => {
             data.append('redirect_uri', 'http://localhost:3000');
 
             axios.post('https://api.intra.42.fr/oauth/token', data)
-            .then(function (response) {
+            .then(function (response: any) {
                 setIsLoggedIn(response.data.access_token)
                 console.log(response.data.access_token);
             })
-            .catch(function (error) {
+            .catch(function (error: any) {
                 console.log(error);
             });
         }
@@ -44,9 +44,8 @@ const Login = (props) => {
     return (
         <div className='login-main-ctn' style={{backgroundImage:"url('./img/main-bg.jpg')"}}>
             <div className='login-ctn'>
-                <h2 className='login-title'>Welcome to my transandance</h2>
-                <p>42evaluators is originialy created to find an active student to set up a correction.
-Now, it contains tools and informations for every 42 students around the world.</p>
+                <h2 className='login-title'>Welcome to my transcendence</h2>
+                <p>I am the best pong player</p>
                 <Button variant='contained' size='large' onClick={() => loginWithApi()}> 
                     Log with 42
                 </Button>

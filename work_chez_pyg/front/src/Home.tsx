@@ -2,7 +2,7 @@ import { useState } from "react";
 import ButtonAppBar from "./comps/Header"
 import Page from "./comps/Page"
 
-const Home = (props) => {
+const Home = (props: any) => {
 
     const { setIsLoggedIn } = props;
 
