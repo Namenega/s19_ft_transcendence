@@ -12,7 +12,7 @@ import Gamebar from '../comps/Gamebar';
 
 export default function Game() {
 
-	const [gamePage, setGamePage] = useState("LiveWatch");
+	const [gamePage, setGamePage] = useState("Start");
 
 	/*const { setIsLoggedIn, setCurrentPage, currentPage } = props;*/
 
