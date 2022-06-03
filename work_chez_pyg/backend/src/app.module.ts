@@ -14,7 +14,11 @@ import { DirectMessageModule } from './direct-message/direct-message.module';
 /*  Middleware */
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, MatchHistoryModule, FriendsModule, DirectMessageModule],
+  imports: [TypeOrmModule.forRoot(),
+        UsersModule,
+        MatchHistoryModule,
+        FriendsModule,
+        DirectMessageModule],
   providers: [],
 })
 export class AppModule {

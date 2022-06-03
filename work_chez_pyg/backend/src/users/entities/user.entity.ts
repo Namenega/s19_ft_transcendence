@@ -86,6 +86,8 @@ export class UserEntity {
 	@Type(() => FriendsEntity)
 	friends: FriendsEntity[]
 
+	/* Creating a many to many relationship between the UserEntity and the
+	DirectMessageEntity. */
 	@ManyToMany(type => DirectMessageEntity, DirectMessageEntity => DirectMessageEntity.users)
 	@IsOptional()
 	@IsArray()
@@ -93,6 +95,8 @@ export class UserEntity {
 	@Type(() => DirectMessageEntity)
 	directMessage: DirectMessageEntity[]
 
+	/* Creating a many to many relationship between the UserEntity and the
+	ChannelsEntity. */
 	@ManyToMany(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.users)
 	@JoinTable()
 	@IsOptional()

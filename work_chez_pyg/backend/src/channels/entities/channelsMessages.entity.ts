@@ -4,6 +4,7 @@ import { UserEntity } from "../../users/entities/user.entity";
 import { IsString, ValidateNested, IsInt, Min } from "class-validator";
 import { Type } from 'class-transformer';
 
+/* It's a message that belongs to a channel and a user */
 @Entity({ orderBy: { order: "DESC" } })
 export class ChannelsMessagesEntity {
 	@PrimaryGeneratedColumn()

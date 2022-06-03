@@ -4,6 +4,8 @@ import { UserEntity } from "../../users/entities/user.entity";
 import { ValidateNested, IsBoolean } from "class-validator";
 import { Type } from 'class-transformer';
 
+/* This class is used to create a many-to-many relationship between the UserEntity
+and ChannelsEntity classes */
 @Entity()
 export class ChannelsUsersEntity {
 	@PrimaryGeneratedColumn()

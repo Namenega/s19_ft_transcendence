@@ -5,7 +5,9 @@ import { UserEntity } from "../../users/entities/user.entity";
 import { IsArray, ValidateNested, IsIn, IsNotEmpty, IsString } from "class-validator";
 import { Type } from 'class-transformer';
 
-
+/* The ChannelsEntity class is a TypeScript class that is decorated with the
+@Entity() decorator. This class is a TypeScript representation of the channels
+table in the database */
 @Entity()
 export class ChannelsEntity {
 	@PrimaryGeneratedColumn()

@@ -3,6 +3,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 
+/* This class is a controller that
+contains methods that are called when a user wants to create, find, update, or
+delete an account */
 @Controller('users')
 export class UsersController {
   constructor(private readonly user: UsersService) {}

@@ -5,6 +5,8 @@ import { CreateDirectMessageListDto } from './dto/createDirectMessageList.dto';
 import { UpdateDirectMessageDto } from './dto/updateDirectMessage.dto';
 import { UpdateDirectMessageListDto } from './dto/updateDirectMessageList.dto';
 
+/* This class is a controller that is
+handling the requests that are being sent to the server */
 @Controller('direct-message')
 export class DirectMessageController {
 	/**
