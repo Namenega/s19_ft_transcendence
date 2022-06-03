@@ -142,7 +142,7 @@ export const removeUser: (id: number) => void = async (id) => {
  * @returns The secret key for 2FA
  */
 export const get2FASecret: () => Promise<any> = async () => {
-	return (await axios.get('user/2fa/secret')).data;
+	return (await axios.get('users/2fa/secret')).data;
 }
 
 /**
@@ -167,6 +167,6 @@ export const verify2FA: (secret: any, token: string) =>
  */
 export const userPasswordVerification: (id: number, password: string) =>
 		Promise<boolean> = async (id, password) => {
-	const response = await axios.get(`/user/password_verification/${id}/${password}`);
+	const response = await axios.get(`/users/password_verification/${id}/${password}`);
 	return response.data;
 }
