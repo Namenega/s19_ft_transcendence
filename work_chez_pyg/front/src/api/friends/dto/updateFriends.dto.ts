@@ -1,3 +1,3 @@
-import { CreateFriendsDto } from "./createFriends.dto";
+import { FriendsDto } from "./friends.dto"; //import { CreateFriendsDto } from "./createFriends.dto"; ?
 
-export type UpdateFriendsDto = Partial<CreateFriendsDto>;
+export type UpdateFriendDto = Partial<FriendsDto>; //export type UpdateFriendsDto = Partial<CreateFriendsDto>;?
