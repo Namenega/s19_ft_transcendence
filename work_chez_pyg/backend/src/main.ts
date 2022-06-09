@@ -9,6 +9,7 @@ async function bootstrap() {
     logger: console,
   });
 
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
 
   // The object will listen/wait for Http requests on port 3001

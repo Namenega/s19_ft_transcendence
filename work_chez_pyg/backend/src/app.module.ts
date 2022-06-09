@@ -6,12 +6,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { MatchHistoryModule } from './match-history/match-history.module';
 import { FriendsModule } from './friends/friends.module';
-// import { channelPasswordEncryptionMiddleware, userPasswordEncryptionMiddleware } from './middleware/pwEncryption.middleware';
 import { DirectMessageModule } from './direct-message/direct-message.module';
+import { ChannelsModule } from './channels/channels.module';
+import { GamesModule } from './games/games.module';
 
 /*  Gateway */
+import { ChatGateway } from './gateways/chat/chat.gateway';
+import { GameGateway } from './gateways/game/game.gateway';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 /*  Middleware */
+import { channelPasswordEncryptionMiddleware, userPasswordEncryptionMiddleware } from './middleware/pwEncryption.middleware';
+
+/*  Interceptor */
+import { setUserStatusInterceptor } from './interceptors/userStatus.interceptor';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -25,13 +33,16 @@ import { DirectMessageModule } from './direct-message/direct-message.module';
     "synchronize": true
   }),
         UsersModule,
+        ChannelsModule,
         MatchHistoryModule,
         FriendsModule,
-        DirectMessageModule],
-  providers: [],
+        DirectMessageModule,
+        GamesModule],
+  providers: [ChatGateway, GameGateway, { provide: APP_INTERCEPTOR, useClass: setUserStatusInterceptor}],
 })
 export class AppModule {
-  // async configure(consumer: MiddlewareConsumer) {
-  //   await consumer.apply(userPasswordEncryptionMiddleware).forRoutes('/users');
-  // }
+    async configure(consumer: MiddlewareConsumer) {
+        await consumer.apply(channelPasswordEncryptionMiddleware).forRoutes('/channels');
+        await consumer.apply(userPasswordEncryptionMiddleware).forRoutes('/user');
+    }
 }

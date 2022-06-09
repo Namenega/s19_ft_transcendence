@@ -125,6 +125,21 @@ Singe Page Application website where users are able to play the Pong game.
 
 ### install speakeasy
 >$ npm install --save speakeasy
+
+### install lodash
+>$ npm i lodash
+
+### install timers
+>$ npm i timers
+
+### install nestjs/websockets
+>$ npm i @nestjs/websockets
+
+### install socket.io
+>$ npm i socket.io
+
+### install plateform-socket.io
+>$ npm install @nestjs/platform-socket.io
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
@@ -247,10 +262,3 @@ How NestJS concepts work?
 
 
 </details>
-
-
-### TODO for next meeting
-
-- Check [Full tuto/Typescript & react tuto video]
-- Check [Javascripttheroy/Advanced JS/.]
-- Check [Ressources/Full-Stack approach & step-by-step]
