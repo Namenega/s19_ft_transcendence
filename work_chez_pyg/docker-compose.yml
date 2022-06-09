@@ -20,6 +20,7 @@ services:
     container_name: backend
     build: ./backend/.
     image: backend
+    env_file: ./backend/.env
     depends_on:
       - postgres
     restart: always
