@@ -44,7 +44,7 @@ export class DirectMessageService {
 	 * @returns A promise of a DirectMessageEntity
 	 */
 	async findOne(id: number): Promise<DirectMessageEntity> {
-		return await this.dm.findOne(id);
+		return await this.dm.findOne({ where: { id } });
 	}
 	
 	/**
@@ -91,7 +91,7 @@ export class DirectMessageService {
 	 * @returns A DirectMessageListEntity
 	 */
 	async findOneList(id: number): Promise<DirectMessageListEntity> {
-		return await this.dmList.findOne(id);
+		return await this.dmList.findOne({ where: { id } });
 	}
 
 	/**

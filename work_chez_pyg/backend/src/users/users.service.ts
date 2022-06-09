@@ -56,7 +56,7 @@ export class UsersService {
 	 * @returns A promise of a UserEntity
 	 */
 	async findOne(id: number): Promise<UserEntity> {
-		return await this.UserRepo.findOne(id);
+		return await this.UserRepo.findOne({ where: { id } });
 	}
 
 	/**
@@ -65,7 +65,7 @@ export class UsersService {
 	 * @returns The user with the given id, with all of the relations loaded.
 	 */
 	async findCompleteOne(id: number): Promise<UserEntity> {
-		return await this.UserRepo.findOne(id, {
+		return await this.UserRepo.findOne({ where: { id },
 			relations: ['matchHistory', 'friends', 'dms', 'channels']
 		});
 	}
@@ -139,8 +139,8 @@ export class UsersService {
 	*/
 	async passwordVerification(id: number, password: string): Promise<boolean> {
 		try {
-			let user = await this.UserRepo.findOne(id);
-			user = undefined;
+			let user = await this.UserRepo.findOne({ where: { id } });
+			// user = undefined;
 			return await bcrypt.compare(password, user.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
 			
 		} catch (error) {

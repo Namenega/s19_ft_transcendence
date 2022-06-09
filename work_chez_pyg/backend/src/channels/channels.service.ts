@@ -65,7 +65,7 @@ export class ChannelsService {
 	 * @returns The channel with the given id.
 	 */
 	async findOne(id: number): Promise<ChannelsEntity> {
-		return await this.chan.findOne(id);
+		return await this.chan.findOne({ where: { id } });
 	}
 
 	/**
@@ -117,7 +117,7 @@ export class ChannelsService {
 	 * @returns A single message from the database.
 	 */
 	async findOneMessage(id: number): Promise<ChannelsMessagesEntity> {
-		return await this.chanMsg.findOne(id);
+		return await this.chanMsg.findOne({ where: { id } });
 	}
 
 	/**
@@ -166,7 +166,7 @@ export class ChannelsService {
 	 * @returns The channel user with the given id.
 	 */
 	async findOneUser(id: number): Promise<ChannelsUsersEntity> {
-		return await this.chanUser.findOne(id);
+		return await this.chanUser.findOne({ where: { id } });
 	}
 	
 	/**
@@ -196,7 +196,7 @@ export class ChannelsService {
 	 * @returns A boolean value.
 	 */
 	async passwordVerification(id: number, password: string): Promise<boolean> {
-		const channel = await this.chan.findOne(id);
+		const channel = await this.chan.findOne({ where: { id } });
 		return await bcrypt.compare(password, channel.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
 	}
 }

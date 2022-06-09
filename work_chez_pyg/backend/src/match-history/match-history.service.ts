@@ -45,8 +45,8 @@ export class MatchHistoryService {
 	 */
 	async findMatchHistoryOfUser(login: string): Promise<MatchHistoryEntity[]> {
 		return await this.MatchHistoryRepo.find({
-			relations: ['me'],
-			where: { me: {login: login} }}
+			relations: ['user'],
+			where: { user: {login: login} }}
 		);
 	}
 
@@ -57,7 +57,7 @@ export class MatchHistoryService {
 	 * @returns The MatchHistoryEntity
 	 */
 	async findOne(id: number): Promise<MatchHistoryEntity> {
-		return await this.MatchHistoryRepo.findOne(id);;
+		return await this.MatchHistoryRepo.findOne({ where: { id } });
 	}
 
 	/**
