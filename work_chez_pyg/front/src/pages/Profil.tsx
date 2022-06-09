@@ -1,5 +1,8 @@
+import Profile from './profilePage/UserAccount'
+
 const Profil = () => {
 
+	
     return (
         <div className="profile-main-ctn">
             <div className="profile-banner-ctn">
@@ -12,6 +15,7 @@ const Profil = () => {
 	    </div>
         </div>
     )
+	// return (<Profile />)
 }
 
 export default Profil

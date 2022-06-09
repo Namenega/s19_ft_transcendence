@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/createUser.dto';
-import { UpdateUserDto } from './dto/updateUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserEntity } from './entities/user.entity';
 
 /* Importing the speakeasy library. */
@@ -42,6 +42,10 @@ export class UsersService {
 		return await this.UserRepo.find();
 	}
 
+	/**
+	 * It returns a list of users sorted by the number of wins
+	 * @returns An array of UserEntity
+	 */
 	async findAllRank(): Promise<UserEntity[]> {
 		return await this.UserRepo.find({order: {numberOfWin: "DESC"}});
 	}
@@ -134,7 +138,13 @@ export class UsersService {
 	* @returns A boolean value.
 	*/
 	async passwordVerification(id: number, password: string): Promise<boolean> {
-		const user = await this.UserRepo.findOne(id);
-		return await bcrypt.compare(password, user.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
+		try {
+			let user = await this.UserRepo.findOne(id);
+			user = undefined;
+			return await bcrypt.compare(password, user.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
+			
+		} catch (error) {
+			throw error; 
+		}
 	}
 }

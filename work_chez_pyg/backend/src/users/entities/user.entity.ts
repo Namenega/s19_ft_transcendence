@@ -2,10 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTabl
 import { MatchHistoryEntity } from "src/match-history/entities/matchHistory.entity";
 import { FriendsEntity } from "src/friends/entities/friends.entity";
 import { ChannelsEntity } from "src/channels/entities/channels.entity";
-import { ChannelsUsersEntity } from "src/channels/entities/channelsUsers.entity";
-import { ChannelsMessagesEntity } from "src/channels/entities/channelsMessages.entity";
 import { DirectMessageEntity } from "src/direct-message/entities/directMessage.entity";
-// import { DmsMessagesEntity } from "src/dms/entities/dms_messages.entity";
 import { ValidateNested, IsNotEmpty, IsString, IsBoolean, IsInt, Min, IsArray, IsOptional, IsNumberString, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 

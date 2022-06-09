@@ -80,6 +80,10 @@ export class UsersController {
   /* A method that is called when a user wants to verify their password. */
   @Get('/password_verification/:id/:password')
   passwordVerification(@Param('id', ParseIntPipe) id: number, @Param('password') password: string) {
-    return this.user.passwordVerification(+id, password);
+    try {
+      return this.user.passwordVerification(+id, password);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
