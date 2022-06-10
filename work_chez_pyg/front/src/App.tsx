@@ -3,10 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Authentication from './pages/userAccount/authentication';
 
 export default function App() {
-  return (
-                <Routes>
-                  <Route path='/' element={<Authentication />} />
-                </Routes>
+  return (<Routes>
+            <Route path='/' element={<Authentication />} />
+        </Routes>
 );
 }
 

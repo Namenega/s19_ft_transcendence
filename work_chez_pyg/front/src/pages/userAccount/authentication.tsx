@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserDto } from "../../api/user/dto/user.dto";
+import Button from '@mui/material/Button';
 import { addUser, createNewUser, getUserByLogin, getUserByName, userPasswordVerification, verify2FA } from "../../api/user/user.api";
-import Home from "../../Home";
 import { OAuth42_access_token, OAuth42_user } from "../../OAuth42/login";
+import './authentication.css';
+import Home from "../home/home";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
@@ -136,8 +138,21 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 	// 			  </div>)
 }
 
+const loginWithApi = async () => {
+	window.location.href = `https://api.intra.42.fr/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`
+}
+
 const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: boolean}> = ({ changePage, alreadyConnected }) => {
-    return (<div> MDR </div>); 
+	return (
+	<div className='start-main-ctn' style={{backgroundImage:"url('./img/main-bg.jpg')"}}>
+		<div className='start-ctn'>
+			<h2 className='start-title'>Welcome to my transcendence</h2>
+			<p>I am the best pong player</p>
+			<Button variant='contained' size='large' onClick={() => loginWithApi()}> 
+				Log with 42
+			</Button>
+		</div>
+	</div>);
 	// return (<div>
 	// 					<h1>Pong Game</h1>
 	// 					<button className={styles.loginButton} onClick={()=>{changePage('login')}}>Log in</button><>&nbsp;&nbsp;</>
@@ -196,25 +211,25 @@ const Authentication: React.FC = () => {
 		setAlreadyConnected(newValue);
 	}
 
-    return (<div> LOL </div>);
-	// if (user !== null) {
-	// 	if (twoFA)
-	// 		return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
-	// 	if (page !== "start")
-    //         changePage("start");
-	// 	return (<Home user={user} changeUser={changeUser}/>);
-	// }
-    // else if (page === "start") {
-	// 	return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
-	// }
+    // return (<div> LOL </div>);
+	if (user !== null) {
+		if (twoFA)
+			return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
+		if (page !== "start")
+            changePage("start");
+		return (<Home user={user} changeUser={changeUser}/>);
+	}
+    else if (page === "start") {
+		return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
+	}
     // else if (page === "signup" || page === "login") {
 	// 	return (<LogForm changePage={changePage} changeUser={changeUser}
 	// 		signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
 	// 		changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
 	// }
-    // else {
-	// 	return <h1>Authentification Error</h1>;
-	// }
+    else {
+		return <h1>Authentification Error</h1>;
+	}
 }
 
 export default Authentication;
