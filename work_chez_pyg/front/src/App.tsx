@@ -3,11 +3,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Authentication from './pages/userAccount/authentication';
 
 export default function App() {
-  return (<BrowserRouter>
+  return (
                 <Routes>
                   <Route path='/' element={<Authentication />} />
                 </Routes>
-          </BrowserRouter>);
+);
 }
 
 // import './App.css';

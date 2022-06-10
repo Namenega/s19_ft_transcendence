@@ -196,25 +196,25 @@ const Authentication: React.FC = () => {
 		setAlreadyConnected(newValue);
 	}
 
-    // return (<div> LOL </div>);
-	if (user !== null) {
-		if (twoFA)
-			return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
-		if (page !== "start")
-            changePage("start");
-		return (<Home user={user} changeUser={changeUser}/>);
-	}
-    else if (page === "start") {
-		return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
-	}
-    else if (page === "signup" || page === "login") {
-		return (<LogForm changePage={changePage} changeUser={changeUser}
-			signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
-			changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
-	}
-    else {
-		return <h1>Authentification Error</h1>;
-	}
+    return (<div> LOL </div>);
+	// if (user !== null) {
+	// 	if (twoFA)
+	// 		return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
+	// 	if (page !== "start")
+    //         changePage("start");
+	// 	return (<Home user={user} changeUser={changeUser}/>);
+	// }
+    // else if (page === "start") {
+	// 	return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
+	// }
+    // else if (page === "signup" || page === "login") {
+	// 	return (<LogForm changePage={changePage} changeUser={changeUser}
+	// 		signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
+	// 		changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
+	// }
+    // else {
+	// 	return <h1>Authentification Error</h1>;
+	// }
 }
 
 export default Authentication;
