@@ -320,8 +320,10 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 			</Box>
 			<div className="profile-main-ctn">
 				<div className="profile-banner-ctn">
-					<div className="profile-banner-avatar-ctn"></div>
-					<div> AVATAR </div>
+					<div className='user-name'>
+						<div className="profile-banner-avatar-ctn"></div>
+						<div> AVATAR </div>
+					</div>
 					<div className="profile-banner-statistics-ctn">STATISTICS</div>
 				</div>
 				<div className="profile-history-achievements-ctn">
