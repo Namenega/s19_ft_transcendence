@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserDto } from "../../api/user/dto/user.dto";
-import Button from '@mui/material/Button';
+import { Button } from "@mui/material";
 import { addUser, createNewUser, getUserByLogin, getUserByName, userPasswordVerification, verify2FA } from "../../api/user/user.api";
 import { OAuth42_access_token, OAuth42_user } from "../../OAuth42/login";
 import './authentication.css';
@@ -84,33 +84,33 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 	 	};
 	 	reader.readAsDataURL(event.target.files[0]);
  }
-    return (<div> MDR </div>);
-	// return (<div>
-	// 					<button className={cs.backButton} onClick={()=>{changePage("start")}}>Back</button>
-	// 					{!signup ? <h1>Log in</h1> : <h1>Sign up</h1>}
-	// 					<label>Name:</label><br/>
-	// 					<input className={cs.textInput} type="text" value={name} maxLength={40} onChange={(e)=>setName(e.target.value)} required/>
-	// 					{signup && <br/>}
-	// 					{signup && <br/>}
-	// 					{signup && <label>Login:</label>}
-	// 					{signup && <br/>}
-	// 					{signup && <input className={cs.textInput} type="text" value={login} maxLength={20} onChange={(e)=>setLogin(e.target.value)} required/>}
-	// 					<br/><br/>
-	// 					<label>Password:</label>
-	// 					<br/>
-	// 					<input className={cs.textInput} type="password" value={password} maxLength={20} onChange={(e)=>setPassword(e.target.value)} required/>
-	// 					{signup && <br/>}
-	// 					{signup && <br/>}
-	// 					{signup && <><label className={cs.chooseFileButton}>Download Avatar Image
-	// 											<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
-	// 										</label><br/></>}
-	// 					<br/><br/>
-	// 					{accountAlreadyInUse && <p>This account already exists</p>}
-	// 					{nonExistingAccount && <p>This account does not exist</p>}
-	// 					{alreadyConnected && <p>User is already connected</p>}
-	// 					{wrongPassword && <p>Wrong Password</p>}
-	// 					<button className={cs.submitButton} type="submit" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}>Submit</button>
-	// 			</div>);
+    //return (<div> MDR </div>);
+	return (<div>
+						<button className='game-button-text' onClick={()=>{changePage("start")}}>Back</button>
+						{!signup ? <h1>Log in</h1> : <h1>Sign up</h1>}
+						<label>Name:</label><br/>
+						<input className='game-button-text' type="text" value={name} maxLength={40} onChange={(e)=>setName(e.target.value)} required/>
+						{signup && <br/>}
+						{signup && <br/>}
+						{signup && <label>Login:</label>}
+						{signup && <br/>}
+						{signup && <input className='game-button-text' type="text" value={login} maxLength={20} onChange={(e)=>setLogin(e.target.value)} required/>}
+						<br/><br/>
+						<label>Password:</label>
+						<br/>
+						<input className='game-button-text' type="password" value={password} maxLength={20} onChange={(e)=>setPassword(e.target.value)} required/>
+						{signup && <br/>}
+						{signup && <br/>}
+						{signup && <><label className='game-button-text'>Download Avatar Image
+												<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
+											</label><br/></>}
+						<br/><br/>
+						{accountAlreadyInUse && <p>This account already exists</p>}
+						{nonExistingAccount && <p>This account does not exist</p>}
+						{alreadyConnected && <p>User is already connected</p>}
+						{wrongPassword && <p>Wrong Password</p>}
+						<button className='game-button-text' type="submit" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}>Submit</button>
+				</div>);
 }
 
 const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: boolean) => void, twoFA: boolean}> = ({user, changeTwoFA, twoFA}) => {
@@ -148,7 +148,13 @@ const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: 
 		<div className='start-ctn'>
 			<h2 className='start-title'>Welcome to my transcendence</h2>
 			<p>I am the best pong player</p>
-			<Button variant='contained' size='large' onClick={() => loginWithApi()}> 
+			<Button className='game-button-text' variant="contained" onClick={()=>{changePage('login')}}>
+				Log in
+			</Button>
+			<Button className='game-button-text' variant="contained" onClick={()=>{changePage('signup')}}>
+				Sign up
+			</Button>
+			<Button className='game-button-text' variant="contained" onClick={() => loginWithApi()}> 
 				Log with 42
 			</Button>
 		</div>
@@ -211,25 +217,33 @@ const Authentication: React.FC = () => {
 		setAlreadyConnected(newValue);
 	}
 
+	//// à enlever
+	function crNewUser()
+	{
+		let newUser = {id: 1, name: "Garreth", login: "Garreth", password: "Garreth", avatar: "Garreth", has2FA: false, secret2FA: "Garreth", status: "Online", numberOfWin: 2, numberOfLoss: 2, latestTimeOnline: "Yesterday"};
+		return (newUser);
+	}
+	////
+
     // return (<div> LOL </div>);
-	if (user !== null) {
-		if (twoFA)
-			return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
-		if (page !== "start")
-            changePage("start");
-		return (<Home user={user} changeUser={changeUser}/>);
-	}
-    else if (page === "start") {
-		return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
-	}
+	// if (user !== null) {
+	// 	if (twoFA)
+	// 		return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
+	// 	if (page !== "start")
+    //         changePage("start");
+		return (<Home user={crNewUser()} changeUser={changeUser}/>); 		/// remplacer crNewUser par user
+	// }
+    // else if (page === "start") {
+	// 	return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
+	// }
     // else if (page === "signup" || page === "login") {
 	// 	return (<LogForm changePage={changePage} changeUser={changeUser}
 	// 		signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
 	// 		changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
 	// }
-    else {
-		return <h1>Authentification Error</h1>;
-	}
+    // else {
+	// 	return <h1>Authentification Error</h1>;
+	// }
 }
 
 export default Authentication;

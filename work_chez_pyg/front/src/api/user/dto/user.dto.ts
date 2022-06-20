@@ -1,8 +1,8 @@
 // import { MatchHistoryDto } from "../../match-history/dto/match-history.dto";
-// import { FriendDto } from "../../friends/dto/friend.dto";
-// import { ChannelDto } from "../../channels/dto/channel.dto";
-// import { ChannelUserDto } from "../../channels/dto/channel_user.dto";
-// import { ChannelMessageDto } from "../../channels/dto/channel_message.dto";
+// import { FriendsDto } from "../../friends/dto/friends.dto";
+// import { ChannelDto } from "../../channel/dto/channel.dto";
+// import { ChannelUserDto } from "../../channel/dto/channel_user.dto";
+// import { ChannelMessageDto } from "../../channel/dto/channel_message.dto";
 // import { DmDto } from "../../dms/dto/dm.dto";
 // import { DmMessageDto } from "../../dms/dto/dm_message.dto";
 
@@ -19,7 +19,7 @@ export interface UserDto {
 	numberOfWin: number;
 	numberOfLoss: number;
 	// matchHistory: MatchHistoryDto[]
-	// friends: FriendDto[]
+	// friends: FriendsDto[]
 	// dms: DmDto[]
 	// dms_messages: DmMessageDto[]
 	// channels: ChannelDto[]
