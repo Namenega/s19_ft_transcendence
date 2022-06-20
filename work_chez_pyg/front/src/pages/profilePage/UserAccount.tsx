@@ -8,8 +8,12 @@ import { get2FASecret, getAllUsers, getUser, getUserByLogin, updateUser, verify2
 import _ from 'underscore';
 import { FriendsDto } from "../../api/friends/dto/friends.dto";
 import { addFriend, createNewFriend, getFriendsOfUser, removeFriend } from "../../api/friends/friends.api";
+import './UserAccount.css';
 
 import QRCode from 'qrcode';
+import { Button } from "@mui/material";
+import ButtonAppBar from "../../comps/Header";
+import { Box } from "@mui/system";
 
 let g_viewed_users_history: UserDto[] = [];
 
@@ -306,7 +310,27 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 		g_viewed_users_history = [];
 		changeGame(Game);
 	}
-	return ( <div> Bonjour </div>);
+	return (
+		<div className='home-main-ctn'>
+			<Box textAlign='center'>
+				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Back </Button>
+				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Game </Button>
+				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Chat </Button>
+				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Watch </Button>
+			</Box>
+			<div className="profile-main-ctn">
+				<div className="profile-banner-ctn">
+					<div className="profile-banner-avatar-ctn"></div>
+					<div> AVATAR </div>
+					<div className="profile-banner-statistics-ctn">STATISTICS</div>
+				</div>
+				<div className="profile-history-achievements-ctn">
+					<div className="profile-history-ctn">Match History</div>
+					<div className="profile-achievements-ctn">Achievements</div>
+				</div>
+			</div>
+		</div>
+	);
 
 	// return (
 	// 	<div className={styles.profileRoot}>

@@ -13,7 +13,6 @@ import Profile from "../profilePage/UserAccount";
 //   }
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void}> = ({user, changeMenuPage }) => {
-    //return (<div> HAHA </div>);
 	// return (<div>
 	// 			{/* <h1>Welcome to the Pong Game</h1> */}
 	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('play')}}>Play</button><>&nbsp;&nbsp;&nbsp;</>
@@ -22,12 +21,13 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('watch')}}>Watch</button>
 	// 		</div>);
 
+	
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 		<AppBar position="static">
 		  <Toolbar >
 			<Typography variant="h6" component="div">
-			  Transcendence - Pong Game
+			  Transcendence
 			</Typography>
 			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
 			  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("play")}>PLAY</Button>

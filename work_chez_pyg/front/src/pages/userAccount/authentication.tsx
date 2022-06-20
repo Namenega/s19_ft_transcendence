@@ -225,7 +225,6 @@ const Authentication: React.FC = () => {
 	}
 	////
 
-    // return (<div> LOL </div>);
 	// if (user !== null) {
 	// 	if (twoFA)
 	// 		return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
