@@ -140,6 +140,9 @@ Singe Page Application website where users are able to play the Pong game.
 
 ### install plateform-socket.io
 >$ npm install @nestjs/platform-socket.io
+
+### install socket io client
+npm i socket.io-client
 ```
 - [Install Docker](https://docs.docker.com/engine/install/ubuntu/)
 - [Install Docker compose](https://docs.docker.com/compose/install/)
