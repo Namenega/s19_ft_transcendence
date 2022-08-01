@@ -36,7 +36,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 			  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("profile")}>PROFILE</Button>
 			  <Button variant="contained" onClick={() => changeMenuPage("watch")}>WATCH</Button>
 			</Box>
-			<Avatar alt="Remy Sharp" src="url('')" />
+			{/* <Avatar alt="Remy Sharp" src="url('')" /> */}
 			{/* Avatar 19 a chercher sur l'api */}
 		  </Toolbar>
 		</AppBar>

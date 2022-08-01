@@ -117,25 +117,35 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 	 	reader.readAsDataURL(event.target.files[0]);
  }
 
- return ( <div> SETTINGS </div> );
-// 	return (<div>
-// 						<br/><label>New Login: </label>
-// 						<input className={cs.textInput} type="text" value={login} onChange={(e)=>setLogin(e.target.value)}/><>&nbsp;&nbsp;</>
-// 						<button className={cs.submitButton} type="submit" onClick={()=>newLogin(login)}>Submit</button>
-// 						{loginAlreadyInUse && <><>&nbsp;&nbsp;</><span>This login is already in use</span></>}
-// 						<br/><br/><label>Two-factor-authentication: </label>
-// 						{user.hasTwoFactorAuthentication && <input type="checkbox" onClick={()=>changeTwoFactorAuthentication()} checked/>}
-// 						{!user.hasTwoFactorAuthentication && <input type="checkbox" onClick={()=>changeTwoFactorAuthentication()}/>}
-// 						{qrcode !== '' && <><br/><img src={qrcode} alt={"QR code"}/><br/></>}
-// 						{qrcode !== '' && <label>Token: </label>}
-// 						{qrcode !== '' && <input className={cs.textInput} type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>}
-// 						{token.length === 6 && verify2FAuth()}
-// 						{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
-// 						<br/><br/>
-// 						<label className={cs.chooseFileButton}>Download Avatar Image
-// 						<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
-// 						</label>
-// 				  </div>)
+	return (
+		<div className="profile-settings-ctn"> 
+			<h1>SETTINGS</h1>
+			<p>
+				<br/><label>New Login: </label>
+				<input type="text" value={login} onChange={(e)=>setLogin(e.target.value)}/><>&nbsp;&nbsp;</>
+				<Button variant="contained" type="submit" onClick={()=>newLogin(login)}>Submit</Button>
+				{loginAlreadyInUse && <><>&nbsp;&nbsp;</><span>This login is already in use</span></>}
+			</p>
+		</div>
+	);
+	// return (<div>
+	// 					<br/><label>New Login: </label>
+	// 					<input className={cs.textInput} type="text" value={login} onChange={(e)=>setLogin(e.target.value)}/><>&nbsp;&nbsp;</>
+	// 					<button className={cs.submitButton} type="submit" onClick={()=>newLogin(login)}>Submit</button>
+	// 					{loginAlreadyInUse && <><>&nbsp;&nbsp;</><span>This login is already in use</span></>}
+	// 					<br/><br/><label>Two-factor-authentication: </label>
+	// 					{user.hasTwoFactorAuthentication && <input type="checkbox" onClick={()=>changeTwoFactorAuthentication()} checked/>}
+	// 					{!user.hasTwoFactorAuthentication && <input type="checkbox" onClick={()=>changeTwoFactorAuthentication()}/>}
+	// 					{qrcode !== '' && <><br/><img src={qrcode} alt={"QR code"}/><br/></>}
+	// 					{qrcode !== '' && <label>Token: </label>}
+	// 					{qrcode !== '' && <input className={cs.textInput} type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>}
+	// 					{token.length === 6 && verify2FAuth()}
+	// 					{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
+	// 					<br/><br/>
+	// 					<label className={cs.chooseFileButton}>Download Avatar Image
+	// 					<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
+	// 					</label>
+	// 			  </div>)
 }
 
 const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderFriends }) => {
@@ -319,12 +329,14 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 			  				Transcendence
 						</Typography>
 						<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
+							<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>BACK</Button>
 			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>PLAY</Button>
 			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>CHAT</Button>
-							<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>CHAT</Button>
-			  				<Button variant="contained" onClick={() => back()}>WATCH</Button>
+			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>WATCH</Button>
+							{ownAccount && <Button variant="contained" onClick={()=>{setSettings(!settings); renderPage();}}>SETTINGS</Button>}
 						</Box>
-						<Avatar alt="Remy Sharp" src="url('')" />
+						{ownAccount && <Button variant="contained" sx={{marginLeft: '10px'}} onClick={()=>{logout()}}>LOGOUT</Button>}
+						{/* <Avatar alt="Remy Sharp" src="url('')" /> */}
 						{/* Avatar 19 a chercher sur l'api */}
 		  			</Toolbar>
 				</AppBar>
@@ -333,7 +345,10 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 				<div className="profile-banner-ctn">
 					<div className='user-name'>
 						<div className="profile-banner-avatar-ctn"></div>
-						<div> AVATAR </div>
+						<div>
+							<p>{profile.name}</p>
+							<p>{profile.login}</p>
+						</div>
 					</div>
 					<div className="profile-banner-statistics-ctn">
 						<h1>STATS</h1>
@@ -345,6 +360,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 				<div className="profile-history-achievements-ctn">
 					<div className="profile-history-ctn">Match History</div>
 					<div className="profile-achievements-ctn">Achievements</div>
+					{settings && <Settings user={user} changeUser={changeUser} renderPage={renderPage}/>} 
 				</div>
 			</div>
 		</div>
@@ -359,6 +375,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 	// 				{settings && <Settings user={user} changeUser={changeUser} renderPage={renderPage}/>}
 	// 				{g_viewed_users_history.length !== 0 && <button className={cs.backButton} onClick={()=>{backFromViewedProfile()}}>Back</button>}
 	// 		</div>
+	//--------------------------------------------------------------------------------------------------------------------
 	// 	<div className={styles.profileBodySize}>
 	// 		<div className={styles.profileHeader}>
 	// 			<h1>{profile.login}</h1>
@@ -368,7 +385,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 	// 			<div className={styles.profileUserInfos}>
 	// 				<h3>User Info</h3>
 	// 				<p><strong>Name</strong><br/>{profile.name}</p>
-	
+
 	// 				<strong>Status</strong><br/>
 	// 					{!ownAccount && <span style={profile.status === "Offline" ? {color: "red"} : {color: "green"}}>{profile.status}</span>}
 	// 					{!ownAccount && profile.status === "In a game" && <><br/><br/><button className={styles.watchGameButton} onClick={()=>watchGame()}>Watch</button></>}
@@ -387,8 +404,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 	// 							<td className={styles.profileMatchsDescription}>{`${elem.my_score} : ${elem.opponent_score}`}</td>
 	// 						</tr>) : <p>No matches</p>}
 	// 				</table>
-	
-	
+	//---------------------------------------------------------------------------------------------------------
 	// 			</div>
 	// 			<div className={styles.profileGameStats}>
 	// 				<h3>Stats</h3>

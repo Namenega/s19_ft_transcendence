@@ -38,7 +38,7 @@
     height: 25%;
     margin-top: 25px;
     margin-left: 10px;
-    margin-right: 25px;
+    margin-right: 10px;
     border-radius: 10px;
     padding: 1rem;
     /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
@@ -69,17 +69,22 @@
   }
   
   .profile-history-achievements-ctn {
-    display: flex;
+    width: 98,5%;
     height: 100%;
-    width: 100%;
+    /* margin-top: 25px; */
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
     padding: 1rem;
+    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
+    display: flex;
   }
   
   .profile-history-ctn {
     width: 100%;
     height: 100%;
     margin-top: 10px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     border-radius: 10px;
     /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
     background-color: #1f4e60;
@@ -91,11 +96,24 @@
     height: 100%;
     margin-top: 10px;
     margin-left: 10px;
-    margin-right: 25px;
+    /* margin-right: 10px; */
+    border-radius: 10px;
+    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);  25*/
+    background-color: #1f4e60;
+    display: flex;
+  }
+
+  .profile-settings-ctn {
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    /* margin-right: 25px; */
+    margin-left: 10px;
     border-radius: 10px;
     /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
     background-color: #1f4e60;
-    display: flex;
+    /* display: flex; */
+    display: inline-flexbox;
   }
 
   .game-button-text {
@@ -116,7 +134,10 @@
   }
 
   h1 {
-    text-align: center;
+    /* text-align: center; */
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   p {

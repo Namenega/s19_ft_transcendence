@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserDto } from "../../api/user/dto/user.dto";
-import { Button } from "@mui/material";
+import { Button, Divider, Stack } from "@mui/material";
 import { addUser, createNewUser, getUserByLogin, getUserByName, userPasswordVerification, verify2FA } from "../../api/user/user.api";
 import { OAuth42_access_token, OAuth42_user } from "../../OAuth42/login";
 import './authentication.css';
@@ -147,15 +147,17 @@ const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: 
 		<div className='start-ctn'>
 			<h2 className='start-title'>Welcome to my transcendence</h2>
 			<p>I am the best pong player</p>
-			<Button className='game-button-text' variant="contained" onClick={()=>{changePage('login')}}>
-				Log in
-			</Button>
-			<Button className='game-button-text' variant="contained" onClick={()=>{changePage('signup')}}>
-				Sign up
-			</Button>
-			<Button className='game-button-text' variant="contained" onClick={() => loginWithApi()}> 
-				Log with 42
-			</Button>
+			<Stack spacing={2}>
+				<Button className='game-button-text' variant="contained" onClick={()=>{changePage('login')}}>
+					Log in
+				</Button>
+				<Button className='game-button-text' variant="contained" onClick={()=>{changePage('signup')}}>
+					Sign up
+				</Button>
+				<Button className='game-button-text' variant="contained" onClick={() => loginWithApi()}> 
+					Log with 42
+				</Button>
+			</Stack>
 		</div>
 	</div>);
 	// return (<div>
