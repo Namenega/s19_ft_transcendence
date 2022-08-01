@@ -1,3 +1,16 @@
+import { useEffect, useState } from "react"
+import _ from "underscore"
+import { find } from "underscore"
+import { addChannel, addChannelUser, channelPasswordVerification, createNewChannelUser, getAllChannels, getChannel } from "../../api/channel/channels.api"
+import { ChannelDto } from "../../api/channel/dto/channel.dto"
+import { CreateChannelDto } from "../../api/channel/dto/create-channel.dto"
+import { addDm, createNewDm } from "../../api/dms/dms.api"
+import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
+import { DmDto } from "../../api/dms/dto/dm.dto"
+import { GameDto } from "../../api/games/dto/game.dto"
+import { UserDto } from "../../api/user/dto/user.dto"
+import { getAllUsers, getCompleteUser } from "../../api/user/user.api"
+import Chat from "../Chat"
 
 
 interface joinChannelProps {
@@ -39,7 +52,7 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 		const allChannels = await getAllChannels();
 		
 		allChannels.forEach((item) => searchValue.length !== 0 && item.type !== "private"
-			&& !isPartOfChannels(item) && item.name.includes(searchValue)
+			&& !isPartOfChannels(item) && item.name.includes(searchValue))
 		setSearchText(searchValue);
 		setSearchResults(search);
 	}
@@ -91,33 +104,29 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 	const [searchResults, setSearchResults] = useState<UserDto[]>([]);
 	const [searchText, setSearchText] = useState<string>('');
-	
+
 	const isPartOfDms: (account: UserDto) => boolean = (account) => {
-		const find = dms.find((dm) => dm.users.some(user) => user.id === account.id));
+		const find = dms.find((dm) => dm.users.some((user) => user.id === account.id));
 		return (find !== undefined);
 	}
 
-	const handleSearch: (searchValue: string) => void = async (searchValue) => {
-		let search: UserDto[] = [];
+  const handleSearch: (searchValue: string) => void = async (searchValue) => {
+    let search: UserDto[] = [];
 		const allUsers = await getAllUsers();
-		
-		allUsers.forEach((item => searchValue.length !== 0 && !isPartOfDms(item)
-			&& item.login.includes(searchValue) && item.login !== user.login
-			&& search.push(item)
-		setSearchText(searchValue);
-		setSearchResults(search);
-	}
-	
-	const onSubmit: (user2: UserDto) => vooid = async (user2) => {
-		const newDm: CreateDmDto = createNewDm(user, user2);
-		const NewDm: DmDto = await addDm(newDm);
-		
-		changeCurrentChat(NewDm);
-	}
-	
-	return (
-		<div> THIS IS NEWDM() </div>
-	);
+
+    allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfDms(item)
+                            && item.login.includes(searchValue) && item.login !== user.login && search.push(item))
+    setSearchText(searchValue);
+    setSearchResults(search);
+  }
+
+  const onSubmit: (user2: UserDto) => void = async (user2) => {
+			const newDm: CreateDmDto = createNewDm(user, user2);
+			const NewDm: DmDto = await addDm(newDm);
+      changeCurrentChat(NewDm);
+  }
+
+  return (<div> THIS IS NEW DM </div>);
 }
 
 const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage, changeGame }) => {
@@ -140,29 +149,29 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		const completeUser = await getCompleteUser(user.id);
 		if (completeUser === null)
 			return ;
-		if (_.isEqual(completeUser.dms, dms) && _.isEqual(completeuser.channels, channels))
+		if (_.isEqual(completeUser.dms, dms) && _.isEqual(completeUser.channels, channels))
 			return ;
 		if (currentChat !== null && !("block" in currentChat) &&
 				completeUser!.channels.find((channel: ChannelDto) =>
-				id.channel === currentChat.id) === undefined)
+				channel.id === currentChat.id) === undefined)
 			changeCurrentChat(null);
 		if (currentChat !== null && ("block" in currentChat) &&
 				completeUser!.dms.find((dm: DmDto) =>
 				dm.id === currentChat.id) === undefined)
 			changeCurrentChat(null);
-		setDms(completeuser!.dms);
+		setDms(completeUser!.dms);
 		setChannels(completeUser!.channels);
 	}
 	
 	const changeCurrentChat: (newChat: DmDto | ChannelDto | null) => void = (newChat) => {
-		setNewCHannel(false);
-		setNewDm(false);
+		setNewchannel(false);
+		setNewdm(false);
 		setJoinchannel(false);
 		setCurrentChat(newChat);
 	}
 	
 	if (currentChat !== null)
-		return (<Chat user={user} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} changegame={changeGame}/>);
+		return (<Chat user={user} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} changeGame={changeGame}/>);
 	else {
 		return (
 			<div> THIS IS CHATSVIEW() </div>

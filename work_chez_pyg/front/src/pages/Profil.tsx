@@ -5,7 +5,7 @@ const Profil = () => {
     return (
 		<div> XDXDXD </div>
     );
-	// return (<Profile />)
+	// return (<Profile />);
 }
 
 export default Profil

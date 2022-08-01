@@ -18,6 +18,7 @@ import { getAllUsers, addUser, getCompleteUser, getUser } from "../api/user/user
 import { UserDto } from "../api/user/dto/user.dto";
 
 import Authentication from './userAccount/authentication';
+import Profile from './profilePage/UserAccount';
 
 
 
@@ -366,7 +367,7 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 	}
 
 	if (viewProfile !== undefined)
-		return <Authentication user={viewProfile} changeUser={changeUser} back={backFromViewProfile}
+		return <Profile user={viewProfile} changeUser={changeUser} back={backFromViewProfile}
 			myAccount={false} changeGame={changeGame}/>;
 
 	//MODIFY

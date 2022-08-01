@@ -39,13 +39,13 @@ export const createNewUser: (name: string, login: string, avatar: string, passwo
 		status: "Online",
 		numberOfWin: 0,
 		numberOfLoss: 0,
-		// matchHistory: [],
-		// friends: [],
-		// dms: [],
-		// dms_messages: [],
-		// channels: [],
-		// channels_messages: [],
-		// channels_users: [],
+		matchHistory: [],
+		friends: [],
+		dms: [],
+		dms_messages: [],
+		channels: [],
+		channels_messages: [],
+		channels_users: [],
 		latestTimeOnline: Math.round(new Date().getTime() / 1000).toString()
 	}
 	return createUserDto;

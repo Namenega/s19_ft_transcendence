@@ -84,7 +84,6 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 	 	};
 	 	reader.readAsDataURL(event.target.files[0]);
  }
-    //return (<div> MDR </div>);
 	return (<div>
 						<button className='game-button-text' onClick={()=>{changePage("start")}}>Back</button>
 						{!signup ? <h1>Log in</h1> : <h1>Sign up</h1>}
@@ -128,7 +127,7 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 		}
 	}
 
-    return (<div> HAHAHA </div>)
+    return (<div> TWO FACTOR AUTHENTIFICATION </div>)
 	// return (<div>
 	// 					<h1>Two Factor Authentication</h1>
 	// 					<label>Token: </label>
@@ -225,24 +224,24 @@ const Authentication: React.FC = () => {
 	}
 	////
 
-	// if (user !== null) {
-	// 	if (twoFA)
-	// 		return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
-	// 	if (page !== "start")
-    //         changePage("start");
-		return (<Home user={crNewUser()} changeUser={changeUser}/>); 		/// remplacer crNewUser par user
-	// }
-    // else if (page === "start") {
-	// 	return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
-	// }
-    // else if (page === "signup" || page === "login") {
-	// 	return (<LogForm changePage={changePage} changeUser={changeUser}
-	// 		signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
-	// 		changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
-	// }
-    // else {
-	// 	return <h1>Authentification Error</h1>;
-	// }
+	if (user !== null) {
+		if (twoFA)
+			return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
+		if (page !== "start")
+            changePage("start");
+		return (<Home user={user} changeUser={changeUser}/>); 		/// remplacer crNewUser par user
+	}
+    else if (page === "start") {
+		return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
+	}
+    else if (page === "signup" || page === "login") {
+		return (<LogForm changePage={changePage} changeUser={changeUser}
+			signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
+			changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
+	}
+    else {
+		return <h1>Authentification Error</h1>;
+	}
 }
 
 export default Authentication;

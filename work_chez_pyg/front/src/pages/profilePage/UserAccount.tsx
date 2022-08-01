@@ -117,7 +117,7 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 	 	reader.readAsDataURL(event.target.files[0]);
  }
 
- return ( <div> VIKTOR </div> );
+ return ( <div> SETTINGS </div> );
 // 	return (<div>
 // 						<br/><label>New Login: </label>
 // 						<input className={cs.textInput} type="text" value={login} onChange={(e)=>setLogin(e.target.value)}/><>&nbsp;&nbsp;</>
@@ -164,7 +164,7 @@ const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderF
 		renderFriends();
 	}
 
-	return ( <div> SEJUANI </div> );
+	return ( <div> FIND FRIENDS </div> );
 //   return (<div>
 //             <input placeholder={"New friends..."} className={cs.textInput} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
 //             {searchResults.map((item) => <div>
@@ -214,7 +214,7 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
 		renderFriends();
 	}
 
-  return ( <div> KAYN </div> );
+  return ( <div> FRIENDS </div> );
 //   return (
 //   <div>
 //             <h3>Friends</h3>

@@ -1,10 +1,10 @@
-// import { MatchHistoryDto } from "../../match-history/dto/match-history.dto";
-// import { FriendsDto } from "../../friends/dto/friends.dto";
-// import { ChannelDto } from "../../channel/dto/channel.dto";
-// import { ChannelUserDto } from "../../channel/dto/channel_user.dto";
-// import { ChannelMessageDto } from "../../channel/dto/channel_message.dto";
-// import { DmDto } from "../../dms/dto/dm.dto";
-// import { DmMessageDto } from "../../dms/dto/dm_message.dto";
+import { MatchHistoryDto } from "../../match-history/dto/match-history.dto";
+import { FriendsDto } from "../../friends/dto/friends.dto";
+import { ChannelDto } from "../../channel/dto/channel.dto";
+import { ChannelUserDto } from "../../channel/dto/channel_user.dto";
+import { ChannelMessageDto } from "../../channel/dto/channel_message.dto";
+import { DmDto } from "../../dms/dto/dm.dto";
+import { DmMessageDto } from "../../dms/dto/dm_message.dto";
 
 /* Defining the structure of the UserDto object. */
 export interface UserDto {
@@ -18,12 +18,12 @@ export interface UserDto {
 	status: string;
 	numberOfWin: number;
 	numberOfLoss: number;
-	// matchHistory: MatchHistoryDto[]
-	// friends: FriendsDto[]
-	// dms: DmDto[]
-	// dms_messages: DmMessageDto[]
-	// channels: ChannelDto[]
-	// channels_messages: ChannelMessageDto[]
-	// channels_users: ChannelUserDto[]
+	matchHistory: MatchHistoryDto[]
+	friends: FriendsDto[]
+	dms: DmDto[]
+	dms_messages: DmMessageDto[]
+	channels: ChannelDto[]
+	channels_messages: ChannelMessageDto[]
+	channels_users: ChannelUserDto[]
 	latestTimeOnline: string
 }
