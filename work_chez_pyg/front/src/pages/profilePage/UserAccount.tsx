@@ -11,7 +11,7 @@ import { addFriend, createNewFriend, getFriendsOfUser, removeFriend } from "../.
 import './UserAccount.css';
 
 import QRCode from 'qrcode';
-import { Button } from "@mui/material";
+import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
 import ButtonAppBar from "../../comps/Header";
 import { Box } from "@mui/system";
 
@@ -313,10 +313,21 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 	return (
 		<div className='home-main-ctn'>
 			<Box textAlign='center'>
-				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Back </Button>
-				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Game </Button>
-				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Chat </Button>
-				<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{back()}}> Watch </Button>
+				<AppBar position="static">
+		  			<Toolbar >
+						<Typography variant="h6" component="div">
+			  				Transcendence
+						</Typography>
+						<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
+			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>PLAY</Button>
+			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>CHAT</Button>
+							<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>CHAT</Button>
+			  				<Button variant="contained" onClick={() => back()}>WATCH</Button>
+						</Box>
+						<Avatar alt="Remy Sharp" src="url('')" />
+						{/* Avatar 19 a chercher sur l'api */}
+		  			</Toolbar>
+				</AppBar>
 			</Box>
 			<div className="profile-main-ctn">
 				<div className="profile-banner-ctn">
@@ -324,7 +335,12 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 						<div className="profile-banner-avatar-ctn"></div>
 						<div> AVATAR </div>
 					</div>
-					<div className="profile-banner-statistics-ctn">STATISTICS</div>
+					<div className="profile-banner-statistics-ctn">
+						<h1>STATS</h1>
+						<p>RATIO: {(profile.numberOfWin / profile.numberOfLoss) ? (profile.numberOfWin / profile.numberOfLoss) : 0}</p>
+						<p>WINS: {profile.numberOfWin}</p>
+						<p>LOSSES: {profile.numberOfLoss}</p>
+					</div>
 				</div>
 				<div className="profile-history-achievements-ctn">
 					<div className="profile-history-ctn">Match History</div>

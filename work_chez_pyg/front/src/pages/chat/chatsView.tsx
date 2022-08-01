@@ -1,3 +1,4 @@
+import { Box, Button } from "@mui/material"
 import { useEffect, useState } from "react"
 import _ from "underscore"
 import { find } from "underscore"
@@ -174,8 +175,37 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		return (<Chat user={user} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} changeGame={changeGame}/>);
 	else {
 		return (
-			<div> THIS IS CHATSVIEW() </div>
+			<div className='home-main-ctn'>
+				<Box textAlign='center'>
+					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
+					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('game')}}> Game </Button>
+					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
+					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+				</Box>
+				<div> this is </div>
+			</div>
 		);
+// 		return (<div className={cs.chatRootClass}>
+// 			<button className={cs.backButton} onClick={()=>{changeMenuPage('home')}}>Back</button>
+// 							<h1>Chat</h1>
+// 			<button className={!newdm ? styles.newDmButton : styles.newDmButtonOn} onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false);}}>New DM</button><>&nbsp;&nbsp;</>
+// 			<button className={!newchannel ? styles.newChannelButton : styles.newChannelButtonOn} onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false);}}>New Channel</button><>&nbsp;&nbsp;</>
+// 			<button className={!joinchannel ? styles.joinChannelButton : styles.joinChannelButtonOn} onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false);}}>Join Channel</button><>&nbsp;&nbsp;</>
+// 							<button className={!viewChatCommands ? styles.viewChatCommandsButton : styles.viewChatCommandsButtonOn} onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false);}}>Chat Commands</button>
+// 			{newdm && <NewDm user={user} dms={dms} changeCurrentChat={changeCurrentChat}/>}
+// 			{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
+// 			{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
+// 							{viewChatCommands && <><br/><br/><span style={{color:"#507255"}}>Propose to play a default game: </span><span style={{color:"#4AAD52"}}>*PLAY*</span>
+// 																	 <br/><br/><span style={{color:"#507255"}}>Play a random game: </span><span style={{color:"#4AAD52"}}>*PLAY* random</span>
+// 																	  <br/><br/><span style={{color:"#507255"}}>Play a game with custom settings: </span><span style={{color:"#4AAD52"}}>*PLAY* 3 night</span><br/></>}
+// 			<br/><br/>
+// 							<h3>Active Chats</h3>
+// 			{channels.map((item)=><p className={cs.clickable} onClick={()=>changeCurrentChat(item)}>{`${item.name} -- channel`}</p>)}
+// 							{dms.map((item)=><p className={cs.clickable} onClick={()=>changeCurrentChat(item)}>{`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}</p>)}
+// 							{!channels.length && !dms.length && <p>No chats</p>}
+// 		  </div>);
+// }
+//}
 	}
 }
 export default ChatsView;
