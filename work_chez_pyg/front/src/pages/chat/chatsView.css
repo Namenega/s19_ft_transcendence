@@ -1,5 +1,110 @@
-.listamis {
-  width: 33%;
+.home-main-ctn {
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+}
+
+.home-ctn {
+  width: 100%;
   height: 100%;
-  background-color: #d6a9a8;
+}
+
+.profile-main-ctn {
+  width: 100%;
+  height: 100%;
+  display: inline-flexbox;
+  justify-content: center; /*position horizontale */
+  align-items: center;  /*position verticale */
+}
+
+.profile-ctn {
+  width: 98%;
+  height: 100%;
+  margin-top: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
+  background-color: #a8d6ab;
+  display: inline-flexbox;
+}
+
+.profile-banner-ctn {
+  width: 98,5%;
+  height: 25%;
+  margin-top: 25px;
+  margin-left: 10px;
+  margin-right: 25px;
+  border-radius: 10px;
+  padding: 1rem;
+  /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
+  background-color: #1f4e60;
+  display: flex;
+}
+
+.profile-banner-statistics-ctn {
+  width: 75%;
+  height: 90%;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: #66bb6a;
+}
+
+.profile-banner-avatar-ctn {
+  background-image: url('http://i.stack.imgur.com/Dj7eP.jpg%27');
+  width: 150px;
+  height: 150px;
+  background-size: cover;
+  background-position: top center;
+  border-radius: 50%;
+  margin-top: 20px;
+  margin-left: 10px;
+  display: inline-flexbox;
+}
+
+.chat-ctn {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+}
+
+.chat-new-dm-ctn {
+  width: 15%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #a8d6ab;
+  display: inline-flexbox;
+  padding: 1rem;
+}
+
+.chat-channel-ctn {
+  width: 100%;
+  height: 100%;
+  /* margin-top: 10px; */
+  margin-left: 10px;
+  margin-right: 25px;
+  border-radius: 10px;
+  background-color: #1f4e60;
+  display: flex;
+}
+
+.game-button-text {
+  color: #1f4e60;
+  font-weight: bold;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  color: gray;
+}
+
+h2 {
+  text-align: center;
 }
