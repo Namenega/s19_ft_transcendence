@@ -20,8 +20,8 @@ const Login = (props) => {
             const data = new FormData();
 
             data.append('grant_type', 'authorization_code');
-            data.append('client_id', '4fdbf2cda36c892bc525ad74e2b75188d936e8750b098515903aaf7e8a511daf');
-            data.append('client_secret', 'ed1533e5bc5827832dd37bab7a4eb050b831b07e868d4475e47bd88e13197432');
+            data.append('client_id', 'e5844d8208a1f7c06f276e51371b33d42a655aeccb9ca4a40d8397eb863f20b8');
+            data.append('client_secret', '6d6231979349ab80f1516a2386ae19be4a15ef5526f9dc05e6f3c189c675e829');
             data.append('code', AUTH_CODE);
             data.append('redirect_uri', 'http://localhost:3000');
 
@@ -38,7 +38,7 @@ const Login = (props) => {
 
 
     const loginWithApi = async () => {
-        window.location.href = "https://api.intra.42.fr/oauth/authorize?client_id=4fdbf2cda36c892bc525ad74e2b75188d936e8750b098515903aaf7e8a511daf&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=code"
+        window.location.href = "https://api.intra.42.fr/oauth/authorize?client_id=e5844d8208a1f7c06f276e51371b33d42a655aeccb9ca4a40d8397eb863f20b8&redirect_uri=http%3A%2F%2Flocalhost%3A3000&response_type=code"
     }
 
     return (

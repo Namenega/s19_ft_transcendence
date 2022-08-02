@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material"
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import _ from "underscore"
 import { find } from "underscore"
@@ -177,12 +177,21 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		return (
 			<div className='home-main-ctn'>
 				<Box textAlign='center'>
-					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
-					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('game')}}> Game </Button>
-					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-					<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+					<AppBar position="static">
+						<Toolbar >
+							<Typography variant="h6" component="div">
+								Transcendence
+							</Typography>
+							<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
+								<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
+								<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('game')}}> Game </Button>
+								<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
+								<Button variant="contained" sx={{marginTop: '20px', marginLeft: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+							</Box>
+						</Toolbar>
+					</AppBar>
 				</Box>
-				<div> this is </div>
+				<div className='listamis'> this is </div>
 			</div>
 		);
 // 		return (<div className={cs.chatRootClass}>
