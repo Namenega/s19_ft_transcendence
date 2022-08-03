@@ -78,6 +78,7 @@
   background-color: #a8d6ab;
   display: inline-flexbox;
   padding: 1rem;
+  margin: auto;
 }
 
 .chat-channel-ctn {
@@ -107,4 +108,50 @@
 
 h2 {
   text-align: center;
+}
+
+.textInput {
+  background-color: #F2F6D0;
+  border-width: 0px;
+  border-radius: 5px;
+  font-family: Courier New;
+  font-size: 15px;
+  height: 23px;
+}
+
+/* .smallButton {
+  cursor: pointer;
+  color: black;
+  height: 30px;
+  width: 75px;
+  font-size: 15px;
+  font-family: Courier New;
+  border: 1px solid black;
+  border-radius: 30px;
+} */
+
+.startDmButton {
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  /* width: 75px; */
+  font-size: 15px;
+  font-family: Courier New;
+  border-radius: 30px;
+  border: 1px solid black;
+  color: black;
+  background-color: transparent;
+}
+
+.startChannelButton {
+  cursor: pointer;
+  width: 70px;
+  height: 30px;
+  /* width: 75px; */
+  font-size: 15px;
+  font-family: Courier New;
+  border-radius: 30px;
+  border: 1px solid black;
+  color: black;
+  background-color: transparent;
 }
