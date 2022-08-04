@@ -26,7 +26,7 @@ export const getAllMatchHistory: () => Promise<MatchHistoryDto[]> = async () => 
 }
 
 export const getMatchHistoryOfUser: (userLogin: string) => Promise<MatchHistoryDto[]> = async (userLogin) => {
-  const response = await axios.get(`/match-history/user/${userLogin}`);
+  const response = await axios.get(`/match-history/users/${userLogin}`);
   return response.data;
 }
 

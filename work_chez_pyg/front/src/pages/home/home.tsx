@@ -7,6 +7,7 @@ import { UserDto } from "../../api/user/dto/user.dto";
 import { getUser, updateUser } from "../../api/user/user.api";
 import ChatsView from "../chat/chatsView";
 import Profile from "../profilePage/UserAccount";
+import Play from "../playPage/Play";
 
 // const isLogout = () => {
 //     window.location.href = 'http://localhost:3000'
@@ -125,9 +126,9 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	}
 
 	if (menuPage === "home") {
-	    return (<HomeDisplay user={user} changeMenuPage={changeMenuPage}/>);
-	// } else if (menuPage === "play" || game !== null) {
-	// 	return <Play user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
+	    return <HomeDisplay user={user} changeMenuPage={changeMenuPage}/>;
+	} else if (menuPage === "play" || game !== null) {
+		return <Play user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
 	} else if (menuPage === "chat") {
 		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame}/>;
 	} else if (menuPage === "profile") {
