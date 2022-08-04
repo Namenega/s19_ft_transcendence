@@ -46,6 +46,7 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 	
 	const isPartOfChannels: (channel: ChannelDto) => boolean = (channel) => {
 		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
+		// https://bobbyhadz.com/blog/javascript-cannot-read-property-find-of-undefined
 		// const finder = channels.find((myChannel) => myChannel.name === channel.name);
 		const finder = channels ? channels.find((myChannel) => myChannel.name === channel.name) : undefined;
 
@@ -197,6 +198,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 
 	const isPartOfDms: (account: UserDto) => boolean = (account) => {
 		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
+		// https://bobbyhadz.com/blog/javascript-cannot-read-property-find-of-undefined
 		// const finder = dms.find((dm) => dm.users.some((user) => user.id === account.id));
 		const finder = dms ? dms.find((dm) => dm.users.some((user) => user.id === account.id)) : undefined;
 
@@ -299,22 +301,22 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		return (
 			<div className='home-main-ctn'>
 				<Box textAlign='center'>
-				<AppBar position="static">
-                    <Toolbar >
-                        <Typography variant="h6" component="div">
-                            Transcendence
-                        </Typography>
-                        <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('game')}}> Game </Button>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                </Box>
-                <div className='chat-ctn'>
-                    {/* <List sx={{ width: '25%', maxWidth: 360, bgcolor: '#a8d6ab', borderRadius: '10px' }}>
+					<AppBar position="static">
+						<Toolbar >
+							<Typography variant="h6" component="div">
+								Transcendence
+							</Typography>
+							<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
+								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
+								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('game')}}> Game </Button>
+								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
+								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+							</Box>
+						</Toolbar>
+					</AppBar>
+				</Box>
+				<div className='chat-ctn'>
+					{/* <List sx={{ width: '25%', maxWidth: 360, bgcolor: '#a8d6ab', borderRadius: '10px' }}>
 						<ListItem alignItems="flex-start">
 							<ListItemText
 							primary="Name"
@@ -335,7 +337,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 							secondary={"Last Message"}
 							/>
 						</ListItem>
-                     </List> */}
+					 </List> */}
 					<div className="chat-new-dm-ctn">
 						<Box textAlign='center'>
 							<Button variant="contained" fullWidth
@@ -402,11 +404,11 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 						{/* {!channels.length && !dms.length && <p>No chats</p>} */}
 						{/* ----------------------- */}
 					</div>
-                    {/* <div className='chat-channel-ctn'>
-                        Channel
-                	</div> */}
-            	</div>
-            </div>
+					<div className='chat-channel-ctn'>
+						<h2>Channel</h2>
+					</div>
+				</div>
+			</div>
 		);
 
 

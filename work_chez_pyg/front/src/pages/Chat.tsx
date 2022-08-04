@@ -19,7 +19,8 @@ import { UserDto } from "../api/user/dto/user.dto";
 
 import Authentication from './userAccount/authentication';
 import Profile from './profilePage/UserAccount';
-
+import './chat/chatsView.css'
+import { Button } from '@mui/material';
 
 
 //const Chat = () => {
@@ -119,6 +120,17 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 	return (
 		<div>
 			This is Chat return 1
+			<br />
+			<input className="textInput" placeholder={"Add users..."} type="text" value={searchText}
+					onChange={(e) => handleSearch(e.target.value)}/>
+			<br />
+			{searchResults.map((item) =>
+				<div>
+					<br/>
+					<span>{item.login}</span><>&nbsp;&nbsp;</>
+					<Button variant="contained" onClick={(e)=> {onSubmit(item.id)}}>Add User</Button>
+				</div>)
+			}
 		</div>
 	);
 }
