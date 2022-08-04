@@ -352,7 +352,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 					</div>
 					<div className="profile-banner-statistics-ctn">
 						<h1>STATS</h1>
-						<p>RATIO: {(profile.numberOfWin / profile.numberOfLoss) ? (profile.numberOfWin / profile.numberOfLoss) : 0}</p>
+						<p>RATIO: {(`${profile.numberOfWin} / ${profile.numberOfLoss}`) ? (`${profile.numberOfWin} / ${profile.numberOfLoss}`) : 0} ~ {profile.numberOfLoss ? profile.numberOfWin / (profile.numberOfWin + profile.numberOfLoss) * 100 : profile.numberOfWin ? 100 : `N/A`}%</p>
 						<p>WINS: {profile.numberOfWin}</p>
 						<p>LOSSES: {profile.numberOfLoss}</p>
 					</div>

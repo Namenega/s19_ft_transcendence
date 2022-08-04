@@ -62,26 +62,26 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 				removeGame(props.gameInfos.id);
 				let latestUser2 = await getUser(user2.id);
 				if (latestUser2 === null || latestUser2.status !== "In a game" || userDisconnected) return ;
-				await addMatchHistory(createNewMatchHistory(props.user,
+				addMatchHistory(createNewMatchHistory(props.user,
 					game.myNum === scores.win.p ? scores.win.score : scores.loose.score,
 					user2.id,
 					game.myNum === scores.win.p ? scores.loose.score : scores.win.score));
 				if (game.myNum === scores.win.p) {
-					await updateUser(props.user.id, {numberOfWin: props.user.numberOfWin + 1});
+					updateUser(props.user.id, {numberOfWin: props.user.numberOfWin + 1});
 				} else {
-					await updateUser(props.user.id, {numberOfLoss: props.user.numberOfLoss + 1});
+					updateUser(props.user.id, {numberOfLoss: props.user.numberOfLoss + 1});
 				}
 				await new Promise(r => setTimeout(r, 1000));
 				let numberOfMatchHistoryOpponentAfter: number = (await getMatchHistoryOfUser(user2.login)).length;
 				if (numberOfMatchHistoryOpponent === numberOfMatchHistoryOpponentAfter) {
-					await addMatchHistory(createNewMatchHistory(user2,
+					addMatchHistory(createNewMatchHistory(user2,
 						game.myNum !== scores.win.p ? scores.win.score : scores.loose.score,
 						props.user.id,
 						game.myNum !== scores.win.p ? scores.loose.score : scores.win.score));
 						if (game.myNum !== scores.win.p) {
-							await updateUser(user2.id, {numberOfWin: user2.numberOfWin + 1});
+							updateUser(user2.id, {numberOfWin: user2.numberOfWin + 1});
 						} else {
-							await updateUser(user2.id, {numberOfLoss: user2.numberOfLoss + 1});
+							updateUser(user2.id, {numberOfLoss: user2.numberOfLoss + 1});
 						}
 				}
 				let latestUser = await getUser(props.user.id);

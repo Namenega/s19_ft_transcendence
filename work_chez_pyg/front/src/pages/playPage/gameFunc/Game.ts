@@ -200,7 +200,7 @@ export class Game {
 			if (score.win.p === this.me.num)
 				result = "You win !!!";
 			else
-				result = "You loose ...";
+				result = "You lose ...";
 			this.ctx.fillText(result, 350 * this.coeff, 150 * this.coeff);
 
 			this.ctx.font = Math.floor(35 * this.coeff).toString() +  "px fantasy";
