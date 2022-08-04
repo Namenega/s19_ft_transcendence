@@ -1,18 +1,18 @@
-import { AppBar, Box, Button, Divider, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-import _ from "underscore"
-import { find } from "underscore"
+import Chat from "../Chat"
+import { addDm, createNewDm } from "../../api/dms/dms.api"
 import { addChannel, addChannelUser, channelPasswordVerification, createNewChannelUser, getAllChannels, getChannel, createNewChannel } from "../../api/channel/channels.api"
+import { getAllUsers, getCompleteUser } from "../../api/user/user.api"
+import { UserDto } from "../../api/user/dto/user.dto"
+import { DmDto } from "../../api/dms/dto/dm.dto"
 import { ChannelDto } from "../../api/channel/dto/channel.dto"
 import { CreateChannelDto } from "../../api/channel/dto/create-channel.dto"
-import { addDm, createNewDm } from "../../api/dms/dms.api"
 import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
-import { DmDto } from "../../api/dms/dto/dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
-import { UserDto } from "../../api/user/dto/user.dto"
-import { getAllUsers, getCompleteUser } from "../../api/user/user.api"
-import Chat from "../Chat"
+import _ from "underscore"
 import './chatsView.css'
+import { AppBar, Box, Button, Divider, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material"
+import { Filter, Filter1Outlined } from "@mui/icons-material"
 
 
 interface joinChannelProps {
@@ -45,8 +45,14 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 	const [password, setPassword] = useState<string>('');
 	
 	const isPartOfChannels: (channel: ChannelDto) => boolean = (channel) => {
-		const find = channels.find((myChannel) => myChannel.name === channel.name);
-		return (find !== undefined);
+		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
+		// const finder = channels.find((myChannel) => myChannel.name === channel.name);
+		const finder = channels ? channels.find((myChannel) => myChannel.name === channel.name) : undefined;
+
+		// CHECK FINDER (A ENLEVER)
+		console.log(finder);
+
+		return (finder !== undefined);
 	}
 	
 	const handleSearch: (searchValue: string) => void = async (searchValue) => {
@@ -54,7 +60,7 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 		const allChannels = await getAllChannels();
 		
 		allChannels.forEach((item) => searchValue.length !== 0 && item.type !== "private"
-			&& !isPartOfChannels(item) && item.name.includes(searchValue))
+			&& !isPartOfChannels(item) && item.name.includes(searchValue) && search.push(item))
 		setSearchText(searchValue);
 		setSearchResults(search);
 	}
@@ -190,16 +196,26 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 	const [searchText, setSearchText] = useState<string>('');
 
 	const isPartOfDms: (account: UserDto) => boolean = (account) => {
-		const find = dms.find((dm) => dm.users.some((user) => user.id === account.id));
-		return (find !== undefined);
+		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
+		// const finder = dms.find((dm) => dm.users.some((user) => user.id === account.id));
+		const finder = dms ? dms.find((dm) => dm.users.some((user) => user.id === account.id)) : undefined;
+
+		// CHECK FINDER
+		console.log(finder);
+
+		return (finder !== undefined);
 	}
 
 	const handleSearch: (searchValue: string) => void = async (searchValue) => {
 		let search: UserDto[] = [];
 		const allUsers = await getAllUsers();
 
+		console.log(allUsers)
+		console.log(searchValue)
+		console.log(isPartOfDms(allUsers[1]))
+
 		allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfDms(item)
-				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item))
+				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item) && console.log(item.login))
 		setSearchText(searchValue);
 		setSearchResults(search);
 	}
@@ -212,16 +228,16 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 	}
 
   	return (<div>
-			<br/>
-			<input className="textInput" placeholder={"Search user..."} type="text" value={searchText}
+				<br/>
+				<input className="textInput" placeholder={"Search user..."} type="text" value={searchText}
 					onChange={(e) => handleSearch(e.target.value)}/>
-			<br/><br/>
-			{searchResults.map((item) =>
-				<div>
- 					<br/>
- 					<span>{item.login}</span><>&nbsp;&nbsp;</>
- 					<button className="startDmButton" onClick={(e)=> {onSubmit(item)}}>DM</button>
- 				</div>)}
+				<br/><br/>
+				{searchResults.map((item) =>
+					<div>
+						<br/>
+						<span>{item.login}</span><>&nbsp;&nbsp;</>
+						<Button className="startDmButton" variant="contained" onClick={(e)=> {onSubmit(item)}}>DM</Button>
+					</div>)}
 			</div>);
 
 //   return (<div>
@@ -241,7 +257,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [newchannel, setNewchannel] = useState<boolean>(false);
 	const [joinchannel, setJoinchannel] = useState<boolean>(false);
 	const [viewChatCommands, setViewChatCommands] = useState<boolean>(false);
-	const [dms, setDms] = useState<DmDto[]>([]);
+	const [directMessage, setDms] = useState<DmDto[]>([]);
 	const [channels, setChannels] = useState<ChannelDto[]>([]);
 	const [currentChat, setCurrentChat] = useState<DmDto | ChannelDto | null>(null);
 
@@ -256,7 +272,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		const completeUser = await getCompleteUser(user.id);
 		if (completeUser === null)
 			return ;
-		if (_.isEqual(completeUser.dms, dms) && _.isEqual(completeUser.channels, channels))
+		if (_.isEqual(completeUser.dms, directMessage) && _.isEqual(completeUser.channels, channels))
 			return ;
 		if (currentChat !== null && !("block" in currentChat) &&
 				completeUser!.channels.find((channel: ChannelDto) =>
@@ -329,7 +345,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 								New DM
 							</Button>
 							{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
-							{newdm && <NewDm user={user} dms={dms} changeCurrentChat={changeCurrentChat}/>}
+							{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}
 							<Button variant="contained" fullWidth
 									sx={{ marginTop: 2 }}
 									color={!newchannel ? "primary" : "secondary"}
@@ -371,13 +387,13 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 
 						<h2>Active Chats</h2>
 						{channels.map((item) =>
-								<p className="clickable" onClick={() => changeCurrentChat(item)}>
-									{`${item.name} -- channel`}
-								</p>)
+							<p className="clickable" onClick={() => changeCurrentChat(item)}>
+								{`${item.name} -- channel`}
+							</p>)
 						}
-						{/* BUG HERE - BLANK SCREEN */}
+						{/* BUG HERE - BLANK SCREEN - Need DMS first */}
 						{/* ----------------------- */}
-						{/* {dms.map((item) =>
+						{/* {directMessage.map((item) =>
 							<p className="clickable" onClick={()=>changeCurrentChat(item)}>
 								Hello
 								{`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}
@@ -386,9 +402,9 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 						{/* {!channels.length && !dms.length && <p>No chats</p>} */}
 						{/* ----------------------- */}
 					</div>
-                    <div className='chat-channel-ctn'>
+                    {/* <div className='chat-channel-ctn'>
                         Channel
-                	</div>
+                	</div> */}
             	</div>
             </div>
 		);

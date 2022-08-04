@@ -10,7 +10,7 @@ const axios = require('axios');
 axios.defaults.baseURL = API_ENDPOINT;
 
 export const addDm: (createDmDto: CreateDmDto) => Promise<DmDto> = async (createDmDto) => {
-  const response = await axios.post("/dms", createDmDto);
+  const response = await axios.post("/direct-message", createDmDto);
   return response.data;
 }
 
@@ -25,31 +25,31 @@ export const createNewDm: (user1: UserDto, user2: UserDto) => CreateDmDto = (use
 }
 
 export const getAllDms: () => Promise<DmDto[]> = async () => {
-  const response = await axios.get("/dms");
+  const response = await axios.get("/direct-message");
   return response.data;
 }
 
 // export const getDmsOfUser: (userLogin: string) => Promise<DmDto[]> = async (userLogin) => {
-//   const response = await axios.get(`/dms/user/${userLogin}`);
+//   const response = await axios.get(`/direct-message/user/${userLogin}`);
 //   return response.data;
 // }
 
 export const getDm: (id: number) => Promise<DmDto | null> = async (id) => {
-  const response = await axios.get(`/dms/${id}`);
+  const response = await axios.get(`/direct-message/${id}`);
   if (response.data === "") { return null; }
   return response.data;
 }
 
 export const updateDm: (id: number, updateDmDto: UpdateDmDto) => void = async (id, updateDmDto) => {
-  await axios.patch(`/dms/${id}`, updateDmDto);
+  await axios.patch(`/direct-message/${id}`, updateDmDto);
 }
 
 export const removeDm: (id: number) => void = async (id) => {
-  await axios.delete(`/dms/${id}`);
+  await axios.delete(`/direct-message/${id}`);
 }
 
 export const addDmMessage: (createDmMessageDto: CreateDmMessageDto) => void = async (createDmMessageDto) => {
-  await axios.post("/dms/message", createDmMessageDto);
+  await axios.post("/direct-message/message", createDmMessageDto);
 }
 
 export const createNewDmMessage: (user: UserDto, dm: DmDto, content: string, order: number) => CreateDmMessageDto = (user, dm, content, order) => {
@@ -63,19 +63,19 @@ export const createNewDmMessage: (user: UserDto, dm: DmDto, content: string, ord
 }
 
 export const getAllDmsMessages: () => Promise<DmMessageDto[]> = async () => {
-  const response = await axios.get("/dms/message");
+  const response = await axios.get("/direct-message/message");
   return response.data;
 }
 
 export const getDmMessage: (id: number) => Promise<DmMessageDto> = async (id) => {
-  const response = await axios.get(`/dms/message/${id}`);
+  const response = await axios.get(`/direct-message/message/${id}`);
   return response.data;
 }
 
 export const updateDmMessage: (id: number, updateDmMessageDto: UpdateDmMessageDto) => void = async (id, updateDmMessageDto) => {
-  await axios.patch(`/dms/message/${id}`, updateDmMessageDto);
+  await axios.patch(`/direct-message/message/${id}`, updateDmMessageDto);
 }
 
 export const removeDmMessage: (id: number) => void = async (id) => {
-  await axios.delete(`/dms/message/${id}`);
+  await axios.delete(`/direct-message/message/${id}`);
 }
