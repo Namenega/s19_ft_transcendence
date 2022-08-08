@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserDto } from "../../api/user/dto/user.dto";
-import { Button, Divider, Stack } from "@mui/material";
+import { Button, Divider, Stack, TextField } from "@mui/material";
 import { addUser, createNewUser, getUserByLogin, getUserByName, userPasswordVerification, verify2FA } from "../../api/user/user.api";
 import { OAuth42_access_token, OAuth42_user } from "../../OAuth42/login";
 import './authentication.css';
 import Home from "../home/home";
+import { Input } from '@mui/material';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
@@ -84,32 +85,54 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 	 	};
 	 	reader.readAsDataURL(event.target.files[0]);
  }
-	return (<div>
-						<button className='game-button-text' onClick={()=>{changePage("start")}}>Back</button>
-						{!signup ? <h1>Log in</h1> : <h1>Sign up</h1>}
-						<label>Name:</label><br/>
-						<input className='game-button-text' type="text" value={name} maxLength={40} onChange={(e)=>setName(e.target.value)} required/>
-						{signup && <br/>}
-						{signup && <br/>}
-						{signup && <label>Login:</label>}
-						{signup && <br/>}
-						{signup && <input className='game-button-text' type="text" value={login} maxLength={20} onChange={(e)=>setLogin(e.target.value)} required/>}
-						<br/><br/>
-						<label>Password:</label>
-						<br/>
-						<input className='game-button-text' type="password" value={password} maxLength={20} onChange={(e)=>setPassword(e.target.value)} required/>
-						{signup && <br/>}
-						{signup && <br/>}
-						{signup && <><label className='game-button-text'>Download Avatar Image
-												<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
-											</label><br/></>}
-						<br/><br/>
-						{accountAlreadyInUse && <p>This account already exists</p>}
-						{nonExistingAccount && <p>This account does not exist</p>}
-						{alreadyConnected && <p>User is already connected</p>}
-						{wrongPassword && <p>Wrong Password</p>}
-						<button className='game-button-text' type="submit" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}>Submit</button>
-				</div>);
+	// return (<div>
+	// 					<button className='game-button-text' onClick={()=>{changePage("start")}}>Back</button>
+	// 					{!signup ? <h1>Log in</h1> : <h1>Sign up</h1>}
+	// 					<label>Name:</label><br/>
+	// 					<input className='game-button-text' type="text" value={name} maxLength={40} onChange={(e)=>setName(e.target.value)} required/>
+	// 					{signup && <br/>}
+	// 					{signup && <br/>}
+	// 					{signup && <label>Login:</label>}
+	// 					{signup && <br/>}
+	// 					{signup && <input className='game-button-text' type="text" value={login} maxLength={20} onChange={(e)=>setLogin(e.target.value)} required/>}
+	// 					<br/><br/>
+	// 					<label>Password:</label>
+	// 					<br/>
+	// 					<input className='game-button-text' type="password" value={password} maxLength={20} onChange={(e)=>setPassword(e.target.value)} required/>
+	// 					{signup && <br/>}
+	// 					{signup && <br/>}
+	// 					{signup && <><label className='game-button-text'>Download Avatar Image
+	// 											<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
+	// 										</label><br/></>}
+	// 					<br/><br/>
+	// 					{accountAlreadyInUse && <p>This account already exists</p>}
+	// 					{nonExistingAccount && <p>This account does not exist</p>}
+	// 					{alreadyConnected && <p>User is already connected</p>}
+	// 					{wrongPassword && <p>Wrong Password</p>}
+	// 					<button className='game-button-text' type="submit" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}>Submit</button>
+	// 			</div>);
+
+	return (
+		<div className='start-main-ctn' style={{backgroundImage:"url('./img/main-bg.jpg')"}}>
+			<div className='start-ctn'>
+				{!signup ? <h2>Log in</h2> : <h2>Sign up</h2>}
+				<Stack spacing={2}>
+					<TextField required id="outlined-required" label="Required" defaultValue="Name" onChange={(e)=>setName(e.target.value)}/>
+					{signup && <TextField required id="outlined-required" label="Required" defaultValue="Login" onChange={(e)=>setLogin(e.target.value)}/>}
+					<TextField required id="outlined-required" label="Required" defaultValue="Password" onChange={(e)=>setPassword(e.target.value)}/>
+					{signup && <Button className='game-button-text' variant="outlined"> 
+						Upload File <input style={{ display: 'none' }} type="file" accept="image/*"/>
+					</Button>}
+					{accountAlreadyInUse && <p>This account already exists</p>}
+					{nonExistingAccount && <p>This account does not exist</p>}
+					{alreadyConnected && <p>User is already connected</p>}
+					{wrongPassword && <p>Wrong Password</p>}
+					<Button className='game-button-text' variant="contained" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}> 
+						Submit
+					</Button>
+				</Stack>
+			</div>
+		</div>);
 }
 
 const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: boolean) => void, twoFA: boolean}> = ({user, changeTwoFA, twoFA}) => {
