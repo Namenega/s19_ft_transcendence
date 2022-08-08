@@ -180,6 +180,7 @@ const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: 
 				<Button className='game-button-text' variant="contained" onClick={() => loginWithApi()}> 
 					Log with 42
 				</Button>
+				{alreadyConnected && <p>User is already connected</p>}
 			</Stack>
 		</div>
 	</div>);

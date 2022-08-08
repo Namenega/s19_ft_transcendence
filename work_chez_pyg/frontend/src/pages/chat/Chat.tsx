@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'underscore';
-import { connect, listen, joinRoom, leaveRoom, send, disconnect } from "../socket/chat/chat.socket";
+import { connect, listen, joinRoom, leaveRoom, send, disconnect } from "../../socket/chat/chat.socket";
 
-import { addChannel, removeChannel, updateChannel, updateChannelUser, getChannel, addChannelMessage, createNewChannelMessage, addChannelUser, createNewChannelUser, updateChannelMessage } from "../api/channel/channels.api";
-import { ChannelDto } from '../api/channel/dto/channel.dto';
-import { ChannelUserDto } from '../api/channel/dto/channel_user.dto';
-import { ChannelMessageDto } from "../api/channel/dto/channel_message.dto";
+import { addChannel, removeChannel, updateChannel, updateChannelUser, getChannel, addChannelMessage, createNewChannelMessage, addChannelUser, createNewChannelUser, updateChannelMessage } from "../../api/channel/channels.api";
+import { ChannelDto } from '../../api/channel/dto/channel.dto';
+import { ChannelUserDto } from '../../api/channel/dto/channel_user.dto';
+import { ChannelMessageDto } from "../../api/channel/dto/channel_message.dto";
 
-import { addDm, getDm, addDmMessage, createNewDmMessage, updateDmMessage } from "../api/dms/dms.api";
-import { DmDto } from '../api/dms/dto/dm.dto';
-import { DmMessageDto } from "../api/dms/dto/dm_message.dto";
+import { addDm, getDm, addDmMessage, createNewDmMessage, updateDmMessage } from "../../api/dms/dms.api";
+import { DmDto } from '../../api/dms/dto/dm.dto';
+import { DmMessageDto } from "../../api/dms/dto/dm_message.dto";
 
-import { addGame } from "../api/games/games.api";
-import { GameDto } from '../api/games/dto/game.dto';
+import { addGame } from "../../api/games/games.api";
+import { GameDto } from '../../api/games/dto/game.dto';
 
-import { getAllUsers, addUser, getCompleteUser, getUser } from "../api/user/user.api";
-import { UserDto } from "../api/user/dto/user.dto";
+import { getAllUsers, addUser, getCompleteUser, getUser } from "../../api/user/user.api";
+import { UserDto } from "../../api/user/dto/user.dto";
 
-import Authentication from './userAccount/authentication';
-import Profile from './profilePage/UserAccount';
-import './chat/chatsView.css'
+import Authentication from '../userAccount/authentication';
+import Profile from '../profilePage/UserAccount';
+import './chatsView.css'
 import { Button } from '@mui/material';
 
 

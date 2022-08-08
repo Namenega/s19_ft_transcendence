@@ -36,11 +36,6 @@
   display: inline-flexbox;
 }
 
-.game-button-text {
-  color: #1f4e60;
-  font-weight: bold;
-}
-
 .clickable {
   cursor: pointer;
 }

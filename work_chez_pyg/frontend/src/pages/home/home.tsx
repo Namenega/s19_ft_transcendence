@@ -9,20 +9,12 @@ import ChatsView from "../chat/chatsView";
 import Profile from "../profilePage/UserAccount";
 import Play from "../playPage/Play";
 import MenuIcon from '@mui/icons-material/Menu';
+import './home.css'
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void}> = ({user, changeMenuPage }) => {
 	const isLogout = () => {
 		window.location.href = 'http://localhost:3000'
 	  }
-	// return (<div>
-	// 			{/* <h1>Welcome to the Pong Game</h1> */}
-	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('play')}}>Play</button><>&nbsp;&nbsp;&nbsp;</>
-	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('chat')}}>Chat</button><>&nbsp;&nbsp;&nbsp;</>
-	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('profile')}}>Profile</button><>&nbsp;&nbsp;&nbsp;</>
-	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('watch')}}>Watch</button>
-	// 		</div>);
-
-	
 	// return (
 	// 	<Box sx={{ flexGrow: 1 }}>
 	// 	<AppBar position="static">

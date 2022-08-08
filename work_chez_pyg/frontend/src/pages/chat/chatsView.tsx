@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Chat from "../Chat"
+import Chat from "./Chat"
 import { addDm, createNewDm } from "../../api/dms/dms.api"
 import { addChannel, addChannelUser, channelPasswordVerification, createNewChannelUser, getAllChannels, getChannel, createNewChannel } from "../../api/channel/channels.api"
 import { getAllUsers, getCompleteUser } from "../../api/user/user.api"

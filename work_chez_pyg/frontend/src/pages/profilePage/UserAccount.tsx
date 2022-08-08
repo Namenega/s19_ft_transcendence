@@ -11,7 +11,6 @@ import { addFriend, createNewFriend, getFriendsOfUser, removeFriend } from "../.
 import './UserAccount.css';
 import QRCode from 'qrcode';
 import { AppBar, Avatar, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import ButtonAppBar from "../../comps/Header";
 import { Box } from "@mui/system";
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -321,7 +320,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 		changeGame(Game);
 	}
 	return (
-		<div className='home-main-ctn'>
+		<div className='basic-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
