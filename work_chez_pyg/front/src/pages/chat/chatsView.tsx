@@ -11,8 +11,9 @@ import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
 import _ from "underscore"
 import './chatsView.css'
-import { AppBar, Box, Button, Divider, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material"
 import { Filter, Filter1Outlined } from "@mui/icons-material"
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 interface joinChannelProps {
@@ -294,24 +295,26 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		setJoinchannel(false);
 		setCurrentChat(newChat);
 	}
+
+	const isLogout = () => {
+		window.location.href = 'http://localhost:3000'
+	  }
 	
 	if (currentChat !== null)
 		return (<Chat user={user} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} changeGame={changeGame}/>);
 	else {
 		return (
 			<div className='home-main-ctn'>
-				<Box textAlign='center'>
+				<Box sx={{ flexGrow: 1 }}>
 					<AppBar position="static">
-						<Toolbar >
-							<Typography variant="h6" component="div">
-								Transcendence
-							</Typography>
-							<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
-								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('game')}}> Game </Button>
-								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-								<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
-							</Box>
+						<Toolbar>
+						<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+							<MenuIcon onClick={() => changeMenuPage('home')}/>
+						</IconButton>
+						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+							ft_transcendence
+						</Typography>
+						<Button variant="contained" color="secondary" onClick={() => isLogout()}>Logout</Button>
 						</Toolbar>
 					</AppBar>
 				</Box>

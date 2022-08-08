@@ -9,11 +9,11 @@ import _ from 'underscore';
 import { FriendsDto } from "../../api/friends/dto/friends.dto";
 import { addFriend, createNewFriend, getFriendsOfUser, removeFriend } from "../../api/friends/friends.api";
 import './UserAccount.css';
-
 import QRCode from 'qrcode';
-import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import ButtonAppBar from "../../comps/Header";
 import { Box } from "@mui/system";
+import MenuIcon from '@mui/icons-material/Menu';
 
 let g_viewed_users_history: UserDto[] = [];
 
@@ -322,23 +322,17 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 	}
 	return (
 		<div className='home-main-ctn'>
-			<Box textAlign='center'>
+			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
-		  			<Toolbar >
-						<Typography variant="h6" component="div">
-			  				Transcendence
-						</Typography>
-						<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-							<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>BACK</Button>
-			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>PLAY</Button>
-			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>CHAT</Button>
-			  				<Button variant="contained" sx={{marginRight: '10px'}} onClick={() => back()}>WATCH</Button>
-							{ownAccount && <Button variant="contained" onClick={()=>{setSettings(!settings); renderPage();}}>SETTINGS</Button>}
-						</Box>
-						{ownAccount && <Button variant="contained" sx={{marginLeft: '10px'}} onClick={()=>{logout()}}>LOGOUT</Button>}
-						{/* <Avatar alt="Remy Sharp" src="url('')" /> */}
-						{/* Avatar 19 a chercher sur l'api */}
-		  			</Toolbar>
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+						<MenuIcon onClick={() => back()}/>
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					</Toolbar>
 				</AppBar>
 			</Box>
 			<div className="profile-main-ctn">

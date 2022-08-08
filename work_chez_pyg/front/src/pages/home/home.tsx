@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { GameDto } from "../../api/games/dto/game.dto";
@@ -8,13 +8,12 @@ import { getUser, updateUser } from "../../api/user/user.api";
 import ChatsView from "../chat/chatsView";
 import Profile from "../profilePage/UserAccount";
 import Play from "../playPage/Play";
-
-// const isLogout = () => {
-//     window.location.href = 'http://localhost:3000'
-//     setIsLoggedIn(false)
-//   }
+import MenuIcon from '@mui/icons-material/Menu';
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void}> = ({user, changeMenuPage }) => {
+	const isLogout = () => {
+		window.location.href = 'http://localhost:3000'
+	  }
 	// return (<div>
 	// 			{/* <h1>Welcome to the Pong Game</h1> */}
 	// 			<button className='game-button-text' onClick={()=>{changeMenuPage('play')}}>Play</button><>&nbsp;&nbsp;&nbsp;</>
@@ -24,26 +23,55 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 	// 		</div>);
 
 	
-	return (
-		<Box sx={{ flexGrow: 1 }}>
-		<AppBar position="static">
-		  <Toolbar >
-			<Typography variant="h6" component="div">
-			  Transcendence
-			</Typography>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-			  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("play")}>PLAY</Button>
-			  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("chat")}>CHAT</Button>
-			  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("profile")}>PROFILE</Button>
-			  <Button variant="contained" onClick={() => changeMenuPage("watch")}>WATCH</Button>
-			</Box>
-			{/* <Avatar alt="Remy Sharp" src="url('')" /> */}
-			{/* Avatar 19 a chercher sur l'api */}
-		  </Toolbar>
-		</AppBar>
-	  </Box>
-	);
+	// return (
+	// 	<Box sx={{ flexGrow: 1 }}>
+	// 	<AppBar position="static">
+	// 	  <Toolbar >
+	// 		<Typography variant="h6" component="div">
+	// 		  Transcendence
+	// 		</Typography>
+	// 		<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
+	// 		  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("play")}>PLAY</Button>
+	// 		  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("chat")}>CHAT</Button>
+	// 		  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("profile")}>PROFILE</Button>
+	// 		  <Button variant="contained" onClick={() => changeMenuPage("watch")}>WATCH</Button>
+	// 		</Box>
+	// 		{/* <Avatar alt="Remy Sharp" src="url('')" /> */}
+	// 		{/* Avatar 19 a chercher sur l'api */}
+	// 	  </Toolbar>
+	// 	</AppBar>
+	//   </Box>
+	// );
 	// <Button color="inherit" onClick={() => isLogout()}>Logout</Button>				// à placer au dessus de <Avatar alt="Remy Sharp" src="url('')" />
+
+	return (
+		<div className='menu-main-ctn'>
+			<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="static">
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="secondary" onClick={() => isLogout()}>Logout</Button>
+					</Toolbar>
+				</AppBar>
+			</Box>
+			<div className='start-main-ctn' style={{backgroundImage:"url('./img/manette.webp')"}}>
+				<div className='start-ctn'>
+					<h2 className='start-title'>Menu</h2>
+					<Stack spacing={2}>
+						<Button className='game-button-text' variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("play")}>PLAY</Button>
+						<Button className='game-button-text' variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("chat")}>CHAT</Button>
+						<Button className='game-button-text' variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("profile")}>PROFILE</Button>
+						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("watch")}>WATCH</Button>
+					</Stack>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => void}> = ({ user, changeUser }) => {

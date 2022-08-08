@@ -1,7 +1,5 @@
-- AppBar (back event)
-- Avatar
-- 2FA
-- Adding friends and see their current status
-- Finir stats (win/loss/achievements)
-- Match History
-- On peut utiliser postman
+- Input file hidden not working
+- add theme colors
+- remove css en trop
+- browser history
+- bouton back dans chat
