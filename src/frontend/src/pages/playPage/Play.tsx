@@ -5,13 +5,18 @@ import { UserDto } from "../../api/user/dto/user.dto";
 import PongGame from "./gameFunc/PongGame";
 // import styles from "../../css/play.module.css";
 // import cs from "../../css/convention.module.css";
-import { AppBar, Box, Button, Divider, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Toolbar, Typography, IconButton } from "@mui/material";
+import { updateUser } from "../../api/user/user.api";
+import MenuIcon from '@mui/icons-material/Menu';
 import "./Play.css";
+import { margin } from '@mui/system';
 
 const Maps = ['black', 'white', 'winter', 'summer', 'night'];
 
 interface preGamePageProps {
   getGame: "create" | "join" | null
+  user: UserDto
+  changeUser: (newUser: UserDto | null) => void
   changeGetGame: (page: "create" | "join" | null) => void
   changeMenuPage: (newMenuPage: string) => void
   game: GameDto
@@ -20,6 +25,7 @@ interface preGamePageProps {
 
 interface joinGameProps {
   user: UserDto
+  changeUser: (newUser: UserDto | null) => void
   changeGetGame: (page: "create" | "join" | null) => void
   changeMenuPage: (newMenuPage: string) => void
   changeGame: (newGame: GameDto | null) => void
@@ -27,20 +33,21 @@ interface joinGameProps {
 
 interface createGameProps {
   user: UserDto
+  changeUser: (newUser: UserDto | null) => void
   changeGetGame: (page: "create" | "join" | null) => void
   changeMenuPage: (newMenuPage: string) => void
   changeGame: (newGame: GameDto | null) => void
 }
 
 interface playProps {
-	user: UserDto
+  user: UserDto
   changeUser: (newUser: UserDto | null) => void
-	changeMenuPage: (newMenuPage: string) => void
+  changeMenuPage: (newMenuPage: string) => void
   game: GameDto | null
   changeGame: (newGame: GameDto | null) => void
 }
 
-const PreGamePage: React.FC<preGamePageProps> = ({ getGame, changeGetGame, changeMenuPage, game, changeGame }) => {
+const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, changeGetGame, changeMenuPage, game, changeGame }) => {
   const [waitingEffect, setWaitingEffect] = useState<number>(0);
 
   useEffect(()=>{
@@ -63,24 +70,29 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, changeGetGame, chang
   // eslint-disable-next-line
   }, [])
 
+  const logout: () => void = async () => {
+	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
+	changeUser(null);
+	}
+
   return (
-	<div className='home-main-ctn'>
-	<Box textAlign='center'>
-	<AppBar position="static">
-		<Toolbar >
-			<Typography variant="h6" component="div">
-				Transcendence
-			</Typography>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null))}}> Back </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('chat')}}> Chat </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+	<div className='basic-main-ctn'>
+			<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="static">
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					</Toolbar>
+				</AppBar>
 			</Box>
-		</Toolbar>
-	</AppBar>
-	</Box>
-            <br/><br/>
+            <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => changeGame(null)}>Back</Button>
+			<br/>
             <h1 style={{display: 'inline', marginLeft: '33%'}}>Waiting for a second player</h1>
             {waitingEffect === 1 && <h1 style={{display: 'inline'}}>.</h1>}
             {waitingEffect === 2 && <h1 style={{display: 'inline'}}>..</h1>}
@@ -100,7 +112,7 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, changeGetGame, chang
 	)
 }
 
-const JoinGame: React.FC<joinGameProps> = ({ user, changeGetGame, changeMenuPage, changeGame }) => {
+const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, changeMenuPage, changeGame }) => {
   const [waitingEffect, setWaitingEffect] = useState<number>(0);
 
   useEffect(()=>{
@@ -125,24 +137,29 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeGetGame, changeMenuPage
   // eslint-disable-next-line
   }, [])
 
+  const logout: () => void = async () => {
+	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
+	changeUser(null);
+	}
+
   return (
-	<div className='home-main-ctn'>
-	<Box textAlign='center'>
-	<AppBar position="static">
-		<Toolbar >
-			<Typography variant="h6" component="div">
-				Transcendence
-			</Typography>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeGetGame(null)}}> Back </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('chat')}}> Chat </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+	<div className='basic-main-ctn'>
+			<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="static">
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					</Toolbar>
+				</AppBar>
 			</Box>
-		</Toolbar>
-	</AppBar>
-	</Box>
-            <br/><br/>
+            <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => changeGetGame(null)}>Back</Button>
+			<br/>
             <h1 style={{display: 'inline', marginLeft: '40%'}}>Searching Game</h1>
             {waitingEffect === 1 && <h1 style={{display: 'inline'}}>.</h1>}
             {waitingEffect === 2 && <h1 style={{display: 'inline'}}>..</h1>}
@@ -150,7 +167,7 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeGetGame, changeMenuPage
     </div>)
 }
 
-const CreateGame: React.FC<createGameProps> = ({ user, changeGetGame, changeMenuPage, changeGame }) => {
+const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame, changeMenuPage, changeGame }) => {
   const [ballSpeed, setBallSpeed] = useState<number>(1);
   const [map, setMap] = useState<string>("black");
 
@@ -159,24 +176,31 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeGetGame, changeMenu
     changeGame(game);
   }
 
+  const logout: () => void = async () => {
+	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
+	changeUser(null);
+	}
+
   return (
-	<div className='home-main-ctn'>
-	<Box textAlign='center'>
-	<AppBar position="static">
-		<Toolbar >
-			<Typography variant="h6" component="div">
-				Transcendence
-			</Typography>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeGetGame(null)}}> Back </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('chat')}}> Chat </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-				<Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
+	<div className='basic-main-ctn'>
+			<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="static">
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					</Toolbar>
+				</AppBar>
 			</Box>
-		</Toolbar>
-	</AppBar>
-	</Box>
-            <h1>Create Game</h1>
+			<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => changeGetGame(null)}>Back</Button>
+			<Box sx={{marginRight:'100px'}}>
+				<h1>Create&nbsp;Game</h1>
+			</Box>
 			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
 				<label>Ball Speed: </label>
 				<input type="number" step="1" min="1" max="3" value={ballSpeed} onChange={(e)=>setBallSpeed(Number(e.target.value))} required/>
@@ -204,33 +228,38 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 
   const quitGame: () => void = async () => {
     if (game === null) return ;
-    if (game.user1.id === user.id || game.user2!.id === user.id) await removeGame(game.id);
+    if (game.user1.id === user.id || game.user2!.id === user.id) removeGame(game.id);
     changeGame(null);
     changeGetGame(null);
   }
 
+  const logout: () => void = async () => {
+	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
+	changeUser(null);
+	}
+
   if (game !== null && game.user2 !== null) {
     return (<PongGame gameInfos={game} user={user} changeUser={changeUser} back={quitGame} player={(game.user1.id === user.id || game.user2.id === user.id)}/>);
   } else if (game !== null) {
-    return <PreGamePage getGame={getGame} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
+    return <PreGamePage getGame={getGame} user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
   } else if (getGame === null) {
     return (
-		<div className='home-main-ctn'>
-				<Box textAlign='center'>
+		<div className='basic-main-ctn'>
+			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
-                    <Toolbar >
-                        <Typography variant="h6" component="div">
-                            Transcendence
-                        </Typography>
-                        <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('home')}}> Back </Button>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('chat')}}> Chat </Button>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('profile')}}> Profile </Button>
-                            <Button variant="contained" sx={{marginRight: '10px'}} onClick={()=>{changeMenuPage('watch')}}> Watch </Button>
-                        </Box>
-                    </Toolbar>
-                </AppBar>
-                </Box>
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					</Toolbar>
+				</AppBar>
+			</Box>
+			<br/>
+			<br/>
             <h1>Play Pong</h1>
 			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
             	<Button variant="contained" onClick={()=>changeGetGame("create")}> Create Game </Button><>&nbsp;&nbsp;</>
@@ -238,9 +267,9 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 			</Box>
         </div>);
   } else if (getGame === "create") {
-    return <CreateGame user={user} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>
+    return <CreateGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>
   } else {
-    return <JoinGame user={user} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>
+    return <JoinGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>
   }
 }
 

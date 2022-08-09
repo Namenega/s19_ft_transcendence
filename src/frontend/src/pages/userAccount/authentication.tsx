@@ -117,9 +117,9 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 			<div className='start-ctn'>
 				{!signup ? <h2>Log in</h2> : <h2>Sign up</h2>}
 				<Stack spacing={2}>
-					<TextField required id="outlined-required" label="Required" defaultValue="Name" onChange={(e)=>setName(e.target.value)}/>
-					{signup && <TextField required id="outlined-required" label="Required" defaultValue="Login" onChange={(e)=>setLogin(e.target.value)}/>}
-					<TextField required id="outlined-required" label="Required" defaultValue="Password" onChange={(e)=>setPassword(e.target.value)}/>
+					<TextField required id="outlined-required" label="Required" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
+					{signup && <TextField required id="outlined-required" label="Required" placeholder="Login" onChange={(e)=>setLogin(e.target.value)}/>}
+					<TextField required id="outlined-required" label="Required" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
 					{signup && <Button className='game-button-text' variant="outlined"> 
 						Upload File <input style={{ display: 'none' }} type="file" accept="image/*"/>
 					</Button>}
