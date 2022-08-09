@@ -306,7 +306,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		return (
 			<div className='home-main-ctn'>
 				<Box sx={{ flexGrow: 1 }}>
-					<AppBar position="static">
+					<AppBar position="static" color="secondary">
 						<Toolbar>
 						<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
 							<MenuIcon onClick={() => changeMenuPage('home')}/>
@@ -314,7 +314,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 							ft_transcendence
 						</Typography>
-						<Button variant="contained" color="secondary" onClick={() => isLogout()}>Logout</Button>
+						<Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
 						</Toolbar>
 					</AppBar>
 				</Box>
@@ -440,10 +440,3 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	}
 }
 export default ChatsView;
-
-
-
-
-
-
-

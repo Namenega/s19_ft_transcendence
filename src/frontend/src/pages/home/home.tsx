@@ -39,7 +39,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 	return (
 		<div className='menu-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position="static">
+				<AppBar position="static" color="secondary">
 					<Toolbar>
 					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
 						<MenuIcon />
@@ -47,7 +47,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="secondary" onClick={() => isLogout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>

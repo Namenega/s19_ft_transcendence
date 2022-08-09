@@ -1,132 +1,72 @@
+/*//////////////////////// à enlever //////////////////////////*/
+
+h1 {
+  /* text-align: center; */
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p {
+  text-align: center;
+}
+
+.user-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
 /* ******************************************************** */
 /* ******************** Profile Screen ******************** */
 /* ******************************************************** */
 
-  .basic-main-ctn {
-    width: 100%;
-    height: 100vh;
-    background-color: white;
-  }
+.basic-main-ctn {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
 
-  .profile-main-ctn {
-    width: 100%;
-    height: 100%;
-    display: inline-flexbox;
-    justify-content: center; /*position horizontale */
-    align-items: center;  /*position verticale */
-  }
-  
-  .profile-ctn {
-    width: 98%;
-    height: 100%;
-    margin-top: 25px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 10px;
-    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
-    background-color: #a8d6ab;
-    display: inline-flexbox;
-  }
-  
-  .profile-banner-ctn {
-    width: 98,5%;
-    height: 25%;
-    margin-top: 25px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 10px;
-    padding: 1rem;
-    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
-    background-color: #1f4e60;
-    display: flex;
-  }
-  
-  .profile-banner-statistics-ctn {
-    width: 90%;
-    height: 90%;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 10px;
-    background-color: #66bb6a;
-  }
-  
-  .profile-banner-avatar-ctn {
-    background-image: url('http://i.stack.imgur.com/Dj7eP.jpg%27');
-    width: 150px;
-    height: 150px;
-    background-size: cover;
-    background-position: top center;
-    border-radius: 50%;
-    margin-top: 20px;
-    margin-left: 10px;
-    display: inline-flexbox;
-  }
-  
-  .profile-history-achievements-ctn {
-    width: 98,5%;
-    height: 100%;
-    /* margin-top: 25px; */
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 10px;
-    padding: 1rem;
-    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
-    display: flex;
-  }
-  
-  .profile-history-ctn {
-    width: 100%;
-    height: 100%;
-    margin-top: 10px;
-    /* margin-left: 10px; */
-    border-radius: 10px;
-    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
-    background-color: #1f4e60;
-    display: flex;
-  }
-  
-  .profile-achievements-ctn {
-    width: 100%;
-    height: 100%;
-    margin-top: 10px;
-    margin-left: 10px;
-    /* margin-right: 10px; */
-    border-radius: 10px;
-    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);  25*/
-    background-color: #1f4e60;
-    display: flex;
-  }
+.profile-main-ctn {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center; /*position horizontale */
+  align-items: center;  /*position verticale */
+}
 
-  .profile-settings-ctn {
-    width: 100%;
-    height: 100%;
-    margin-top: 10px;
-    /* margin-right: 25px; */
-    margin-left: 10px;
-    border-radius: 10px;
-    /*box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);*/
-    background-color: #1f4e60;
-    /* display: flex; */
-    display: inline-flexbox;
-  }
+.profile-ctn {
+  width: 25%;
+  height: 65%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /*position verticale */
+  align-items: center;  /*position horizontale */
+  text-align: center;
+  padding: 20px;
+}
 
-  .user-name {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.profile-title {
+margin-bottom: 10px;
+}
 
-  /*//////////////////////// à enlever //////////////////////////*/
-
-  h1 {
-    /* text-align: center; */
-    width: 100px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  p {
-    text-align: center;
-  }
+.extension-ctn {
+  width: 25%;
+  height: 80%;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /*position verticale */
+  align-items: center;  /*position horizontale */
+  text-align: center;
+  padding: 20px;
+  margin-left: 10%;
+}
