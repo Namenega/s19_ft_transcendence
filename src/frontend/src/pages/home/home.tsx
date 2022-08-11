@@ -12,9 +12,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void}> = ({user, changeMenuPage }) => {
-	const isLogout = () => {
-		window.location.href = 'http://localhost:3000'
-	  }
+
+	// const isLogout = () => {
+	// 	window.location.href = 'http://localhost:3000'
+	//   }
+
+	const logout: () => void = async () => {
+		let profile = user;
+		if (profile.status === "Online") await updateUser(profile.id, {status: "Offline"});
+	}
+
 	// return (
 	// 	<Box sx={{ flexGrow: 1 }}>
 	// 	<AppBar position="static">
@@ -47,7 +54,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
@@ -69,6 +76,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => void}> = ({ user, changeUser }) => {
 	const [menuPage, setMenuPage] = useState<string>("home");
 	const [game, setGame] = useState<GameDto | null>(null);
+	const [forward, setForward] = useState<string>("home");
 
 	/*
 	**Goal: Perform actions before user quits unexpectedly (close tabs, refresh, goes to other link...), especially set user status as offline...
@@ -144,6 +152,41 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	const back: () => void = () => {
 		changeMenuPage("home");
 	}
+
+	const logout: () => void = async () => {
+		let profile = user;
+		if (profile.status === "Online") 
+			await updateUser(profile.id, {status: "Offline"});
+		changeUser(null);
+	}
+
+	const buttonEvent = async (e: any) => {
+		e.preventDefault();
+		console.log(e.state);
+		console.log(menuPage);
+		// if (e.state === -1 && menuPage === "home")
+		// 	logout();
+		if (e.state === -1 && menuPage !== "home")
+		{
+			setForward(menuPage);
+			changeMenuPage("home");
+		}
+		else if (e.state === 1)
+			changeMenuPage(forward);
+	}
+	
+	useEffect(() => {
+		// window.history.pushState(null, "", window.location.pathname);
+		window.history.pushState(-1, ""); // back state
+		window.history.pushState(0, ""); // main state
+		window.history.pushState(1, ""); // forward state
+		window.history.go(-1); // start in main state
+		window.addEventListener('popstate', buttonEvent);
+		console.log("Garreth");
+		return () => {
+			window.removeEventListener('popstate', buttonEvent);  
+		};
+	}, [menuPage]);
 
 	if (menuPage === "home") {
 	    return <HomeDisplay user={user} changeMenuPage={changeMenuPage}/>;

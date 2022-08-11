@@ -21,7 +21,7 @@
 
 .profile-ctn {
   width: 500px;
-  height: 750px;
+  height: 700px;
   border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
   background-color: white;
@@ -39,7 +39,7 @@ margin-bottom: 10px;
 
 .extension-ctn {
   width: 500px;
-  height: 750px;
+  height: 800px;
   border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
   background-color: white;

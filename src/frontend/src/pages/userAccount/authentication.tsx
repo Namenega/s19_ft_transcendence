@@ -150,16 +150,32 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 		}
 	}
 
-    // return (<div> TWO FACTOR AUTHENTIFICATION </div>)
-	return (
-		<div>
-						<h1>Two Factor Authentication</h1>
-						<label>Token: </label>
-						<input type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>
-						{/* {token.length === 6 && verify2FAuth()} */}
-						{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
+	const keyPress: (e: any) => void = (e) => {
+		if(e.keyCode == 13){
+			verify2FAuth();
+		// put the login here
+		}
+	}
+
+    return (
+		<div className='start-main-ctn' style={{backgroundImage:"url('./img/main-bg.jpg')"}}>
+			<div className='start-ctn'>
+				<h2 className='start-title'>Two Factor Authentication</h2>
+				<br/>
+				<TextField label="Token" defaultValue={token} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setToken(e.target.value)}/>
+				{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
+			</div>
 		</div>
 	)
+	// return (
+	// 	<div>
+	// 					<h1>Two Factor Authentication</h1>
+	// 					<label>Token: </label>
+	// 					<input type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>
+	// 					{/* {token.length === 6 && verify2FAuth()} */}
+	// 					{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
+	// 	</div>
+	// )
 }
 
 const loginWithApi = async () => {
@@ -185,7 +201,8 @@ const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: 
 				{alreadyConnected && <p>User is already connected</p>}
 			</Stack>
 		</div>
-	</div>);
+	</div>
+	);
 	// return (<div>
 	// 					<h1>Pong Game</h1>
 	// 					<button className={styles.loginButton} onClick={()=>{changePage('login')}}>Log in</button><>&nbsp;&nbsp;</>

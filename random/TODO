@@ -1,8 +1,5 @@
 - Input file hidden not working
-- add theme colors
-- remove css en trop
 - browser history
 - bouton back dans chat
-- remplacer les ctnrs par containers mui
-- Authentication settings
 - faire log out correct
+- handle axios error

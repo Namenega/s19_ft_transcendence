@@ -13,7 +13,6 @@ import QRCode from 'qrcode';
 import { AppBar, Avatar, Button, IconButton, Stack, Toolbar, Typography, Badge, Card, Container, ButtonGroup, TextField, FormControlLabel, Checkbox, CardContent, Divider, ListItem, Paper, InputBase } from "@mui/material";
 import { Box } from "@mui/system";
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 
 let g_viewed_users_history: UserDto[] = [];
 
@@ -122,6 +121,13 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 	 	reader.readAsDataURL(event.target.files[0]);
  }
 
+		const keyPress: (e: any) => void = (e) => {
+			if(e.keyCode == 13){
+				verify2FAuth();
+			// put the login here
+			}
+		}
+
  	return (
         <div className='extension-ctn'>
 			<h2 className='profile-title'>Settings</h2>
@@ -130,11 +136,10 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 				<Button variant="contained" type="submit" onClick={()=>newLogin(login)}>Submit</Button>
 				{loginAlreadyInUse && <span>This login is already in use</span>}
 				<Divider variant="middle" />
-				<FormControlLabel control={<Checkbox onChange={()=>changeTwoFactorAuthentication()}/>} label="Two Factor Authentication" />
+				<FormControlLabel control={<Checkbox checked={activate2FA} onChange={()=>changeTwoFactorAuthentication()}/>} label="Two Factor Authentication" />
 				{qrcode !== '' && <img src={qrcode} alt={"QR code"}/>}
-				{qrcode !== '' && <TextField required id="outlined-required" label="Required" defaultValue={token} onChange={(e)=>setToken(e.target.value)}/>} 
-				{/* {token.length === 6 && verify2FAuth()} */}
-				{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
+				{qrcode !== '' && <TextField label="Token" defaultValue={token} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setToken(e.target.value)}/>}
+				{wrongToken && <span>Wrong Token</span>}
 				<Divider variant="middle" />
 				<Button className='game-button-text' variant="outlined"> 
 					Change Avatar <input style={{ display: 'none' }} type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
@@ -442,14 +447,14 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 		if (settings)
 			setSettings(false);
 		else
-			setSettings(true); 
+			setSettings(true);
 	}
 
 	const showMatchH: () => void = () => {
 		if (showMH)
 			setShowMH(false);
 		else
-			setShowMH(true); 
+			setShowMH(true);
 	}
 
 	const showFriends: () => void = () => {
@@ -480,7 +485,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 			showFriends();
 		}
 	}
-
+	
 	return (
 		<div className='full-profile-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
