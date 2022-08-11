@@ -125,7 +125,12 @@ export const getUserByLogin: (login: string) => Promise<UserDto | null> = async 
  */
 export const updateUser: (id: number, updateUserDto: UpdateUserDto) =>
 		void = async (id, updateUserDto) => {
-	await axios.patch(`/users/${id}`, updateUserDto);
+	await axios.patch(`/users/${id}`, updateUserDto)
+			.catch(function (error: any) {
+				if (error.response) {
+					return (error.response);
+				}
+			});
 }
 
 /**

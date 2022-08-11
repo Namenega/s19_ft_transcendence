@@ -37,7 +37,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 	// <Button color="inherit" onClick={() => isLogout()}>Logout</Button>				// à placer au dessus de <Avatar alt="Remy Sharp" src="url('')" />
 
 	return (
-		<div className='menu-main-ctn'>
+		<div className='full-menu-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static" color="secondary">
 					<Toolbar>
@@ -51,7 +51,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 					</Toolbar>
 				</AppBar>
 			</Box>
-			<div className='start-main-ctn' style={{backgroundImage:"url('./img/manette.webp')"}}>
+			<div className='start-main-ctn'>
 				<div className='start-ctn'>
 					<h2 className='start-title'>Menu</h2>
 					<Stack spacing={2}>

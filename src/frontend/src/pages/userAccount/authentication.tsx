@@ -121,7 +121,7 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 					{signup && <TextField required id="outlined-required" label="Required" placeholder="Login" onChange={(e)=>setLogin(e.target.value)}/>}
 					<TextField required id="outlined-required" label="Required" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
 					{signup && <Button className='game-button-text' variant="outlined"> 
-						Upload Avatar <input style={{ display: 'none' }} type="file" accept="image/*"/>
+						Upload Avatar <input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>    {/*style={{ display: 'none' }}*/}
 					</Button>}
 					{accountAlreadyInUse && <p>This account already exists</p>}
 					{nonExistingAccount && <p>This account does not exist</p>}
@@ -150,14 +150,16 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 		}
 	}
 
-    return (<div> TWO FACTOR AUTHENTIFICATION </div>)
-	// return (<div>
-	// 					<h1>Two Factor Authentication</h1>
-	// 					<label>Token: </label>
-	// 					<input className={cs.textInput} type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>
-	// 					{token.length === 6 && verify2FAuth()}
-	// 					{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
-	// 			  </div>)
+    // return (<div> TWO FACTOR AUTHENTIFICATION </div>)
+	return (
+		<div>
+						<h1>Two Factor Authentication</h1>
+						<label>Token: </label>
+						<input type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>
+						{/* {token.length === 6 && verify2FAuth()} */}
+						{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
+		</div>
+	)
 }
 
 const loginWithApi = async () => {
@@ -242,20 +244,12 @@ const Authentication: React.FC = () => {
 		setAlreadyConnected(newValue);
 	}
 
-	//// à enlever
-	function crNewUser()
-	{
-		let newUser = {id: 1, name: "Garreth", login: "Garreth", password: "Garreth", avatar: "Garreth", has2FA: false, secret2FA: "Garreth", status: "Online", numberOfWin: 2, numberOfLoss: 2, latestTimeOnline: "Yesterday"};
-		return (newUser);
-	}
-	////
-
 	if (user !== null) {
 		if (twoFA)
 			return (<TwoFactorAuthentication user={user} changeTwoFA={changeTwoFA} twoFA={twoFA}/>)
 		if (page !== "start")
             changePage("start");
-		return (<Home user={user} changeUser={changeUser}/>); 		/// remplacer crNewUser par user
+		return (<Home user={user} changeUser={changeUser}/>);
 	}
     else if (page === "start") {
 		return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
