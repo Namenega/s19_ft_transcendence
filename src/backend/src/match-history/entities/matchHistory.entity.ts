@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { ValidateNested, IsInt, IsPositive, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -6,10 +6,10 @@ import { Type } from 'class-transformer';
 /* It's a class that represents a match history entry for a user */
 @Entity()
 export class MatchHistoryEntity {
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn()
 	id: number;
 
-	@ManyToOne(type => UserEntity, UserEntity => UserEntity.matchHistory, {eager: true})
+	@ManyToOne(() => UserEntity, (user) => user.matchHistory, {eager: true})
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => UserEntity)
@@ -18,7 +18,7 @@ export class MatchHistoryEntity {
 	@Column()
 	@IsInt()
 	@Min(0)
-	@Max(5)
+	@Max(11)
 	userScore: number;
 
 	@Column()
@@ -29,6 +29,6 @@ export class MatchHistoryEntity {
 	@Column()
 	@IsInt()
 	@Min(0)
-	@Max(5)
+	@Max(11)
 	opponentScore: number;
 }

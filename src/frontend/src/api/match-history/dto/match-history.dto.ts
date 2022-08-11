@@ -2,16 +2,16 @@ import { UserDto } from "../../user/dto/user.dto"
 
 export interface MatchHistoryDto {
   id: number;
-  me: UserDto;
-  my_score: number;
-  opponent_id: number;
-  opponent_score: number;
+  user: UserDto;
+  userScore: number;
+  opponentId: number;
+  opponentScore: number;
 }
 
 export interface CompleteMatchHistoryDto {
   id: number;
-  me: UserDto;
-  my_score: number;
+  user: UserDto;
+  userScore: number;
   opponent: UserDto;
-  opponent_score: number;
+  opponentScore: number;
 }

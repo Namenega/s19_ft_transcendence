@@ -31,7 +31,7 @@ export class UserEntity {
 	/* Creating a column in the database called password, and it is a string. */
 	@Column()
 	@IsString()
-	password: string
+	password: string;
 
 	/* Creating a column in the database called avatar, and it is a string. */
 	@Column()
@@ -67,45 +67,45 @@ export class UserEntity {
 
 	/* Creating a one to many relationship between the UserEntity and the
 	MatchHistoryEntity. */
-	@OneToMany(type => MatchHistoryEntity, MatchHistoryEntity => MatchHistoryEntity.user)
+	@OneToMany(() => MatchHistoryEntity, (matchHistory) => matchHistory.user)
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => MatchHistoryEntity)
-	matchHistory: MatchHistoryEntity[]
+	matchHistory: MatchHistoryEntity[];
 
 	/* Creating a one to many relationship between the UserEntity and the
 	FriendsEntity. */
-	@OneToMany(type => FriendsEntity, FriendsEntity => FriendsEntity.user)
+	@OneToMany(() => FriendsEntity, (friends) => friends.user)
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => FriendsEntity)
-	friends: FriendsEntity[]
+	friends: FriendsEntity[];
 
 	/* Creating a many to many relationship between the UserEntity and the
 	DirectMessageEntity. */
-	@ManyToMany(type => DirectMessageEntity, DirectMessageEntity => DirectMessageEntity.users)
+	@ManyToMany(() => DirectMessageEntity, (directMessage) => directMessage.users)
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => DirectMessageEntity)
-	directMessage: DirectMessageEntity[]
+	directMessage: DirectMessageEntity[];
 
 	/* Creating a many to many relationship between the UserEntity and the
 	ChannelsEntity. */
-	@ManyToMany(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.users)
+	@ManyToMany(() => ChannelsEntity, (channels) => channels.users)
 	@JoinTable()
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => ChannelsEntity)
-	channels: ChannelsEntity[]
+	channels: ChannelsEntity[];
 
 	/* A column in the database called latestTimeOnline, and it is a string. */
 	@Column()
 	@IsString()
 	@IsNotEmpty()
 	@IsNumberString()
-	latestTimeOnline: string
+	latestTimeOnline: string;
 }

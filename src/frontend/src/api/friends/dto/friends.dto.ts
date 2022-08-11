@@ -4,5 +4,5 @@ import { UserDto } from "../../user/dto/user.dto";
 export interface FriendsDto {
 	id: number;
 	user: UserDto;
-	friend_id: number;
+	friendId: number;
 }

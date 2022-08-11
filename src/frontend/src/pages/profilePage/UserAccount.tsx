@@ -202,10 +202,8 @@ const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderF
   }
 
 	const _addFriend: (item: UserDto) => void = async (item) => {
-		await addFriend(createNewFriend(profile, item.id));
-		console.log(item.id);
-		console.log(profile.id);
-		await addFriend(createNewFriend(item, profile.id));
+		addFriend(createNewFriend(profile, item.id));
+		addFriend(createNewFriend(item, profile.id));
 		handleSearch("");
 		renderFriends();
 	}
@@ -253,7 +251,7 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
 	useEffect(() => {
 		const getUserFriends: () => void = async () => {
 			let friends: FriendsDto[] = await getFriendsOfUser(profile.login);
-			let friends1: (UserDto | null)[] = await Promise.all(friends.map(async (item): Promise<UserDto | null> => { return await getFriendFromId(item.friend_id); }));
+			let friends1: (UserDto | null)[] = await Promise.all(friends.map(async (item): Promise<UserDto | null> => { return await getFriendFromId(item.friendId); }));
 			// @ts-ignore
 			let friends2: UserDto[] = friends1.filter((friend) => friend !== null);
 			if (_.isEqual(userFriends, friends2)) return ;
@@ -323,14 +321,14 @@ const MatchHistory: React.FC<mhProps> = ({ user }) => {
 	const [userMatchHistory, setUserMatchHistory] = useState<CompleteMatchHistoryDto[]>([]);
 
 	const createCompleteMatchHistory: (match: MatchHistoryDto) => Promise<CompleteMatchHistoryDto | null> = async (match) => {
-		const opponent = await getUser(match.opponent_id);
+		const opponent = await getUser(match.opponentId);
 		if (opponent === null) return null;
 		return {
 			id: match.id,
-			me: match.me,
-			my_score: match.my_score,
+			user: match.user,
+			userScore: match.userScore,
 			opponent: opponent,
-			opponent_score: match.opponent_score
+			opponentScore: match.opponentScore
 		};
 	}
 
@@ -350,9 +348,9 @@ const MatchHistory: React.FC<mhProps> = ({ user }) => {
 			<h2 className='profile-title'>Match History</h2>
 				<table style={{"margin": "auto"}}>
 				{userMatchHistory.length ? userMatchHistory.map((elem)=><tr>
-				<td>{`${elem.me.login} VS ${elem.opponent.login}`}</td>
+				<td>{`${elem.user.login} VS ${elem.opponent.login}`}</td>
 				<td>|</td>
-				<td>{`${elem.my_score} : ${elem.opponent_score}`}</td>
+				<td>{`${elem.userScore} : ${elem.opponentScore}`}</td>
 				</tr>) : <p>No matches</p>}
 				</table>
 		</div>

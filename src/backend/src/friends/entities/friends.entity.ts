@@ -11,7 +11,7 @@ export class FriendsEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@ManyToOne(type => UserEntity, UserEntity => UserEntity.friends)
+	@ManyToOne(() => UserEntity, (user) => user.friends, {eager: true})
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => UserEntity)

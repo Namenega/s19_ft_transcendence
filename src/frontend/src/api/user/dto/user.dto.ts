@@ -18,12 +18,12 @@ export interface UserDto {
 	status: string;
 	numberOfWin: number;
 	numberOfLoss: number;
-	matchHistory: MatchHistoryDto[]
-	friends: FriendsDto[]
-	dms: DmDto[]
-	dms_messages: DmMessageDto[]
-	channels: ChannelDto[]
-	channels_messages: ChannelMessageDto[]
-	channels_users: ChannelUserDto[]
-	latestTimeOnline: string
+	matchHistory: MatchHistoryDto[];
+	friends: FriendsDto[];
+	dms: DmDto[];
+	dms_messages: DmMessageDto[];
+	channels: ChannelDto[];
+	channels_messages: ChannelMessageDto[];
+	channels_users: ChannelUserDto[];
+	latestTimeOnline: string;
 }

@@ -42,7 +42,7 @@ import { setUserStatusInterceptor } from './interceptors/userStatus.interceptor'
 })
 export class AppModule {
     async configure(consumer: MiddlewareConsumer) {
-        await consumer.apply(channelPasswordEncryptionMiddleware).forRoutes('/channels');
-        await consumer.apply(userPasswordEncryptionMiddleware).forRoutes('/user');
+        consumer.apply(channelPasswordEncryptionMiddleware).forRoutes('/channels');
+        consumer.apply(userPasswordEncryptionMiddleware).forRoutes('/user');
     }
 }

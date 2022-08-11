@@ -3,19 +3,19 @@ import { CreateMatchHistoryDto } from "./dto/create-match-history.dto"
 import { UpdateMatchHistoryDto } from "./dto/update-match-history.dto"
 import { MatchHistoryDto } from "./dto/match-history.dto"
 import { UserDto } from "../user/dto/user.dto";
-const axios = require('axios');
+import axios from 'axios';
 axios.defaults.baseURL = API_ENDPOINT;
 
 export const addMatchHistory: (createMatchHistoryDto: CreateMatchHistoryDto) => void = async (createMatchHistoryDto) => {
   await axios.post("/match-history", createMatchHistoryDto);
 }
 
-export const createNewMatchHistory: (me: UserDto, my_score: number, opponent_id: number, opponent_score: number) => CreateMatchHistoryDto = (me, my_score, opponent_id, opponent_score) => {
+export const createNewMatchHistory: (user: UserDto, userScore: number, opponentId: number, opponentScore: number) => CreateMatchHistoryDto = (user, userScore, opponentId, opponentScore) => {
   let createMatchHistoryDto: CreateMatchHistoryDto = {
-    me: me,
-    my_score: my_score,
-    opponent_id: opponent_id,
-    opponent_score: opponent_score
+    user: user,
+    userScore: userScore,
+    opponentId: opponentId,
+    opponentScore: opponentScore
   }
   return createMatchHistoryDto;
 }

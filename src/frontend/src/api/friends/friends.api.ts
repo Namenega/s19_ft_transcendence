@@ -5,7 +5,7 @@ import { FriendsDto } from "./dto/friends.dto";
 import { UpdateFriendsDto } from "./dto/updateFriends.dto";
 
 /* Importing the axios library and setting the baseURL to the API_ENDPOINT */
-const axios = require('axios');
+import axios from 'axios';
 axios.defaults.baseURL = API_ENDPOINT;
 
 /**
@@ -21,16 +21,16 @@ export const addFriend: (createFriendDto: CreateFriendsDto) => void = async (cre
  * This function takes in a user and a friend_id and returns a CreateFriendsDto
  * object
  * @param user - UserDto - this is the user that is currently logged in
- * @param friend_id - The id of the user you want to add as a friend
+ * @param friendId - The id of the user you want to add as a friend
  * @returns A function that takes in a user and a friend_id and returns a
  * CreateFriendsDto
  */
-export const createNewFriend: (me: UserDto, friend_id: number) => CreateFriendsDto = (user, friend_id) => {
-	let createFriendDto: CreateFriendsDto = {
+export const createNewFriend: (user: UserDto, friendId: number) => CreateFriendsDto = (user, friendId) => {
+	let createFriendsDto: CreateFriendsDto = {
 		user: user,
-		friend_id: friend_id,
+		friendId: friendId
 	}
-	return createFriendDto;
+	return createFriendsDto;
 }
 
 /**

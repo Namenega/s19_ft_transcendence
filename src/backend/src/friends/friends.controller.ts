@@ -23,7 +23,7 @@ export class FriendsController {
 	endpoint. */
 	@Get('/users/:login')
 	findUserFriends(@Param('login') login: string) {
-		return this.friend.findUserFriends
+		return this.friend.findUserFriends(login);
 	}
 
 	/* A method that is called when a GET request is made to the

@@ -81,7 +81,7 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, ch
 				<AppBar position="static">
 					<Toolbar>
 					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-						<MenuIcon onClick={() => changeMenuPage('home')}/>
+						<MenuIcon onClick={() => {changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null)); changeMenuPage('home')}}/>
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
@@ -91,7 +91,7 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, ch
 				</AppBar>
 			</Box>
             <br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => changeGame(null)}>Back</Button>
+			&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => {changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null))}}>Back</Button>
 			<br/>
             <h1 style={{display: 'inline', marginLeft: '33%'}}>Waiting for a second player</h1>
             {waitingEffect === 1 && <h1 style={{display: 'inline'}}>.</h1>}

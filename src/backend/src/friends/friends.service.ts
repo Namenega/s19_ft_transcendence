@@ -81,7 +81,6 @@ export class FriendsService {
 	/**
 	 * This function deletes a friend from the database
 	 * @param {number} id - number - The id of the friend to be deleted
-	 * @param {UpdateFriendsDto} updateFriendsDto - This is the DTO that we created
 	 * earlier.
 	 */
 	async remove(id: number): Promise<void> {
