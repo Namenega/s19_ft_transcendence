@@ -3,13 +3,10 @@ import { GameDto } from "../../api/games/dto/game.dto";
 import { addGame, getAllGames, getGame as GetGame, removeGame, updateGame } from "../../api/games/games.api";
 import { UserDto } from "../../api/user/dto/user.dto";
 import PongGame from "./gameFunc/PongGame";
-// import styles from "../../css/play.module.css";
-// import cs from "../../css/convention.module.css";
 import { AppBar, Box, Button, Toolbar, Typography, IconButton } from "@mui/material";
 import { updateUser } from "../../api/user/user.api";
 import MenuIcon from '@mui/icons-material/Menu';
 import "./Play.css";
-import { margin } from '@mui/system';
 
 const Maps = ['black', 'white', 'winter', 'summer', 'night'];
 
@@ -80,8 +77,8 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, ch
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-						<MenuIcon onClick={() => {changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null)); changeMenuPage('home')}}/>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => {changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null)); changeMenuPage('home')}}>
+						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
@@ -147,8 +144,8 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, ch
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage('home')}>
+						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
@@ -186,8 +183,8 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage('home')}>
+						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
@@ -248,8 +245,8 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 			<Box sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-						<MenuIcon onClick={() => changeMenuPage('home')}/>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage('home')}>
+						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence

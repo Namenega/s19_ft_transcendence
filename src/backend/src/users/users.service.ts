@@ -47,7 +47,7 @@ export class UsersService {
 	 * @returns An array of UserEntity
 	 */
 	async findAllRank(): Promise<UserEntity[]> {
-		return await this.UserRepo.find({order: {numberOfWin: "DESC"}});
+		return await this.UserRepo.find({order: {elo: "DESC"}});
 	}
 
 	/**

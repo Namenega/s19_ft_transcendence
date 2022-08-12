@@ -13,7 +13,6 @@ import { Game } from "./Game";
 import { addMatchHistory, createNewMatchHistory, getMatchHistoryOfUser } from "../../../api/match-history/match-history.api";
 import { getUser } from "../../../api/user/user.api";
 import { removeGame } from "../../../api/games/games.api";
-// import cs from "../../../css/convention.module.css";
 
 
 
@@ -67,9 +66,9 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 					user2.id,
 					game.myNum === scores.win.p ? scores.loose.score : scores.win.score));
 				if (game.myNum === scores.win.p) {
-					updateUser(props.user.id, {numberOfWin: props.user.numberOfWin + 1});
+					updateUser(props.user.id, {numberOfWin: props.user.numberOfWin + 1, elo: props.user.elo + (32 * (1 - (1 / (1 + Math.pow(10, (user2.elo - props.user.elo) / 400))))) | 0});
 				} else {
-					updateUser(props.user.id, {numberOfLoss: props.user.numberOfLoss + 1});
+					updateUser(props.user.id, {numberOfLoss: props.user.numberOfLoss + 1, elo: props.user.elo + (32 * (0 - (1 / (1 + Math.pow(10, (user2.elo - props.user.elo) / 400))))) | 0});
 				}
 				await new Promise(r => setTimeout(r, 1000));
 				let numberOfMatchHistoryOpponentAfter: number = (await getMatchHistoryOfUser(user2.login)).length;
@@ -79,9 +78,9 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 						props.user.id,
 						game.myNum !== scores.win.p ? scores.loose.score : scores.win.score));
 						if (game.myNum !== scores.win.p) {
-							updateUser(user2.id, {numberOfWin: user2.numberOfWin + 1});
+							updateUser(user2.id, {numberOfWin: user2.numberOfWin + 1, elo: user2.elo + (32 * (1 - (1 / (1 + Math.pow(10, (props.user.elo - user2.elo) / 400))))) | 0});
 						} else {
-							updateUser(user2.id, {numberOfLoss: user2.numberOfLoss + 1});
+							updateUser(user2.id, {numberOfLoss: user2.numberOfLoss + 1, elo: user2.elo + (32 * (0 - (1 / (1 + Math.pow(10, (props.user.elo - user2.elo) / 400))))) | 0});
 						}
 				}
 				let latestUser = await getUser(props.user.id);

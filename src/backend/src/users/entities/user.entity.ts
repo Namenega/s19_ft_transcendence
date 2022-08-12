@@ -65,6 +65,11 @@ export class UserEntity {
 	@Min(0)
 	numberOfLoss: number;
 
+	@Column()
+	@IsInt()
+	@Min(0)
+	elo: number;
+
 	/* Creating a one to many relationship between the UserEntity and the
 	MatchHistoryEntity. */
 	@OneToMany(() => MatchHistoryEntity, (matchHistory) => matchHistory.user)

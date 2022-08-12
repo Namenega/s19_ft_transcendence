@@ -39,6 +39,7 @@ export const createNewUser: (name: string, login: string, avatar: string, passwo
 		status: "Online",
 		numberOfWin: 0,
 		numberOfLoss: 0,
+		elo: 1000,
 		matchHistory: [],
 		friends: [],
 		dms: [],

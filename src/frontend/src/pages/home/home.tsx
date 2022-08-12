@@ -8,6 +8,7 @@ import { getUser, updateUser } from "../../api/user/user.api";
 import ChatsView from "../chat/chatsView";
 import Profile from "../profilePage/UserAccount";
 import Play from "../playPage/Play";
+import Watch from "../playPage/Watch";
 import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
 
@@ -196,8 +197,8 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame}/>;
 	} else if (menuPage === "profile") {
 		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} changeGame={changeGame}/>;
-	// } else if (menuPage === "watch") {
-	// 	return <Watch back={back} changeGame={changeGame}/>;
+	} else if (menuPage === "watch") {
+		return <Watch back={back} changeGame={changeGame}/>;
 	} else {
 		return <h1>Home Error</h1>;
 	}

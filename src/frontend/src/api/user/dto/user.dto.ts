@@ -18,6 +18,7 @@ export interface UserDto {
 	status: string;
 	numberOfWin: number;
 	numberOfLoss: number;
+	elo: number;
 	matchHistory: MatchHistoryDto[];
 	friends: FriendsDto[];
 	dms: DmDto[];
