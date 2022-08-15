@@ -6,17 +6,13 @@ import { getAllGames, removeGame } from "../../api/games/games.api";
 import { UserDto } from "../../api/user/dto/user.dto";
 import { getUser, updateUser } from "../../api/user/user.api";
 import ChatsView from "../chat/chatsView";
-import Profile from "../profilePage/UserAccount";
-import Play from "../playPage/Play";
-import Watch from "../playPage/Watch";
+import Profile from "../profile/UserAccount";
+import Play from "../play/Play";
+import Watch from "../watch/Watch";
 import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void}> = ({user, changeMenuPage }) => {
-
-	// const isLogout = () => {
-	// 	window.location.href = 'http://localhost:3000'
-	//   }
 
 	const logout: () => void = async () => {
 		let profile = user;
@@ -194,7 +190,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	} else if (menuPage === "play" || game !== null) {
 		return <Play user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
 	} else if (menuPage === "chat") {
-		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame}/>;
+		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame} back={back}/>;
 	} else if (menuPage === "profile") {
 		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} changeGame={changeGame}/>;
 	} else if (menuPage === "watch") {

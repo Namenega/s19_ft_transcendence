@@ -11,7 +11,7 @@ import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
 import _ from "underscore"
 import './chatsView.css'
-import { AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemText, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemText, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import { Filter, Filter1Outlined } from "@mui/icons-material"
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -37,7 +37,8 @@ interface chatsViewProps {
 	user: UserDto,
 	changeUser: (newUser: UserDto | null) => void,
 	changeMenuPage: (newMenuPage: string) => void,
-	changeGame: (newGame: GameDto | null) => void
+	changeGame: (newGame: GameDto | null) => void,
+	back: () => void
 }
 
 const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrentChat }) => {
@@ -78,26 +79,33 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 		await addChannelUser(createNewChannelUser(channel, user, false, false));
 		changeCurrentChat((await getChannel(channel.id)));
 	}
-	
+
 	return (
-		<div>
-			<br/>
-			<input className="textInput" placeholder={"Search channel..."} type="text" value={searchText}
-				onChange={(e) => handleSearch(e.target.value)}/>
-			<br/>
-			{searchResults.map((item) =>
-				<div>
-					<br/>
-					<span>{item.name}</span><>&nbsp;&nbsp;</>
-					{item.type === "password" && <><input className="textInput" placeholder={"Password..."} type="password" value={password}
-							onChange={(e)=>setPassword(e.target.value)}/><>&nbsp;&nbsp;</></>}
-					<Button variant="contained" className="startChannelButton" onClick={(e)=>{onSubmit(item)}}>
-						Join
-					</Button>
-					<br/>
-				</div>)}
+		<div className='chat-extension-ctn'>
+			<h2 className='chat-title'>Join channel</h2>
+
 		</div>
 	);
+	
+	// return (
+	// 	<div>
+	// 		<br/>
+	// 		<input className="textInput" placeholder={"Search channel..."} type="text" value={searchText}
+	// 			onChange={(e) => handleSearch(e.target.value)}/>
+	// 		<br/>
+	// 		{searchResults.map((item) =>
+	// 			<div>
+	// 				<br/>
+	// 				<span>{item.name}</span><>&nbsp;&nbsp;</>
+	// 				{item.type === "password" && <><input className="textInput" placeholder={"Password..."} type="password" value={password}
+	// 						onChange={(e)=>setPassword(e.target.value)}/><>&nbsp;&nbsp;</></>}
+	// 				<Button variant="contained" className="startChannelButton" onClick={(e)=>{onSubmit(item)}}>
+	// 					Join
+	// 				</Button>
+	// 				<br/>
+	// 			</div>)}
+	// 	</div>
+	// );
 
 	// return (<div>
 	// 			<br/>
@@ -133,44 +141,53 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 			changeCurrentChat((await getChannel(NewChannel.id)));
 		}
 	}
+
+	return (
+		<div className='chat-extension-ctn'>
+			<h2 className='chat-title'>New channel</h2>
+
+		</div>
+	);
 	
-	return (<div>
-				<br/>
-				<label>Channel name: </label>
-				<br/><br/>
-				<input className="textInput" type="text" maxLength={20}
-					value={name} name="channelname"
-					onChange={(e)=>setName(e.target.value)} required/>
-				<br/><br/>
-				<input type="radio" name="channeltype" onChange={()=>setType("public")} required/>
-				<Button variant="contained"
-						sx={{margin: 1}}
-						color={type === "public" ? "secondary" : "primary"}>public</Button>
-				<br/>
-				<input type="radio" name="channeltype" onChange={()=>setType("private")} required/>
-				<Button variant="contained"
-						sx={{margin: 1}}
-						color={type === "private" ? "secondary" : "primary"}>private</Button>
-				<br/>
-				<input type="radio" name="channeltype" onChange={()=>setType("password")} required/>
-				<Button variant="contained"
-						sx={{margin: 1}}
-						color={type === "password" ? "secondary" : "primary"}>password</Button>
-				{type === "password" &&
-					<>
-						<input className="textInput" placeholder={"Password..."}
-							type="password" maxLength={20} value={password}
-							onChange={(e)=>setPassword(e.target.value)}/>
-					</>
-				}
-				<br/><br/>
-				{nameAlreadyInUse && <p>Name already exists, try another one.</p> && <br/>}
-				<Button variant="contained" type="submit"
-						onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>
-					Submit
-				</Button>
-				<br/><br/>
-			</div>);
+	// return (<div>
+	// 			<br/>
+	// 			<label>Channel name: </label>
+	// 			<br/><br/>
+	// 			<input className="textInput" type="text" maxLength={20}
+	// 				value={name} name="channelname"
+	// 				onChange={(e)=>setName(e.target.value)} required/>
+	// 			<br/><br/>
+	// 			<input type="radio" name="channeltype" onChange={()=>setType("public")} required/>
+	// 			<Button variant="contained"
+	// 					sx={{margin: 1}}
+	// 					color={type === "public" ? "secondary" : "primary"}>public</Button>
+	// 			<br/>
+	// 			<input type="radio" name="channeltype" onChange={()=>setType("private")} required/>
+	// 			<Button variant="contained"
+	// 					sx={{margin: 1}}
+	// 					color={type === "private" ? "secondary" : "primary"}>private</Button>
+	// 			<br/>
+	// 			<input type="radio" name="channeltype" onChange={()=>setType("password")} required/>
+	// 			<Button variant="contained"
+	// 					sx={{margin: 1}}
+	// 					color={type === "password" ? "secondary" : "primary"}>password</Button>
+	// 			{type === "password" &&
+	// 				<>
+	// 					<input className="textInput" placeholder={"Password..."}
+	// 						type="password" maxLength={20} value={password}
+	// 						onChange={(e)=>setPassword(e.target.value)}/>
+	// 				</>
+	// 			}
+	// 			<br/><br/>
+	// 			{nameAlreadyInUse && <p>Name already exists, try another one.</p> && <br/>}
+	// 			<Button variant="contained" type="submit"
+	// 					onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>
+	// 				Submit
+	// 			</Button>
+	// 			<br/><br/>
+	// 		</div>);
+
+
 //   return (<div>
 // 				<br/>
 // 				<label>Channel name: </label>
@@ -196,6 +213,7 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 	const [searchResults, setSearchResults] = useState<UserDto[]>([]);
 	const [searchText, setSearchText] = useState<string>('');
+	const [showResult, setResult] = useState<boolean>(false);
 
 	const isPartOfDms: (account: UserDto) => boolean = (account) => {
 		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
@@ -221,6 +239,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item) && console.log(item.login))
 		setSearchText(searchValue);
 		setSearchResults(search);
+		showResultList();
 	}
 
 	const onSubmit: (user2: UserDto) => void = async (user2) => {
@@ -230,18 +249,42 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 		changeCurrentChat(NewDm);
 	}
 
-  	return (<div>
+	const showResultList: () => void = () => {
+		setResult(true);
+	}
+
+	return (
+			<div className='chat-extension-ctn'>
+				<h2 className='chat-title'>New direct message</h2>
+				<Stack spacing={1}>
+					<TextField id="outlined-basic" label="Search user" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
+					</TextField>
+				</Stack>
+				{showResult && searchResults.map((item) => <div>
 				<br/>
-				<input className="textInput" placeholder={"Search user..."} type="text" value={searchText}
-					onChange={(e) => handleSearch(e.target.value)}/>
+				<span>{item.login}</span><>&nbsp;&nbsp;</>
+				<Button variant='outlined' onClick={(e)=> {onSubmit(item)}}>
+					Submit
+				</Button>
 				<br/><br/>
-				{searchResults.map((item) =>
-					<div>
-						<br/>
-						<span>{item.login}</span><>&nbsp;&nbsp;</>
-						<Button className="startDmButton" variant="contained" onClick={(e)=> {onSubmit(item)}}>DM</Button>
-					</div>)}
-			</div>);
+				<Divider variant="middle" />
+				</div>)}
+			</div>
+	);
+
+  	// return (<div>
+	// 			<br/>
+	// 			<input className="textInput" placeholder={"Search user..."} type="text" value={searchText}
+	// 				onChange={(e) => handleSearch(e.target.value)}/>
+	// 			<br/><br/>
+	// 			{searchResults.map((item) =>
+	// 				<div>
+	// 					<br/>
+	// 					<span>{item.login}</span><>&nbsp;&nbsp;</>
+	// 					<Button className="startDmButton" variant="contained" onClick={(e)=> {onSubmit(item)}}>DM</Button>
+	// 				</div>)}
+	// 		</div>
+	// );
 
 //   return (<div>
 // 		<br/>
@@ -255,7 +298,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 
 }
 
-const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage, changeGame }) => {
+const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage, changeGame, back }) => {
 	const [newdm, setNewdm] = useState<boolean>(false);
 	const [newchannel, setNewchannel] = useState<boolean>(false);
 	const [joinchannel, setJoinchannel] = useState<boolean>(false);
@@ -264,7 +307,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [channels, setChannels] = useState<ChannelDto[]>([]);
 	const [currentChat, setCurrentChat] = useState<DmDto | ChannelDto | null>(null);
 
-	useEffect(() => getChats(), [currentChat]);
+	// useEffect(() => getChats(), [currentChat]);															c'est ca qui fait blank screen
 	useEffect(() => {
 		const interval = setInterval(getChats, 2000);
 		return () => clearInterval(interval);
@@ -298,120 +341,47 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 
 	const isLogout = () => {
 		window.location.href = 'http://localhost:3000'
-	  }
-	
-	if (currentChat !== null)
-		return (<Chat user={user} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} changeGame={changeGame}/>);
-	else {
-		return (
-			<div className='home-main-ctn'>
-				<Box sx={{ flexGrow: 1 }}>
-					<AppBar position="static" color="secondary">
-						<Toolbar>
-						<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-							<MenuIcon onClick={() => changeMenuPage('home')}/>
-						</IconButton>
-						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-							ft_transcendence
-						</Typography>
-						<Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
-						</Toolbar>
-					</AppBar>
-				</Box>
+	}
+
+	return (
+		<div className='full-chat-main-ctn'>
+			<Box sx={{ flexGrow: 1 }}>
+				<AppBar position="static" color="secondary">
+					<Toolbar>
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => back()}>
+						<MenuIcon/>
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+						ft_transcendence
+					</Typography>
+					<Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
+					</Toolbar>
+				</AppBar>
+			</Box>
+			<div className='chat-main-ctn'>
 				<div className='chat-ctn'>
-					{/* <List sx={{ width: '25%', maxWidth: 360, bgcolor: '#a8d6ab', borderRadius: '10px' }}>
-						<ListItem alignItems="flex-start">
-							<ListItemText
-							primary="Name"
-							secondary={"Last Message"}
-							/>
-						</ListItem>
-						<Divider variant="middle" component="li" />
-						<ListItem alignItems="flex-start">
-							<ListItemText
-							primary="Name"
-							secondary={"Last Message"}
-							/>
-						</ListItem>
-						<Divider variant="middle" component="li" />
-						<ListItem alignItems="flex-start">
-							<ListItemText
-							primary="Name"
-							secondary={"Last Message"}
-							/>
-						</ListItem>
-					 </List> */}
-					<div className="chat-new-dm-ctn">
-						<Box textAlign='center'>
-							<Button variant="contained" fullWidth
-									sx={{ marginTop: 1 }}
-									color={!newdm ? "primary" : "secondary"}
-									onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false);}}>
+					<h2 className='chat-title'>Chat</h2>
+						<Stack spacing={2}>
+							<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false);}}>
 								New DM
 							</Button>
 							{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
-							{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}
-							<Button variant="contained" fullWidth
-									sx={{ marginTop: 2 }}
-									color={!newchannel ? "primary" : "secondary"}
-									onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false);}}>
+							<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false);}}>
 								New Channel
 							</Button>
-							{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
-							<Button variant="contained" fullWidth
-									sx={{ marginTop: 2 }}
-									color={!joinchannel ? "primary" : "secondary"}
-									onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false);}}>
+							<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false);}}>
 								Join Channel
 							</Button>
-							{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
-							<Button variant="contained" fullWidth
-									sx={{ marginTop: 2 }}
-									color={!viewChatCommands ? "primary" : "secondary"}
-									onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false);}}>
+							<Button variant="contained" onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false);}}>
 								Chat Commands
 							</Button>
-							{viewChatCommands &&
-								<>
-									<br/><br/>
-									<span style={{color:"#507255"}}>Propose to play a default game: </span>
-									<br/>
-									<span style={{color:"#4AAD52"}}>*PLAY*</span>
-									<br/><br/>
-									<span style={{color:"#507255"}}>Play a random game: </span>
-									<br/>
-									<span style={{color:"#4AAD52"}}>*PLAY* random</span>
-									<br/><br/>
-									<span style={{color:"#507255"}}>Play a game with custom settings: </span>
-									<br/>
-									<span style={{color:"#4AAD52"}}>*PLAY* 3 night</span>
-									<br/>
-								</>
-							}
-						</Box>
-
-						<h2>Active Chats</h2>
-						{channels.map((item) =>
-							<p className="clickable" onClick={() => changeCurrentChat(item)}>
-								{`${item.name} -- channel`}
-							</p>)
-						}
-						{/* BUG HERE - BLANK SCREEN - Need DMS first */}
-						{/* ----------------------- */}
-						{/* {directMessage.map((item) =>
-							<p className="clickable" onClick={()=>changeCurrentChat(item)}>
-								Hello
-								{`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}
-							</p>)
-						} */}
-						{/* {!channels.length && !dms.length && <p>No chats</p>} */}
-						{/* ----------------------- */}
-					</div>
-					<div className='chat-channel-ctn'>
-						<h2>Channel</h2>
-					</div>
+						</Stack>
 				</div>
+				{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}
+				{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
+				{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
 			</div>
+		</div>
 		);
 
 
@@ -437,6 +407,6 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		// 		  </div>);
 		// }
 		//} */}
-	}
 }
+
 export default ChatsView;

@@ -1,3 +1,56 @@
+/*/////////////////// NOUS /////////////////*/
+
+.full-chat-main-ctn {
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(41,41,51);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-main-ctn {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center; /*position horizontale */
+  align-items: center;  /*position verticale */
+}
+
+.chat-ctn {
+  width: 500px;
+  height: 700px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /*position verticale */
+  align-items: center;  /*position horizontale */
+  text-align: center;
+  padding: 20px;
+}
+
+.chat-title {
+margin-bottom: 10px;
+}
+
+.chat-extension-ctn {
+  width: 500px;
+  height: 800px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /*position verticale */
+  align-items: center;  /*position horizontale */
+  text-align: center;
+  padding: 20px;
+  margin-left: 10%;
+}
+
+/*/////////////////// NATHAN //////////////////*/
 .home-main-ctn {
   width: 100%;
   height: 100vh;
@@ -9,12 +62,12 @@
   height: 100%;
 }
 
-.chat-ctn {
+/* .chat-ctn {
   display: flex;
   height: 100%;
   width: 100%;
   padding: 1rem;
-}
+} */
 
 .chat-new-dm-ctn {
   width: 15%;

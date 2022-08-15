@@ -17,8 +17,8 @@ import { GameDto } from '../../api/games/dto/game.dto';
 import { getAllUsers, addUser, getCompleteUser, getUser } from "../../api/user/user.api";
 import { UserDto } from "../../api/user/dto/user.dto";
 
-import Authentication from '../userAccount/authentication';
-import Profile from '../profilePage/UserAccount';
+import Authentication from '../login/authentication';
+import Profile from '../profile/UserAccount';
 import './chatsView.css'
 import { Button } from '@mui/material';
 

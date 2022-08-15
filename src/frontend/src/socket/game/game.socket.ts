@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { GameInfosDto } from "../../pages/playPage/gameFunc/utils/gameInfosDto";
+import { GameInfosDto } from "../../pages/play/gameFunc/utils/gameInfosDto";
 
 export const connect: () => any = () => {
   return io("http://localhost:80/game");

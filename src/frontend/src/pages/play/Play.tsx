@@ -75,15 +75,15 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, ch
   return (
 	<div className='basic-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position="static">
+				<AppBar position="static" color="secondary">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => {changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null)); changeMenuPage('home')}}>
-						<MenuIcon />
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage("home")}>
+						<MenuIcon/>
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
@@ -142,15 +142,15 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, ch
   return (
 	<div className='basic-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position="static">
+				<AppBar position="static" color="secondary">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage('home')}>
-						<MenuIcon />
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage("home")}>
+						<MenuIcon/>
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
@@ -181,15 +181,15 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame
   return (
 	<div className='basic-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position="static">
+				<AppBar position="static" color="secondary">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage('home')}>
-						<MenuIcon />
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage("home")}>
+						<MenuIcon/>
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
@@ -243,15 +243,15 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
     return (
 		<div className='basic-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
-				<AppBar position="static">
+				<AppBar position="static" color="secondary">
 					<Toolbar>
-					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage('home')}>
-						<MenuIcon />
+					<IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => changeMenuPage("home")}>
+						<MenuIcon/>
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="secondary" onClick={() => logout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>

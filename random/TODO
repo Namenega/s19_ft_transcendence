@@ -1,5 +1,8 @@
 - Input file hidden not working
 - browser history
-- bouton back dans chat
 - faire log out correct
 - handle axios error
+- régler infinite add friends
+- importer les css spécifiques
+- ChatView : le premier useEffect est bugé (destroy error)
+- DM axios error
