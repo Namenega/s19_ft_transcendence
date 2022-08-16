@@ -12,12 +12,16 @@ import Watch from "../watch/Watch";
 import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
 
-const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void}> = ({user, changeMenuPage }) => {
+const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void, logout: () => void}> = ({user, changeMenuPage, logout}) => {
 
-	const logout: () => void = async () => {
-		let profile = user;
-		if (profile.status === "Online") await updateUser(profile.id, {status: "Offline"});
-	}
+	// const isLogout = () => {
+	// 	window.location.href = 'http://localhost:3000'
+	// }
+
+	// const logout: () => void = async () => {
+	// 	if (profile.status === "Online") await updateUser(profile.id, {status: "Offline"});
+	// 	changeUser(null);
+	// }
 
 	// return (
 	// 	<Box sx={{ flexGrow: 1 }}>
@@ -186,7 +190,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	}, [menuPage]);
 
 	if (menuPage === "home") {
-	    return <HomeDisplay user={user} changeMenuPage={changeMenuPage}/>;
+	    return <HomeDisplay user={user} changeMenuPage={changeMenuPage} logout={logout}/>;
 	} else if (menuPage === "play" || game !== null) {
 		return <Play user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
 	} else if (menuPage === "chat") {

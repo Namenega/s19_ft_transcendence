@@ -85,41 +85,15 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 	 	};
 	 	reader.readAsDataURL(event.target.files[0]);
  }
-	// return (<div>
-	// 					<button className='game-button-text' onClick={()=>{changePage("start")}}>Back</button>
-	// 					{!signup ? <h1>Log in</h1> : <h1>Sign up</h1>}
-	// 					<label>Name:</label><br/>
-	// 					<input className='game-button-text' type="text" value={name} maxLength={40} onChange={(e)=>setName(e.target.value)} required/>
-	// 					{signup && <br/>}
-	// 					{signup && <br/>}
-	// 					{signup && <label>Login:</label>}
-	// 					{signup && <br/>}
-	// 					{signup && <input className='game-button-text' type="text" value={login} maxLength={20} onChange={(e)=>setLogin(e.target.value)} required/>}
-	// 					<br/><br/>
-	// 					<label>Password:</label>
-	// 					<br/>
-	// 					<input className='game-button-text' type="password" value={password} maxLength={20} onChange={(e)=>setPassword(e.target.value)} required/>
-	// 					{signup && <br/>}
-	// 					{signup && <br/>}
-	// 					{signup && <><label className='game-button-text'>Download Avatar Image
-	// 											<input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
-	// 										</label><br/></>}
-	// 					<br/><br/>
-	// 					{accountAlreadyInUse && <p>This account already exists</p>}
-	// 					{nonExistingAccount && <p>This account does not exist</p>}
-	// 					{alreadyConnected && <p>User is already connected</p>}
-	// 					{wrongPassword && <p>Wrong Password</p>}
-	// 					<button className='game-button-text' type="submit" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}>Submit</button>
-	// 			</div>);
 
 	return (
 		<div className='start-main-ctn' style={{backgroundImage:"url('./img/main-bg.jpg')"}}>
 			<div className='start-ctn'>
 				{!signup ? <h2>Log in</h2> : <h2>Sign up</h2>}
 				<Stack spacing={2}>
-					<TextField required id="outlined-required" label="Required" placeholder="Name" onChange={(e)=>setName(e.target.value)}/>
-					{signup && <TextField required id="outlined-required" label="Required" placeholder="Login" onChange={(e)=>setLogin(e.target.value)}/>}
-					<TextField required id="outlined-required" label="Required" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
+					<TextField required label="Name" id="outlined-required" placeholder="Required" onChange={(e)=>setName(e.target.value)}/>
+					{signup && <TextField required id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
+					<TextField required id="outlined-required" label="Password" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
 					{signup && <Button className='game-button-text' variant="outlined"> 
 						Upload Avatar <input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>    {/*style={{ display: 'none' }}*/}
 					</Button>}
@@ -167,15 +141,6 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 			</div>
 		</div>
 	)
-	// return (
-	// 	<div>
-	// 					<h1>Two Factor Authentication</h1>
-	// 					<label>Token: </label>
-	// 					<input type="text" value={token} onChange={(e)=>setToken(e.target.value)}/>
-	// 					{/* {token.length === 6 && verify2FAuth()} */}
-	// 					{wrongToken && <><>&nbsp;&nbsp;</><span>Wrong Token</span></>}
-	// 	</div>
-	// )
 }
 
 const loginWithApi = async () => {
@@ -203,13 +168,6 @@ const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: 
 		</div>
 	</div>
 	);
-	// return (<div>
-	// 					<h1>Pong Game</h1>
-	// 					<button className={styles.loginButton} onClick={()=>{changePage('login')}}>Log in</button><>&nbsp;&nbsp;</>
-	// 					<button className={styles.signupButton} onClick={()=>{changePage('signup')}}>Sign up</button><>&nbsp;&nbsp;</>
-	// 					<button className={styles.intraLoginButton} onClick={()=>{window.location.href = `https://api.intra.42.fr/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;}}>Intra 42</button>
-	// 					{alreadyConnected && <p>User is already connected</p>}
-	// 				</div>);
 }
 
 const Authentication: React.FC = () => {

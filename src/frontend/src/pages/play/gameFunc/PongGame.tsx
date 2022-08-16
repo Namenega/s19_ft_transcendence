@@ -13,6 +13,7 @@ import { Game } from "./Game";
 import { addMatchHistory, createNewMatchHistory, getMatchHistoryOfUser } from "../../../api/match-history/match-history.api";
 import { getUser } from "../../../api/user/user.api";
 import { removeGame } from "../../../api/games/games.api";
+import { Button } from '@mui/material';
 
 
 
@@ -104,9 +105,9 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 
 	return (
 		<div>
-			{quitPermited && <><button onClick={()=>props.back()}>Back</button><br/><br/></>}
 			{(!userDisconnected || endGame) && <canvas id="PongCanvas"></canvas>}
 			{userDisconnected && !endGame && <h3>Other user disconnected :(</h3>}
+			{quitPermited && <><br/><br/><Button variant="contained" color="primary" onClick={()=>props.back()}>Quit</Button></>}
 		</div>
 	)
 }
