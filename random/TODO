@@ -1,8 +1,6 @@
-- Input file hidden not working
 - browser history
-- faire log out correct
-- handle axios error
-- régler infinite add friends
-- importer les css spécifiques
+- handle axios error (comme taille image avatar)
 - ChatView : le premier useEffect est bugé (destroy error)
-- DM axios error
+- enlever les console.log
+- match history friends
+- offline après profil ami

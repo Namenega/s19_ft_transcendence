@@ -223,7 +223,7 @@ export class Game {
 			this.ctx.fillStyle = this.scriptureColor;
 			this.ctx.textAlign = "center";
 
-			var msg: string = "Player \"" + name + "\" has left the game :(";
+			var msg: string = "Other user has left the game :(";
 			this.ctx.fillText(msg,(CONSTS.GAME_WIDTH / 2) * this.coeff, (CONSTS.GAME_HEIGHT / 2) * this.coeff);
 		}
 }

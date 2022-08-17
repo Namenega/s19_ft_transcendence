@@ -48,7 +48,7 @@ export const getAllFriends: () => Promise<FriendsDto[]> = async () => {
  * @returns An array of FriendsDto objects
  */
 export const getFriendsOfUser: (userLogin: string) => Promise<FriendsDto[]> = async (userLogin) => {
-	const response = await axios.get(`/friends/user/${userLogin}`);
+	const response = await axios.get(`/friends/users/${userLogin}`);
 	return response.data;
 }
 

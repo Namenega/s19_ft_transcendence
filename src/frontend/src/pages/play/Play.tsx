@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { GameDto } from "../../api/games/dto/game.dto";
-import { addGame, getAllGames, getGame as GetGame, removeGame, updateGame } from "../../api/games/games.api";
+import { addGame, getAllGames, getGame, getGame as GetGame, removeGame, updateGame } from "../../api/games/games.api";
 import { UserDto } from "../../api/user/dto/user.dto";
 import PongGame from "./gameFunc/PongGame";
-import { AppBar, Box, Button, Toolbar, Typography, IconButton, Stack, FormControl, InputLabel, Select, MenuItem, FormHelperText } from "@mui/material";
-import { updateUser } from "../../api/user/user.api";
+import { AppBar, Box, Button, Toolbar, Typography, IconButton, Stack, FormControl, InputLabel, Select, MenuItem, FormHelperText, List, Card, ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
+import { getAllUsersRank, updateUser } from "../../api/user/user.api";
 import MenuIcon from '@mui/icons-material/Menu';
 import "./Play.css";
 
@@ -55,6 +55,15 @@ interface PongProps {
   back: () => void, player: boolean,
   changeMenuPage: (newMenuPage: string) => void,
   logout: () => void
+}
+
+interface liveProps {
+	changeGame: (newGame: GameDto | null) => void,
+  activeGames: GameDto[]
+}
+
+interface rankingProps {
+  rankingUsers: UserDto[]
 }
 
 const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser, back, player, logout}) => {
@@ -268,10 +277,73 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame
     </div> */}
 }
 
+const Ranking: React.FC<rankingProps> = ({ rankingUsers }) => {
+  return (
+    <div className='play-extension-ctn'>
+    <h2 className='play-title'>Ranking</h2>
+    <Card sx={{minWidth: 300}} >
+						<List sx={{ width: '100%', overflow: 'auto', maxHeight: 500}}>
+							{rankingUsers.length ? rankingUsers.map((item)=> 
+							<ListItem>
+								<ListItemAvatar>
+								<Avatar src={item.avatar}/>
+								</ListItemAvatar>
+								<ListItemText primary={item.login} secondary={`${item.elo} ELO`}/>
+							</ListItem>
+							) : <p>Not enough users</p>}
+						</List>
+					</Card>
+  </div>
+  );
+}
+
+const Live:React.FC<liveProps> = ({ changeGame, activeGames }) => {
+
+  const watchGame: (game: GameDto) => void = async (game) => {
+		const latestGame = await getGame(game.id);
+    if (latestGame !== null && latestGame.user1.status === "In a game"
+      && latestGame.user2 !== null && latestGame.user2.status === "In a game") changeGame(latestGame);
+	}
+
+  return (
+    <div className='play-extension-ctn'>
+      <h2 className='play-title'>Watch live</h2>
+      {!activeGames.length ? <p>No Active Games</p> :
+      activeGames.map((game)=> <Button variant="outlined" onClick={()=>watchGame(game)}><span>
+      {<><span >{game.user1.login}</span><span >{' VS '}</span><span >{game.user2 !== null && game.user2.login}</span><span>{` ~ ballspeed: ${game.ballspeed} | map: ${game.map}`}</span></>}</span><br/><br/></Button>)}
+    </div>
+  );
+}
+
 const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, changeGame, logout }) => {
   const [getGame, setGetGame] = useState<"create" | "join" | null>(null);
   const [showJoin, setShowJoin] = useState<boolean>(false);
   const [showCreate, setShowCreate] = useState<boolean>(false);
+  const [activeGames, setActiveGames] = useState<GameDto[]>([]);
+	const [rankingUsers, setRankingUsers] = useState<UserDto[]>([]);
+  const [showRanking, setShowRanking] = useState<boolean>(false);
+  const [showLive, setShowLive] = useState<boolean>(false);
+
+  useEffect(() => {
+    const getActiveGames: () => void = async () => {
+      let games: GameDto[] = await getAllGames();
+      games = games.filter((game)=> game.user1.status === "In a game" && game.user2 !== null
+        && game.user2.status === "In a game")
+      setActiveGames(games);
+    }
+    getActiveGames(); //Instantly get it when entering page
+    const interval = setInterval(getActiveGames, 5000);
+		return () => clearInterval(interval);
+  }, [])
+
+	useEffect(() => {
+		const getRanking: () => void = async () => {
+			setRankingUsers((await getAllUsersRank()))
+		}
+		getRanking();
+		const interval = setInterval(getRanking, 5000);
+		return () => clearInterval(interval);
+	}, [])
 
   const changeGetGame: (page: "create" | "join" | null) => void = (page) => {
     setGetGame(page)
@@ -283,6 +355,20 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
     changeGame(null);
     changeGetGame(null);
   }
+
+  const showR: () => void = () => {
+		if (showRanking)
+			setShowRanking(false);
+		else
+      setShowRanking(true);
+	}
+
+	const showL: () => void = () => {
+		if (showLive)
+			setShowLive(false);
+		else
+      setShowLive(true);
+	}
 
   const showJoinGame: () => void = () => {
 		if (showJoin)
@@ -298,26 +384,37 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 			setShowCreate(true);
 	}
 
-  const showPongGame: () => void = () => {
-		// if (showCreate)
-		// 	setShowCreate(false);
-		// else
-		// 	setShowJoin(true);
-	}
-
   const changeExtension: (ext: string) => void = (ext) => {
 		if (ext === "create")
 		{
       changeGetGame("create")
 			setShowJoin(false);
+      setShowRanking(false);
+      setShowLive(false);
 			showCreateGame();
 		}
 		else if (ext === "join")
 		{
       changeGetGame("join");
 			setShowCreate(false);
+      setShowRanking(false);
+      setShowLive(false);
 			showJoinGame();
 		}
+    else if (ext === "live")
+    {
+			setShowCreate(false);
+      setShowJoin(false);
+      setShowRanking(false);
+			showL();
+    }
+    else if (ext === "ranking")
+    {
+			setShowCreate(false);
+      setShowJoin(false);
+      setShowLive(false);
+			showR();
+    }
 	}
 
   if (game !== null && game.user2 !== null) {
@@ -344,14 +441,18 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
         </Box>
       	<div className='play-main-ctn'>
           <div className='play-ctn'>
-            <h2 className='play-title'>Play</h2>
+            <h2 className='play-title'>Pong</h2>
             <Stack spacing={2}>
+              <Button variant="contained" onClick={()=>changeExtension("ranking")}> Ranking </Button>
+              <Button variant="contained" onClick={()=>changeExtension("join")}> Quick Game </Button>
               <Button variant="contained" onClick={()=>changeExtension("create")}> Create Game </Button>
-            	<Button variant="contained" onClick={()=>changeExtension("join")}> Quick Game </Button>
+              <Button variant="contained" onClick={()=>changeExtension("live")}> Watch live </Button>
             </Stack>
           </div>
           {showCreate && <CreateGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame} logout={logout} />}
           {showJoin && <JoinGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame} logout={logout} />}
+          {showLive && <Live changeGame={changeGame} activeGames={activeGames}/>}
+          {showRanking && <Ranking rankingUsers={rankingUsers}/>}
         </div>
       </div>
     );
