@@ -24,7 +24,7 @@ export class DirectMessageEntity {
 
 	/* This is a one to many relationship between the direct message entity and the
 	direct message list entity. */
-	@OneToMany(type => DirectMessageListEntity, DirectMessageListEntity => DirectMessageListEntity.message, {eager: true, cascade: true})
+	@OneToMany(type => DirectMessageListEntity, DirectMessageListEntity => DirectMessageListEntity.dm, {eager: true, cascade: true})
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => DirectMessageListEntity)

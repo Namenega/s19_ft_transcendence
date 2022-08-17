@@ -6,7 +6,7 @@ import { CreateDmMessageDto } from "./dto/create-dm_message.dto"
 import { UpdateDmMessageDto } from "./dto/update-dm_message.dto"
 import { DmMessageDto } from "./dto/dm_message.dto"
 import { UserDto } from "../user/dto/user.dto"
-const axios = require('axios');
+import axios from 'axios'
 axios.defaults.baseURL = API_ENDPOINT;
 
 export const addDm: (createDmDto: CreateDmDto) => Promise<DmDto> = async (createDmDto) => {
@@ -19,7 +19,7 @@ export const createNewDm: (user1: UserDto, user2: UserDto) => CreateDmDto = (use
     users: [user1, user2],
     messages: [],
     block: false,
-    user_id_who_initiated_blocking: 0
+    blockerUserId: 0
   }
   return createDmDto;
 }

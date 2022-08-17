@@ -25,11 +25,11 @@ export class ChannelsUsersEntity {
 
 	@Column()
 	@IsBoolean()
-	channelOwner: boolean
+	owner: boolean
 
 	@Column()
 	@IsBoolean()
-	channelAdministrator: boolean
+	administrator: boolean
 
 	@Column()
 	@IsBoolean()

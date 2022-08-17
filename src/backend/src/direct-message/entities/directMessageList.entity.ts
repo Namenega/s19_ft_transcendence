@@ -19,11 +19,11 @@ export class DirectMessageListEntity {
 	user: UserEntity
 
 	/* Telling the database that the message is a direct message entity. */
-	@ManyToOne(type => DirectMessageEntity, DirectMessageEntity => DirectMessageEntity.messages)
+	@ManyToOne(() => DirectMessageEntity, DirectMessageEntity => DirectMessageEntity.messages)
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => DirectMessageEntity)
-	message: DirectMessageEntity
+	dm: DirectMessageEntity
 
 	/* A decorator that is telling the database that the content is a string. */
 	@Column()
