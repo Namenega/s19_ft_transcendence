@@ -94,8 +94,8 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 					<TextField required label="Name" id="outlined-required" placeholder="Required" onChange={(e)=>setName(e.target.value)}/>
 					{signup && <TextField required id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
 					<TextField required id="outlined-required" label="Password" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
-					{signup && <Button className='game-button-text' variant="outlined"> 
-						Upload Avatar <input type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>    {/*style={{ display: 'none' }}*/}
+					{signup && <Button component="label" className='game-button-text' variant="outlined"> 
+						Upload Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>    {/*style={{ display: 'none' }}*/}
 					</Button>}
 					{accountAlreadyInUse && <p>This account already exists</p>}
 					{nonExistingAccount && <p>This account does not exist</p>}

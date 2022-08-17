@@ -204,7 +204,7 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, ch
 
   return (
     <div className='play-extension-ctn'>
-      <h2 className='play-title'>Join game</h2>
+      <h2 className='play-title'>Quick game</h2>
         <h1 style={{display: 'inline'}}>Searching Game</h1>
         {waitingEffect === 1 && <h1 style={{display: 'inline'}}>.</h1>}
         {waitingEffect === 2 && <h1 style={{display: 'inline'}}>..</h1>}
@@ -361,7 +361,7 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
             <h2 className='play-title'>Play</h2>
             <Stack spacing={2}>
               <Button variant="contained" onClick={()=>changeExtension("create")}> Create Game </Button>
-            	<Button variant="contained" onClick={()=>changeExtension("join")}> Join Game </Button>
+            	<Button variant="contained" onClick={()=>changeExtension("join")}> Quick Game </Button>
             </Stack>
           </div>
           {showCreate && <CreateGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>}

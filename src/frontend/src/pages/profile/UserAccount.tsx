@@ -141,8 +141,8 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 				{qrcode !== '' && <TextField label="Token" defaultValue={token} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setToken(e.target.value)}/>}
 				{wrongToken && <span>Wrong Token</span>}
 				<Divider variant="middle" />
-				<Button className='game-button-text' variant="outlined"> 
-					Change Avatar <input style={{ display: 'none' }} type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
+				<Button component="label" className='game-button-text' variant="outlined"> 
+					Change Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
 				</Button>
 			</Stack>
         </div>

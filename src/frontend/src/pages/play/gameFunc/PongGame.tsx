@@ -107,9 +107,10 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 		<div>
 			{(!userDisconnected || endGame) && <canvas id="PongCanvas"></canvas>}
 			{userDisconnected && !endGame && <h3>Other user disconnected :(</h3>}
-			{quitPermited && <><br/><br/><Button variant="contained" color="primary" onClick={()=>props.back()}>Quit</Button></>}
+			{<><br/><br/><Button variant="contained" color="primary" onClick={()=>props.back()}>Quit</Button></>}
 		</div>
 	)
+	//quitPermited && 
 }
 
 export default PongGame;
