@@ -38,7 +38,8 @@ interface chatsViewProps {
 	changeUser: (newUser: UserDto | null) => void,
 	changeMenuPage: (newMenuPage: string) => void,
 	changeGame: (newGame: GameDto | null) => void,
-	back: () => void
+	back: () => void,
+	logout: () => void
 }
 
 const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrentChat }) => {
@@ -298,7 +299,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 
 }
 
-const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage, changeGame, back }) => {
+const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage, changeGame, back, logout }) => {
 	const [newdm, setNewdm] = useState<boolean>(false);
 	const [newchannel, setNewchannel] = useState<boolean>(false);
 	const [joinchannel, setJoinchannel] = useState<boolean>(false);
@@ -339,10 +340,6 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		setCurrentChat(newChat);
 	}
 
-	const isLogout = () => {
-		window.location.href = 'http://localhost:3000'
-	}
-
 	return (
 		<div className='full-chat-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
@@ -354,7 +351,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>

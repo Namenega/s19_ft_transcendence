@@ -192,13 +192,13 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	if (menuPage === "home") {
 	    return <HomeDisplay user={user} changeMenuPage={changeMenuPage} logout={logout}/>;
 	} else if (menuPage === "play" || game !== null) {
-		return <Play user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
+		return <Play user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame} logout={logout}/>;
 	} else if (menuPage === "chat") {
-		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame} back={back}/>;
+		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame} back={back} logout={logout}/>;
 	} else if (menuPage === "profile") {
-		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} changeGame={changeGame}/>;
+		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} changeGame={changeGame} logout={logout}/>;
 	} else if (menuPage === "watch") {
-		return <Watch back={back} changeGame={changeGame}/>;
+		return <Watch back={back} changeGame={changeGame} logout={logout}/>;
 	} else {
 		return <h1>Home Error</h1>;
 	}

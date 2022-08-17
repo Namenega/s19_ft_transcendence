@@ -83,7 +83,8 @@ interface chatProps {
 	changeUser: (newUser: UserDto | null) => void,
 	currentChat: any, //type narrowing does not function correctly and typescript gives faulty type errors back, use any to avoid typescript type checking
 	changeCurrentChat: (newChat: DmDto | ChannelDto | null) => void,
-	changeGame: (newGame: GameDto | null) => void
+	changeGame: (newGame: GameDto | null) => void,
+	logout: () => void
 }
 
 /* ****************************** FUNCTIONS ****************************** */
@@ -297,7 +298,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 
 /***************************/
 
-const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurrentChat, changeGame }) => {
+const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurrentChat, changeGame, logout }) => {
 	let dm: boolean = ("block" in currentChat);
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
@@ -380,7 +381,7 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 
 	if (viewProfile !== undefined)
 		return <Profile user={viewProfile} changeUser={changeUser} back={backFromViewProfile}
-			myAccount={false} changeGame={changeGame}/>;
+			myAccount={false} changeGame={changeGame} logout={logout}/>;
 
 	//MODIFY
 	return (

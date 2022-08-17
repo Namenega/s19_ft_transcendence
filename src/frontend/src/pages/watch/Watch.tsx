@@ -5,11 +5,13 @@ import { getAllUsersRank } from "../../api/user/user.api";
 import { getAllGames, getGame } from "../../api/games/games.api";
 import { AppBar, Box, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import { updateUser } from "../../api/user/user.api";
 import './Watch.css';
 
 interface profileProps {
 	back: () => void,
-	changeGame: (newGame: GameDto | null) => void
+	changeGame: (newGame: GameDto | null) => void,
+	logout: () => void
 }
 
 interface liveProps {
@@ -51,7 +53,7 @@ const Live:React.FC<liveProps> = ({ back, changeGame, activeGames }) => {
   );
 }
 
-const Watch: React.FC<profileProps> = ({ back, changeGame }) => {
+const Watch: React.FC<profileProps> = ({ back, changeGame, logout }) => {
   const [activeGames, setActiveGames] = useState<GameDto[]>([]);
 	const [rankingUsers, setRankingUsers] = useState<UserDto[]>([]);
   const [showRanking, setShowRanking] = useState<boolean>(false);
@@ -77,15 +79,6 @@ const Watch: React.FC<profileProps> = ({ back, changeGame }) => {
 		const interval = setInterval(getRanking, 5000);
 		return () => clearInterval(interval);
 	}, [])
-
-  // const logout: () => void = async () => {
-	// 	if (profile.status === "Online") await updateUser(profile.id, {status: "Offline"});
-	// 	changeUser(null);
-	// }
-
-  const isLogout: () => void = async () => {
-    window.location.href = "http://localhost:3000";
-  }
 
   	const showR: () => void = () => {
 		if (showRanking)
@@ -125,7 +118,7 @@ const Watch: React.FC<profileProps> = ({ back, changeGame }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             ft_transcendence
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
+          <Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>

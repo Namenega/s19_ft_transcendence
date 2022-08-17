@@ -21,7 +21,8 @@ interface profileProps {
 	changeUser: (newUser: UserDto | null) => void,
 	back: () => void,
 	myAccount: boolean,
-	changeGame: (newgame: GameDto | null) => void
+	changeGame: (newgame: GameDto | null) => void,
+	logout: () => void
 }
 
 interface settingsProps {
@@ -357,7 +358,7 @@ const MatchHistory: React.FC<mhProps> = ({ user }) => {
 	);
 }
 
-const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, changeGame }) => {
+const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, changeGame, logout }) => {
 	const [profile, setProfile] = useState<UserDto>(user);
 	const [ownAccount, setOwnAccount] = useState<boolean>(myAccount);
 	// const [userMatchHistory, setUserMatchHistory] = useState<CompleteMatchHistoryDto[]>([]);
@@ -412,11 +413,6 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 	const renderPage: () => void = () => {
     setRender(!render);
   }
-
-	const logout: () => void = async () => {
-		if (profile.status === "Online") await updateUser(profile.id, {status: "Offline"});
-		changeUser(null);
-	}
 
 	const backFromViewedProfile: () => void = async () => {
 		let latestProfile = await getUser(g_viewed_users_history[g_viewed_users_history.length - 1].id);

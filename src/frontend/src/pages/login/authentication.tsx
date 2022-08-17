@@ -22,6 +22,7 @@ interface logFormProps {
 
 const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alreadyConnected, changeAlreadyConnected, changeTwoFA }) => {
 	let [accountAlreadyInUse, setAccountAlreadyInUse] = useState<boolean>(false);
+	let [nameLengthWrong, setNameLengthWrong] = useState<boolean>(false);
 	let [nonExistingAccount, setNonExistingAccount] = useState<boolean>(false);
 	let [wrongPassword, setWrongPassword] = useState<boolean>(false);
 	let [name, setName] = useState<string>('');
@@ -58,12 +59,20 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 	}
 
 	const onSubmitSignup: () => void = async () => {
+		
 		if (password === "" || name === "" || login === "") return ;
 		let userInDatabaseByName = await getUserByName(name);
 		let userInDatabaseByLogin = await getUserByLogin(login);
-		if (userInDatabaseByName === null && userInDatabaseByLogin === null) {
+		if (name.length > 15 || login.length > 15) {
+			setNameLengthWrong(true);
+			setName('');
+			setLogin('');
+			setAvatar('');
+			setPassword('');
+		} else if (userInDatabaseByName === null && userInDatabaseByLogin === null) {
 			await addUser(createNewUser(name, login, avatar, password));
 			let userInDatabase = await getUserByName(name);
+			setNameLengthWrong(false);
 			setAccountAlreadyInUse(false);
 			changeTwoFA(userInDatabase!.has2FA);
 			changeUser(userInDatabase);
@@ -95,8 +104,9 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 					{signup && <TextField required id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
 					<TextField required id="outlined-required" label="Password" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
 					{signup && <Button component="label" className='game-button-text' variant="outlined"> 
-						Upload Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>    {/*style={{ display: 'none' }}*/}
+						Upload Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
 					</Button>}
+					{nameLengthWrong && <p>Name and login length must be max 15 characters</p>}
 					{accountAlreadyInUse && <p>This account already exists</p>}
 					{nonExistingAccount && <p>This account does not exist</p>}
 					{alreadyConnected && <p>User is already connected</p>}

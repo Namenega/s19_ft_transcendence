@@ -18,6 +18,7 @@ interface preGamePageProps {
   changeMenuPage: (newMenuPage: string) => void
   game: GameDto
   changeGame: (newGame: GameDto | null) => void
+  logout: () => void
 }
 
 interface joinGameProps {
@@ -26,6 +27,7 @@ interface joinGameProps {
   changeGetGame: (page: "create" | "join" | null) => void
   changeMenuPage: (newMenuPage: string) => void
   changeGame: (newGame: GameDto | null) => void
+  logout: () => void
 }
 
 interface createGameProps {
@@ -34,6 +36,7 @@ interface createGameProps {
   changeGetGame: (page: "create" | "join" | null) => void
   changeMenuPage: (newMenuPage: string) => void
   changeGame: (newGame: GameDto | null) => void
+  logout: () => void
 }
 
 interface playProps {
@@ -42,6 +45,7 @@ interface playProps {
   changeMenuPage: (newMenuPage: string) => void
   game: GameDto | null
   changeGame: (newGame: GameDto | null) => void
+  logout: () => void
 }
 
 interface PongProps {
@@ -49,14 +53,11 @@ interface PongProps {
   user: UserDto,
   changeUser: (newUser: UserDto | null) => void,
   back: () => void, player: boolean,
-  changeMenuPage: (newMenuPage: string) => void
+  changeMenuPage: (newMenuPage: string) => void,
+  logout: () => void
 }
 
-const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser, back, player}) => {
-
-  const isLogout = () => {
-		window.location.href = 'http://localhost:3000'
-	}
+const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser, back, player, logout}) => {
 
   const returnToMenu = () => {
     back();
@@ -74,7 +75,7 @@ const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser,
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             ft_transcendence
           </Typography>
-          <Button variant="contained" color="primary" onClick={() => isLogout()}>Logout</Button>
+          <Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -87,7 +88,7 @@ const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser,
   );
 }
 
-const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, changeGetGame, changeMenuPage, game, changeGame }) => {
+const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, changeGetGame, changeMenuPage, game, changeGame, logout }) => {
   const [waitingEffect, setWaitingEffect] = useState<number>(0);
 
   useEffect(()=>{
@@ -109,11 +110,6 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, ch
     return () => clearInterval(interval);
   // eslint-disable-next-line
   }, [])
-
-  const logout: () => void = async () => {
-	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
-	changeUser(null);
-	}
 
   return (
     <div className='basic-main-ctn'>
@@ -214,7 +210,7 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, ch
   );
 }
 
-const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame, changeMenuPage, changeGame }) => {
+const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame, changeMenuPage, changeGame, logout }) => {
   const [ballSpeed, setBallSpeed] = useState<number>(1);
   const [map, setMap] = useState<string>("black");
 
@@ -222,11 +218,6 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame
     const game = await addGame({user1: user, user2: null, ballspeed: ballSpeed, map: map});
     changeGame(game);
   }
-
-  const logout: () => void = async () => {
-	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
-	changeUser(null);
-	}
 
   return (
     <div className='play-extension-ctn'>
@@ -277,7 +268,7 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame
     </div> */}
 }
 
-const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, changeGame }) => {
+const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, changeGame, logout }) => {
   const [getGame, setGetGame] = useState<"create" | "join" | null>(null);
   const [showJoin, setShowJoin] = useState<boolean>(false);
   const [showCreate, setShowCreate] = useState<boolean>(false);
@@ -292,11 +283,6 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
     changeGame(null);
     changeGetGame(null);
   }
-
-  const logout: () => void = async () => {
-	if (user.status === "Online") updateUser(user.id, {status: "Offline"});
-	changeUser(null);
-	}
 
   const showJoinGame: () => void = () => {
 		if (showJoin)
@@ -335,10 +321,10 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 	}
 
   if (game !== null && game.user2 !== null) {
-    return (<Pong gameInfos={game} user={user} changeMenuPage={changeMenuPage} changeUser={changeUser} back={quitGame} player={(game.user1.id === user.id || game.user2.id === user.id)}/>);
+    return (<Pong gameInfos={game} user={user} changeMenuPage={changeMenuPage} changeUser={changeUser} back={quitGame} player={(game.user1.id === user.id || game.user2.id === user.id)} logout={logout}/>);
   }
   else if (game !== null) {
-    return <PreGamePage getGame={getGame} user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame}/>;
+    return <PreGamePage getGame={getGame} user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame} logout={logout} />;
   }
   else {
     return (
@@ -364,8 +350,8 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
             	<Button variant="contained" onClick={()=>changeExtension("join")}> Quick Game </Button>
             </Stack>
           </div>
-          {showCreate && <CreateGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>}
-          {showJoin && <JoinGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame}/>}
+          {showCreate && <CreateGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame} logout={logout} />}
+          {showJoin && <JoinGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame} logout={logout} />}
         </div>
       </div>
     );
