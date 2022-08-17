@@ -8,7 +8,6 @@ import { getUser, updateUser } from "../../api/user/user.api";
 import ChatsView from "../chat/chatsView";
 import Profile from "../profile/UserAccount";
 import Play from "../play/Play";
-import Watch from "../watch/Watch";
 import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
 
@@ -63,10 +62,9 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 				<div className='start-ctn'>
 					<h2 className='start-title'>Menu</h2>
 					<Stack spacing={2}>
-						<Button className='game-button-text' variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("play")}>PLAY</Button>
-						<Button className='game-button-text' variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("chat")}>CHAT</Button>
-						<Button className='game-button-text' variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("profile")}>PROFILE</Button>
-						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("watch")}>WATCH</Button>
+						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("play")}>PONG</Button>
+						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("chat")}>MESSAGE</Button>
+						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("profile")}>PROFILE</Button>
 					</Stack>
 				</div>
 			</div>
@@ -197,8 +195,6 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame} back={back}/>;
 	} else if (menuPage === "profile") {
 		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} changeGame={changeGame}/>;
-	} else if (menuPage === "watch") {
-		return <Watch back={back} changeGame={changeGame}/>;
 	} else {
 		return <h1>Home Error</h1>;
 	}

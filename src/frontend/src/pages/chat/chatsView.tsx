@@ -360,7 +360,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 			</Box>
 			<div className='chat-main-ctn'>
 				<div className='chat-ctn'>
-					<h2 className='chat-title'>Chat</h2>
+					<h2 className='chat-title'>Message</h2>
 						<Stack spacing={2}>
 							<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false);}}>
 								New DM

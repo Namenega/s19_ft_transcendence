@@ -10,9 +10,10 @@ import { FriendsDto } from "../../api/friends/dto/friends.dto";
 import { addFriend, createNewFriend, getFriendsOfUser, removeFriend } from "../../api/friends/friends.api";
 import './UserAccount.css';
 import QRCode from 'qrcode';
-import { AppBar, Avatar, Button, IconButton, Stack, Toolbar, Typography, Badge, Card, Container, ButtonGroup, TextField, FormControlLabel, Checkbox, CardContent, Divider, ListItem, Paper, InputBase } from "@mui/material";
+import { AppBar, Avatar, Button, IconButton, Stack, Toolbar, Typography, Badge, Card, Container, ButtonGroup, TextField, FormControlLabel, Checkbox, CardContent, Divider, ListItem, Paper, InputBase, List, ListItemAvatar, ListItemText } from "@mui/material";
 import { Box } from "@mui/system";
 import MenuIcon from '@mui/icons-material/Menu';
+import { SendTimeExtension } from "@mui/icons-material";
 
 let g_viewed_users_history: UserDto[] = [];
 
@@ -35,6 +36,7 @@ interface FriendsProps {
 	changeProfile: (newProfile: UserDto) => void,
 	ownAccount: boolean,
 	changeAccountOwner: (newValue: boolean) => void,
+	setExt: any
 }
 
 interface FindFriendsProps {
@@ -237,7 +239,7 @@ const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderF
 	);
 }
 
-const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, changeAccountOwner }) => {
+const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, changeAccountOwner, setExt }) => {
 	const [userFriends, setUserFriends] = useState<UserDto[]>([]);
 	const [render, setRender] = useState<boolean>(true);
 	const [searchF, setSearchF] = useState<boolean>(false);
@@ -257,7 +259,7 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
 			if (_.isEqual(userFriends, friends2)) return ;
 			setUserFriends(friends2);
 		}
-		// getUserFriends();
+		getUserFriends();
 	}, [profile, render, userFriends])
 
 	const renderFriends: () => void = () => {
@@ -289,15 +291,29 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
 		<div className='extension-ctn'>
 			<h2 className='profile-title'>Friends</h2>
 				{searchF && <FindFriends profile={profile} userFriends={userFriends} renderFriends={renderFriends} changeFriendsPage={changeFriendsPage}/>}
+				{/* {!searchF && userFriends.map((elem) => <div>
+ 				<span onClick={()=> {seeFriendProfile(elem); setExt(false)}}>{`${elem.login}`}</span><>&nbsp;&nbsp;</>
+ 				{!searchF && <><button onClick={(e)=> _removeFriend(elem.id)}>Remove</button><br/><br/></>}</div>)}
+				<br/> */}
 				{!searchF &&
-				<Button variant='contained' onClick={()=> changeFriendsPage()}>
+				<Stack spacing={2}>
+					<Button variant='contained' onClick={()=> changeFriendsPage()}>
 					Find Friends
-				</Button>}
-				{!searchF && userFriends.length ? userFriends.map((elem) => <div>
- 				<span onClick={()=> seeFriendProfile(elem)}>{`${elem.login}`}</span><>&nbsp;&nbsp;</>
- 				{!searchF && <><button onClick={(e)=> _removeFriend(elem.id)}>Remove</button><br/><br/></>}</div>)
-				: <p>No friends</p>}
-				<br/>
+					</Button>
+					<Card sx={{minWidth: 300}} >
+						<List sx={{ width: '100%', maxWidth: 360, overflow: 'auto', maxHeight: 500 }}>
+							{userFriends.length ? userFriends.map((item)=> 
+							<ListItem>
+								<ListItemAvatar>
+								<Avatar src={item.avatar} onClick={()=> {seeFriendProfile(item); setExt(false)}}/>
+								</ListItemAvatar>
+								<ListItemText primary={item.login} secondary={item.status} onClick={()=> {seeFriendProfile(item); setExt(false)}}/>
+								<Button variant='outlined' onClick={(e)=> _removeFriend(item.id)}>Remove</Button>
+							</ListItem>
+							) : <p>No friends</p>}
+						</List>
+					</Card>
+				</Stack>}
 		</div>
 	);
 
@@ -501,6 +517,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 			</Box>
 			<div className='profile-main-ctn'>
 				<div className='profile-ctn'>
+					{!ownAccount && <Button onClick={() => {changeProfile(user); setOwnAccount(true)}} >Close</Button>}
 					<h2 className='profile-title'>Profile</h2>
 					<Stack spacing={2}>
 							<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
@@ -547,15 +564,13 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, ch
 							<ButtonGroup variant="contained" aria-label="outlined button group">
 								{ownAccount && <Button onClick={() => changeExtension("settings")}>Settings</Button>}
 								{ownAccount && <Button onClick={() => changeExtension("friends")}>Friends</Button>}
-								{!ownAccount && <Button>Block</Button>}
-								{!ownAccount && <Button>Add</Button>}
 								<Button onClick={() => changeExtension("matchs")}>Match History</Button>
 							</ButtonGroup>
 					</Stack>
 				</div>
 				{settings && <Settings user={user} changeUser={changeUser} renderPage={renderPage}/>}
 				{showMH && <MatchHistory user={user}/>}
-				{friends && !searchF && <Friends profile={profile} changeProfile={changeProfile} ownAccount={ownAccount} changeAccountOwner={changeAccountOwner}/>}
+				{friends && !searchF && <Friends profile={profile} changeProfile={changeProfile} ownAccount={ownAccount} changeAccountOwner={changeAccountOwner} setExt={setFriends}/>}
 			</div>
 		</div>
 	);
