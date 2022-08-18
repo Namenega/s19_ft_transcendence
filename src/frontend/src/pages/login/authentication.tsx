@@ -114,6 +114,7 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 					<Button className='game-button-text' variant="contained" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}> 
 						Submit
 					</Button>
+					<br/>
 				</Stack>
 			</div>
 		</div>);

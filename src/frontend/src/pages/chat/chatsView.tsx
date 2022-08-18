@@ -11,7 +11,7 @@ import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
 import _ from "underscore"
 import './chatsView.css'
-import { AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemText, Stack, TextField, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Divider, FormControl, FormHelperText, IconButton, InputLabel, List, ListItem, ListItemText, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import { Filter, Filter1Outlined } from "@mui/icons-material"
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -307,8 +307,13 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [directMessage, setDms] = useState<DmDto[]>([]);
 	const [channels, setChannels] = useState<ChannelDto[]>([]);
 	const [currentChat, setCurrentChat] = useState<DmDto | ChannelDto | null>(null);
+	// const [showMesCouilles, setShowMesCouilles] = useState<boolean>(false);
 
-	// useEffect(() => getChats(), [currentChat]);															c'est ca qui fait blank screen
+	// useEffect(() => { setShowMesCouilles(true); console.log(channels);
+	// 	console.log(channels.length);
+	// 	console.log(directMessage);
+	// 	console.log(directMessage.length); }, [channels, directMessage]);
+	useEffect(() => { getChats() }, [currentChat]);															//c'est ca qui fait blank screen
 	useEffect(() => {
 		const interval = setInterval(getChats, 2000);
 		return () => clearInterval(interval);
@@ -340,6 +345,13 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		setCurrentChat(newChat);
 	}
 
+	const debug: (channels: ChannelDto[], directMessage: DmDto[]) => void = (channels, directMessage) => {
+		console.log(channels);
+		console.log(channels.length);
+		console.log(directMessage);
+		console.log(directMessage.length);
+	}
+
 	return (
 		<div className='full-chat-main-ctn'>
 			<Box sx={{ flexGrow: 1 }}>
@@ -351,7 +363,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => debug(channels, directMessage)}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
@@ -372,6 +384,25 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 							<Button variant="contained" onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false);}}>
 								Chat Commands
 							</Button>
+							{channels.length !== 0 && channels.map((item)=>
+							<FormControl>
+								<InputLabel>Channels</InputLabel>
+								<Select value="" label="Channels" onChange={()=>changeCurrentChat(item)}>
+								<MenuItem value={item.name}>{item.name}</MenuItem>
+								</Select>
+								<FormHelperText>Set the map design</FormHelperText>
+							</FormControl>
+							)}
+							{/* {directMessage ? directMessage.length && directMessage.map((item)=>
+							<FormControl>
+								<InputLabel>Channels</InputLabel>
+								<Select value="" label="Channels" onChange={()=>changeCurrentChat(item)}>
+								<MenuItem value={`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}>{`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}</MenuItem>
+								</Select>
+								<FormHelperText>Set the map design</FormHelperText>
+							</FormControl>
+							) : <p>xd</p>} */}
+							{/* {channels && directMessage && !channels.length && !directMessage.length && <p>No chats</p>} */}
 						</Stack>
 				</div>
 				{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}

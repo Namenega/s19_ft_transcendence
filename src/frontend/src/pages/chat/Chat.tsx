@@ -119,21 +119,35 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 	}
 
 	return (
-		<div>
-			This is Chat return 1
-			<br />
-			<input className="textInput" placeholder={"Add users..."} type="text" value={searchText}
-					onChange={(e) => handleSearch(e.target.value)}/>
-			<br />
-			{searchResults.map((item) =>
-				<div>
-					<br/>
-					<span>{item.login}</span><>&nbsp;&nbsp;</>
-					<Button variant="contained" onClick={(e)=> {onSubmit(item.id)}}>Add User</Button>
-				</div>)
-			}
-		</div>
-	);
+		<div> This is chat return 1 </div>
+	)
+
+	// return (
+	// 	<div>
+	// 		This is Chat return 1
+	// 		<br />
+	// 		<input className="textInput" placeholder={"Add users..."} type="text" value={searchText}
+	// 				onChange={(e) => handleSearch(e.target.value)}/>
+	// 		<br />
+	// 		{searchResults.map((item) =>
+	// 			<div>
+	// 				<br/>
+	// 				<span>{item.login}</span><>&nbsp;&nbsp;</>
+	// 				<Button variant="contained" onClick={(e)=> {onSubmit(item.id)}}>Add User</Button>
+	// 			</div>)
+	// 		}
+	// 	</div>
+	// );
+
+	// return (<div>
+	// 	<br/>
+	// 	<input className={cs.textInput} placeholder={"Add users..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
+	// 	{searchResults.map((item) => <div>
+	// 									<br/>
+	// 									<span>{item.login}</span><>&nbsp;&nbsp;</>
+	// 									<button className={styles.addUserButton} onClick={(e)=> {onSubmit(item.id)}}>Add User</button>
+	// 								 </div>)}
+	//   </div>);
 }
 
 /***************************/
@@ -161,6 +175,23 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 			This is Chat return 2
 		</div>
 	)
+
+// 	return (<>
+// 		<AddUsers currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
+// 		<h3>Users</h3>
+// 			{currentChat.channel_users.length === 1 ? <p>No other users</p> :
+// 				currentChat.channel_users.map((item: ChannelUserDto) => {
+// 					if (item.user.id === channelUser.user.id) return "";
+// 					if (item.owner) return (<span onClick={()=>changeViewProfile(item.user)}><span className={cs.clickable}>{item.user.login}</span><span>{" --- owner"}</span><br/><br/></span>);
+// 					return (<div>
+// 											<span className={cs.clickable} onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" --- " + (item.administrator ? "administrator" : "user") + (item.mute ? " --- mute   " : "   ")}</span>
+// 											{channelUser.owner && <button className={styles.changeStatusButton} onClick={(e)=>changeStatus(item.id, !item.administrator)}>Change Status</button>}
+// 											{(channelUser.owner || (channelUser.administrator && !item.administrator)) && <button className={styles.banButton} onClick={(e)=>ban(item)}>Ban</button>}
+// 											{(channelUser.owner || (channelUser.administrator && !item.administrator)) && <button className={styles.muteButton} onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</button>}
+// 									<br/><br/></div>);
+// 				})
+// 			}
+//   </>);
 }
 
 /***************************/
@@ -182,6 +213,25 @@ const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCu
 			This is Chat return 3
 		</div>
 	)
+
+// 	return (<>
+// 		<br/><br/>
+// 		<label className={type === "public" ? cs.radioButtonOn : cs.radioButton}>public
+// 			<input type="radio" name="channeltype" onChange={()=>changeType("public")} required/>
+// 		</label>
+// 		<>&nbsp;&nbsp;&nbsp;</>
+// 		<label className={type === "private" ? cs.radioButtonOn : cs.radioButton}>private
+// 			<input type="radio" name="channeltype" onChange={()=>changeType("private")} required/>
+// 		</label>
+// 		<>&nbsp;&nbsp;&nbsp;</>
+// 		<label className={type === "password" ? cs.radioButtonOn : cs.radioButton}>password
+// 			<input type="radio"name="channeltype" onChange={()=>changeType("password")} required/>
+// 		</label>
+// 		<br/><br/>
+// {type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>changePassword(e.target.value)} required/><br/><br/></>}
+// <input className={cs.submitButton} type="submit" onClick={()=>onSubmitChannel()}/>
+// <br/><br/>
+// </>)
 }
 
 /***************************/
@@ -226,6 +276,20 @@ const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, chan
 			This is Chat return 4
 		</div>
 	)
+
+	// return (<div>
+	// 	<button className={!info ? styles.channelInfoButton : styles.channelInfoButtonOn} onClick={()=>{changeInfo(!info); changeSettings(false); changeViewUsers(false); resetSettings();}}>Info</button><>&nbsp;&nbsp;</>
+	// 				<button className={!viewUsers ? styles.usersButton : styles.usersButtonOn} onClick={()=>{changeViewUsers(!viewUsers); changeSettings(false); changeInfo(false); resetSettings();}}>Users</button><>&nbsp;&nbsp;</>
+	// 	{channelUser.owner === true && <button className={!settings ? styles.settingsButton : styles.settingsButtonOn} onClick={()=>{changeSettings(!settings); changeInfo(false); changeViewUsers(false); resetSettings();}}>Settings</button>}
+	// 	{info && <ul>
+	// 			  <li><span style={{color:"#507255"}}>{`Type: `}</span><span style={{color:"#4AAD52"}}>{currentChat.type}</span></li>
+	// 			  <li><span style={{color:"#507255"}}>{`Owner: `}</span><span style={{color:"#4AAD52"}}>{currentChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.owner === true)!.user.login}</span></li>
+	// 			  {/* {currentChat.type === "password" && <li>{`Password: ${currentChat.password}`}</li>} */}
+	// 			  {!channelUser.owner && channelUser.administrator && <li><span style={{color:"#507255"}}>You are an </span><span style={{color:"#4AAD52"}}>administrator</span></li>}
+	// 			</ul>}
+	// 	{settings && <ChannelSettings channelUser={channelUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} password={password} type={type} changePassword={changePassword} changeType={changeType} resetSettings={resetSettings} changeSettings={changeSettings}/>}
+	// 	{viewUsers && <ChannelViewUsers channelUser={channelUser} changeUser={changeUser} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
+	//   </div>);
 }
 
 /***************************/
@@ -287,6 +351,20 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 			}
 		}
 		return(<div>This is Chat return 10</div>)
+
+		// return (<>
+		// 	<div className={message.user.id === currUser ? cs.currUserChatMessageClass : cs.chatMessageClass}>
+		// 		<div className={cs.chatUserNameClass}>
+		// 			{`${message.user.login}`}
+		// 		</div>
+		// 		<div className={cs.chatUserMessageClass}>
+		// 			<ChatCommands/>
+		// 		</div>
+		// 	</div>
+		// 	<br/>
+		// 	<br/>
+		// 	</>); //css jules
+	// }
 	}
 
 	return (
@@ -294,6 +372,17 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 			This is Chat return 11
 		</div>
 	)
+
+// 	return (<>
+// 		<div className={cs.chatMessageBoxClass}>
+// 		<h2 className={cs.chatTitle}>Messages</h2><br/>
+// {currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=><ChatMessage message={message}/>)}
+// 		<br/>
+// <input className={cs.textInput} type="text" value={message} onChange={(e)=>setMessage(e.target.value)}/>
+// {((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) && <input className={styles.messageDisabledButton} type="submit" value="Message" disabled/>}
+// 		{((dm && !currentChat.block) || (!dm && !userOrchannelUser.mute)) && <input className={styles.messageButton} type="submit" value="Message" onClick={(e)=>submitMessage()}/>}
+// 		</div>
+// </>);
 }
 
 /***************************/
@@ -390,6 +479,18 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 			<div className="chat-conversation-ctn"></div>
 		</div>
 	)
+
+	// return (<div className={cs.chatRootClass}>
+	// 	<button className={cs.backButton} onClick={()=>changeCurrentChat(null)}>Back</button>
+	// 	{dm && (!currentChat.block || (currentChat.block && currentChat.user_id_who_initiated_blocking === user.id))
+	// 					&& <><>&nbsp;&nbsp;</><button className={styles.blockButton} onClick={()=>setBlock()}>{currentChat.block === false ? "Block" : "Unblock"}</button></>}
+	// 	{!dm && <><>&nbsp;&nbsp;</><button className={styles.leaveChannelButton} onClick={()=>leaveChannel()}>Leave</button></>}
+	// 				{dm && <h1 className={cs.clickable} onClick={()=>changeViewProfile(currentChat.users.find((userDm: UserDto) => userDm.id !== user.id))}> {currentChat.users.find((userDm: UserDto) => userDm.id !== user.id).login}</h1>}
+	// 	{!dm && <h1> {currentChat.name}</h1>}
+	// 	{!dm && <ChannelInfo channelUser={currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id)} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
+	// 				<br/>
+	// 	<Message userOrchannelUser={dm ? user : currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id)} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>
+	//   </div>);
 }
 
 export default Chat
