@@ -21,6 +21,7 @@ import Authentication from '../login/authentication';
 import Profile from '../profile/UserAccount';
 import './chatsView.css'
 import { Button } from '@mui/material';
+import './chatsView.css'
 
 
 //const Chat = () => {
@@ -388,20 +389,20 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 /***************************/
 
 const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurrentChat, changeGame, logout }) => {
-	let dm: boolean = ("block" in currentChat);
+	// let dm: boolean = ("block" in currentChat);																				à décommenter
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
 
 	useEffect(() => {
 		const connectedSocket = connect()
 		setSocket(connectedSocket);
-		joinRoom(connectedSocket, currentChat.id);
+		// joinRoom(connectedSocket, currentChat.id);																				à décommenter
 		listen(connectedSocket, async (response: string) => {
 			if (response === "new message")
 				await currentChatLatestUpdates();
 		});
 		return () => {
-			leaveRoom(connectedSocket, currentChat.id);
+			// leaveRoom(connectedSocket, currentChat.id);																			à décommenter
 			disconnect(connectedSocket);
 		}
 	}, [])
@@ -415,20 +416,20 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 	const currentChatLatestUpdates: () => void = async () => {
 		let latestChat: any;
 
-		if (dm)
-			latestChat = await getDm(currentChat.id);
-		else
-			latestChat = await getChannel(currentChat.id);
-		if (_.isEqual(latestChat, currentChat))
-			return ;
-		if (latestChat === null
-		|| latestChat.users.find((item: UserDto) => item.id === user.id) === undefined
-		|| (!dm && latestChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.owner
-		=== true) === undefined)) {
-			changeCurrentChat(null);
-			return ;
-		}
-		changeCurrentChat(latestChat);
+		// // if (dm)
+		// // 	latestChat = await getDm(currentChat.id);
+		// // else
+		//  	// latestChat = await getChannel(currentChat.id);
+		// if (_.isEqual(latestChat, currentChat))
+		// 	return ;
+		// if (latestChat === null
+		// || latestChat.users.find((item: UserDto) => item.id === user.id) === undefined
+		// || (!dm && latestChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.owner
+		// === true) === undefined)) {
+		// 	changeCurrentChat(null);
+		// 	return ;
+		// }
+		// changeCurrentChat(latestChat);
 	}
 
 	const setBlock: () => void = async () => {
@@ -474,9 +475,8 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 
 	//MODIFY
 	return (
-		<div className="chat-main-ctn">
-			<div className="chat-messages-ctn"></div>
-			<div className="chat-conversation-ctn"></div>
+		<div className='chat-extension-ctn'>
+			<h2 className='chat-title'>Chat</h2>
 		</div>
 	)
 

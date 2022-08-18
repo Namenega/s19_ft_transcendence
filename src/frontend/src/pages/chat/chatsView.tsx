@@ -9,9 +9,9 @@ import { ChannelDto } from "../../api/channel/dto/channel.dto"
 import { CreateChannelDto } from "../../api/channel/dto/create-channel.dto"
 import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
-import _ from "underscore"
+import _, { any } from "underscore"
 import './chatsView.css'
-import { AppBar, Box, Button, Divider, FormControl, FormHelperText, IconButton, InputLabel, List, ListItem, ListItemText, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, IconButton, InputLabel, List, ListItem, ListItemText, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import { Filter, Filter1Outlined } from "@mui/icons-material"
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -146,9 +146,41 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 	return (
 		<div className='chat-extension-ctn'>
 			<h2 className='chat-title'>New channel</h2>
-
+			<Stack spacing={2}>
+				<TextField id="outlined-required" label="Channel name" variant="outlined" placeholder="Required" inputProps={{maxLength: 20}} value={name} onChange={(e)=>setName(e.target.value)}/>
+				<FormControlLabel label="Public" control={<Checkbox checked={type === "public"} onChange={()=>setType("public")}/>}/>
+				<FormControlLabel label="Private" control={<Checkbox checked={type === "private"} onChange={()=>setType("private")}/>}/>
+				<FormControlLabel label="Password" control={<Checkbox checked={type === "password"} onChange={()=>setType("password")}/>}/>
+				{type === "password" && <TextField id="outlined-required" label="password" variant="outlined" placeholder="Required" inputProps={{maxLength: 20}} value={password} onChange={(e)=>setPassword(e.target.value)}/>}
+				{nameAlreadyInUse && <p>Name already exists try another one</p>}
+				<Button type="submit" variant="contained" onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>Create</Button>
+				{/* {type === "" && <p>Choose a channel type</p>} */}
+			</Stack>
 		</div>
 	);
+
+//   return (
+//		<div>
+// 				<br/>
+// 				<label>Channel name: </label>
+// 				<input className={cs.textInput} type="text" maxLength={20} value={name} name="channelname" onChange={(e)=>setName(e.target.value)} required/><br/><br/>
+// 				<label className={type === "public" ? cs.radioButtonOn : cs.radioButton}>public
+// 					<input type="radio" name="channeltype" onChange={()=>setType("public")} required/>
+// 							  </label>
+// 							  <>&nbsp;&nbsp;&nbsp;</>
+// 				<label className={type === "private" ? cs.radioButtonOn : cs.radioButton}>private
+// 					<input type="radio" name="channeltype" onChange={()=>setType("private")} required/>
+// 							  </label>
+// 							  <>&nbsp;&nbsp;&nbsp;</>
+// 				<label className={type === "password" ? cs.radioButtonOn : cs.radioButton}>password
+// 					<input type="radio"name="channeltype" onChange={()=>setType("password")} required/>
+// 							  </label>
+// 							  <br/><br/>
+// 				{type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>setPassword(e.target.value)}/><br/><br/></>}
+//			 	{nameAlreadyInUse && <p>Name already exists try another one</p>}
+//			 	<button className={cs.submitButton} type="submit" onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>Submit</button>
+// 			</div>
+//	)
 	
 	// return (<div>
 	// 			<br/>
@@ -187,28 +219,6 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 	// 			</Button>
 	// 			<br/><br/>
 	// 		</div>);
-
-
-//   return (<div>
-// 				<br/>
-// 				<label>Channel name: </label>
-// 				<input className={cs.textInput} type="text" maxLength={20} value={name} name="channelname" onChange={(e)=>setName(e.target.value)} required/><br/><br/>
-// 				<label className={type === "public" ? cs.radioButtonOn : cs.radioButton}>public
-// 					<input type="radio" name="channeltype" onChange={()=>setType("public")} required/>
-// 							  </label>
-// 							  <>&nbsp;&nbsp;&nbsp;</>
-// 				<label className={type === "private" ? cs.radioButtonOn : cs.radioButton}>private
-// 					<input type="radio" name="channeltype" onChange={()=>setType("private")} required/>
-// 							  </label>
-// 							  <>&nbsp;&nbsp;&nbsp;</>
-// 				<label className={type === "password" ? cs.radioButtonOn : cs.radioButton}>password
-// 					<input type="radio"name="channeltype" onChange={()=>setType("password")} required/>
-// 							  </label>
-// 							  <br/><br/>
-// 				{type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>setPassword(e.target.value)}/><br/><br/></>}
-//			 	{nameAlreadyInUse && <p>Name already exists try another one</p>}
-//			 	<button className={cs.submitButton} type="submit" onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>Submit</button>
-// 			</div>)
 }
 
 const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
@@ -307,13 +317,9 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [directMessage, setDms] = useState<DmDto[]>([]);
 	const [channels, setChannels] = useState<ChannelDto[]>([]);
 	const [currentChat, setCurrentChat] = useState<DmDto | ChannelDto | null>(null);
-	// const [showMesCouilles, setShowMesCouilles] = useState<boolean>(false);
+	const [showChat, setShowChat] = useState<boolean>(false);
 
-	// useEffect(() => { setShowMesCouilles(true); console.log(channels);
-	// 	console.log(channels.length);
-	// 	console.log(directMessage);
-	// 	console.log(directMessage.length); }, [channels, directMessage]);
-	useEffect(() => { getChats() }, [currentChat]);															//c'est ca qui fait blank screen
+	useEffect(() => { getChats();}, [currentChat]);															//c'est ca qui fait blank screen
 	useEffect(() => {
 		const interval = setInterval(getChats, 2000);
 		return () => clearInterval(interval);
@@ -371,29 +377,29 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 				<div className='chat-ctn'>
 					<h2 className='chat-title'>Message</h2>
 						<Stack spacing={2}>
-							<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false);}}>
+							<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
 								New DM
 							</Button>
 							{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
-							<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false);}}>
+							<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
 								New Channel
 							</Button>
-							<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false);}}>
+							<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false); setShowChat(false)}}>
 								Join Channel
 							</Button>
-							<Button variant="contained" onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false);}}>
+							<Button variant="contained" onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false); setShowChat(false)}}>
 								Chat Commands
 							</Button>
-							{channels.length !== 0 && channels.map((item)=>
+							{/* {channels.length !== 0 &&
 							<FormControl>
 								<InputLabel>Channels</InputLabel>
-								<Select value="" label="Channels" onChange={()=>changeCurrentChat(item)}>
-								<MenuItem value={item.name}>{item.name}</MenuItem>
+								<Select defaultValue={""} value={currentChat? currentChat.name : ""} label="Channels" onClick={(e)=> {changeCurrentChat(e.target.value); setShowChat(true)}}>
+									{channels.map((item)=> <MenuItem value={item.name}>{item.name}</MenuItem>)}
 								</Select>
-								<FormHelperText>Set the map design</FormHelperText>
+								<FormHelperText>Choose the channel</FormHelperText>
 							</FormControl>
-							)}
-							{/* {directMessage ? directMessage.length && directMessage.map((item)=>
+							} */}
+							{/* {directMessage.length && directMessage.map((item)=>
 							<FormControl>
 								<InputLabel>Channels</InputLabel>
 								<Select value="" label="Channels" onChange={()=>changeCurrentChat(item)}>
@@ -401,13 +407,14 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 								</Select>
 								<FormHelperText>Set the map design</FormHelperText>
 							</FormControl>
-							) : <p>xd</p>} */}
-							{/* {channels && directMessage && !channels.length && !directMessage.length && <p>No chats</p>} */}
+							)} */}
+							{!channels.length && <p>No chats</p>}
 						</Stack>
 				</div>
-				{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}
+				{/* {newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>} */}
 				{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
 				{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
+				{showChat && <Chat user={user} changeUser={changeUser} currentChat={currentChat} changeCurrentChat={changeCurrentChat} changeGame={changeGame} logout={logout}/>}
 			</div>
 		</div>
 		);

@@ -15,7 +15,7 @@ export class DirectMessageEntity {
 
 	/* This is a many to many relationship between the direct message entity and the
 	user entity. */
-	@ManyToMany(type => UserEntity, UserEntity => UserEntity.directMessage, {eager: true})
+	@ManyToMany(type => UserEntity, UserEntity => UserEntity.dms, {eager: true})
 	@JoinTable()
 	@IsArray()
 	@ValidateNested({ each: true })

@@ -90,12 +90,12 @@ export class UserEntity {
 
 	/* Creating a many to many relationship between the UserEntity and the
 	DirectMessageEntity. */
-	@ManyToMany(() => DirectMessageEntity, (directMessage) => directMessage.users)
+	@ManyToMany(() => DirectMessageEntity, (dms) => dms.users)
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => DirectMessageEntity)
-	directMessage: DirectMessageEntity[];
+	dms: DirectMessageEntity[];
 
 	/* Creating a many to many relationship between the UserEntity and the
 	ChannelsEntity. */
