@@ -21,7 +21,6 @@ import Authentication from '../login/authentication';
 import Profile from '../profile/UserAccount';
 import './chatsView.css'
 import { Button } from '@mui/material';
-import './chatsView.css'
 
 
 //const Chat = () => {
@@ -389,20 +388,20 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 /***************************/
 
 const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurrentChat, changeGame, logout }) => {
-	// let dm: boolean = ("block" in currentChat);																				à décommenter
+	let dm: boolean = ("block" in currentChat);
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
 
 	useEffect(() => {
 		const connectedSocket = connect()
 		setSocket(connectedSocket);
-		// joinRoom(connectedSocket, currentChat.id);																				à décommenter
+		joinRoom(connectedSocket, currentChat.id);
 		listen(connectedSocket, async (response: string) => {
 			if (response === "new message")
 				await currentChatLatestUpdates();
 		});
 		return () => {
-			// leaveRoom(connectedSocket, currentChat.id);																			à décommenter
+			leaveRoom(connectedSocket, currentChat.id);
 			disconnect(connectedSocket);
 		}
 	}, [])
@@ -416,20 +415,20 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 	const currentChatLatestUpdates: () => void = async () => {
 		let latestChat: any;
 
-		// // if (dm)
-		// // 	latestChat = await getDm(currentChat.id);
-		// // else
-		//  	// latestChat = await getChannel(currentChat.id);
-		// if (_.isEqual(latestChat, currentChat))
-		// 	return ;
-		// if (latestChat === null
-		// || latestChat.users.find((item: UserDto) => item.id === user.id) === undefined
-		// || (!dm && latestChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.owner
-		// === true) === undefined)) {
-		// 	changeCurrentChat(null);
-		// 	return ;
-		// }
-		// changeCurrentChat(latestChat);
+		if (dm)
+			latestChat = await getDm(currentChat.id);
+		else
+		 	latestChat = await getChannel(currentChat.id);
+		if (_.isEqual(latestChat, currentChat))
+			return ;
+		if (latestChat === null
+		|| latestChat.users.find((item: UserDto) => item.id === user.id) === undefined
+		|| (!dm && latestChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.owner
+		=== true) === undefined)) {
+			changeCurrentChat(null);
+			return ;
+		}
+		changeCurrentChat(latestChat);
 	}
 
 	const setBlock: () => void = async () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Chat from "./Chat"
+import Chat from "../../../../../../s19_ft_transcendence/src/frontend/src/pages/chat/Chat"
 import { addDm, createNewDm } from "../../api/dms/dms.api"
 import { addChannel, addChannelUser, channelPasswordVerification, createNewChannelUser, getAllChannels, getChannel, createNewChannel } from "../../api/channel/channels.api"
 import { getAllUsers, getCompleteUser } from "../../api/user/user.api"
@@ -11,9 +11,11 @@ import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
 import _, { any } from "underscore"
 import './chatsView.css'
-import { AppBar, Box, Button, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, IconButton, InputLabel, List, ListItem, ListItemText, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, ButtonGroup, Card, CardContent, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, IconButton, InputLabel, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import { Filter, Filter1Outlined } from "@mui/icons-material"
 import MenuIcon from '@mui/icons-material/Menu';
+import ChatIcon from '@mui/icons-material/Chat';
+import ForumIcon from '@mui/icons-material/Forum';
 
 
 interface joinChannelProps {
@@ -46,6 +48,8 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 	const [searchResults, setSearchResults] = useState<ChannelDto[]>([]);
 	const [searchText, setSearchText] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
+	const [showResult, setResult] = useState<boolean>(false);
+	const [value, setValue] = useState<ChannelDto | null>(null);
 	
 	const isPartOfChannels: (channel: ChannelDto) => boolean = (channel) => {
 		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
@@ -67,9 +71,13 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 			&& !isPartOfChannels(item) && item.name.includes(searchValue) && search.push(item))
 		setSearchText(searchValue);
 		setSearchResults(search);
+		setResult(true);
+		setValue(null);
 	}
 	
-	const onSubmit: (channel: ChannelDto) => void = async (channel) => {
+	const onSubmit: (channel: ChannelDto | null) => void = async (channel) => {
+		if (channel === null)
+			return ;
 		if (channel.type === "password" &&
 				!(await channelPasswordVerification(channel.id, password))) {
 			setPassword('');
@@ -84,10 +92,40 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 	return (
 		<div className='chat-extension-ctn'>
 			<h2 className='chat-title'>Join channel</h2>
-
+			<Stack spacing={1}>
+				<TextField id="outlined-basic" label="Search channel" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
+				</TextField>
+				{showResult && searchResults.map((item) => 
+					<div>
+						<br/>
+						<Button onClick={() => setValue(item)}>{item.name}</Button><>&nbsp;&nbsp;</>
+						<br/><br/>
+						<Divider variant="middle" />
+					</div>
+				)}
+				<br/>
+				<TextField disabled={(!value || value.type !== "password") ? true : false} label="Password" id="outlined-required" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
+				<br/>
+				<Button variant='contained' disabled={!value} onClick={()=> {onSubmit(value)}}>
+					Submit
+				</Button>
+			</Stack>
 		</div>
 	);
 	
+		// return (<div>
+	// 			<br/>
+	// 			<input className={cs.textInput} placeholder={"Search channel..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
+	// 			{searchResults.map((item) =>
+	// 				<div>
+	// 					<br/>
+	// 					<span>{item.name}</span><>&nbsp;&nbsp;</>
+	// 					{item.type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/><>&nbsp;&nbsp;</></>}
+	// 					<button className={styles.startChannelButton} onClick={(e)=>{onSubmit(item)}}>Join</button><>&nbsp;&nbsp;</>
+	// 				</div>)}
+	// 		</div>);
+
+
 	// return (
 	// 	<div>
 	// 		<br/>
@@ -107,18 +145,6 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 	// 			</div>)}
 	// 	</div>
 	// );
-
-	// return (<div>
-	// 			<br/>
-	// 			<input className={cs.textInput} placeholder={"Search channel..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
-	// 			{searchResults.map((item) =>
-	// 				<div>
-	// 					<br/>
-	// 					<span>{item.name}</span><>&nbsp;&nbsp;</>
-	// 					{item.type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/><>&nbsp;&nbsp;</></>}
-	// 					<button className={styles.startChannelButton} onClick={(e)=>{onSubmit(item)}}>Join</button><>&nbsp;&nbsp;</>
-	// 				</div>)}
-	// 		</div>);
 }
 
 const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
@@ -126,6 +152,7 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 	const [type, setType] = useState<"public" | "private" | "password" | "">('');
 	const [password, setPassword] = useState<string>('');
 	const [nameAlreadyInUse, setNameAlreadyInUse] = useState<boolean>(false);
+	const [fillIn, setFillIn] = useState<boolean>(false);
 	
 	const onSubmit: (newChannel: CreateChannelDto) => void = async (newChannel) => {
 		if (newChannel.name === '' || newChannel.type === '' ||
@@ -152,9 +179,10 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 				<FormControlLabel label="Private" control={<Checkbox checked={type === "private"} onChange={()=>setType("private")}/>}/>
 				<FormControlLabel label="Password" control={<Checkbox checked={type === "password"} onChange={()=>setType("password")}/>}/>
 				{type === "password" && <TextField id="outlined-required" label="password" variant="outlined" placeholder="Required" inputProps={{maxLength: 20}} value={password} onChange={(e)=>setPassword(e.target.value)}/>}
-				{nameAlreadyInUse && <p>Name already exists try another one</p>}
-				<Button type="submit" variant="contained" onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>Create</Button>
-				{/* {type === "" && <p>Choose a channel type</p>} */}
+				<Button type="submit" variant="contained" onClick={()=>{onSubmit(createNewChannel([user], name, type, password)); setFillIn(true)}}>Create</Button>
+				{!nameAlreadyInUse && fillIn && name === "" && <p>Choose a channel name.</p>}
+				{fillIn && type === "" && <p>Choose a channel type.</p>}
+				{nameAlreadyInUse && <p>Name already exists, try another one.</p>}
 			</Stack>
 		</div>
 	);
@@ -377,41 +405,66 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 				<div className='chat-ctn'>
 					<h2 className='chat-title'>Message</h2>
 						<Stack spacing={2}>
-							<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
-								New DM
-							</Button>
-							{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
-							<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
-								New Channel
-							</Button>
-							<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false); setShowChat(false)}}>
-								Join Channel
-							</Button>
-							<Button variant="contained" onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false); setShowChat(false)}}>
-								Chat Commands
-							</Button>
-							{/* {channels.length !== 0 &&
-							<FormControl>
-								<InputLabel>Channels</InputLabel>
-								<Select defaultValue={""} value={currentChat? currentChat.name : ""} label="Channels" onClick={(e)=> {changeCurrentChat(e.target.value); setShowChat(true)}}>
-									{channels.map((item)=> <MenuItem value={item.name}>{item.name}</MenuItem>)}
-								</Select>
-								<FormHelperText>Choose the channel</FormHelperText>
-							</FormControl>
-							} */}
-							{/* {directMessage.length && directMessage.map((item)=>
-							<FormControl>
-								<InputLabel>Channels</InputLabel>
-								<Select value="" label="Channels" onChange={()=>changeCurrentChat(item)}>
-								<MenuItem value={`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}>{`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}</MenuItem>
-								</Select>
-								<FormHelperText>Set the map design</FormHelperText>
-							</FormControl>
-							)} */}
-							{!channels.length && <p>No chats</p>}
+							<Card>
+								<CardContent>
+									<Typography variant="body1" color="text.secondary" component="div">
+										Chat commands
+									</Typography>
+									<Divider variant="middle" />
+									<br/>
+									<Typography variant="body2" component="div">
+									<span>Propose to play a default game: </span><p/><span style={{color:"#4AAD52"}}>*PLAY*</span><p/>
+									<span>Play a random game: </span><p/><span style={{color:"#4AAD52"}}>*PLAY* random</span><p/>
+									<span>Play a game with custom settings: </span><p/><span style={{color:"#4AAD52"}}>*PLAY* 3 night</span>
+									</Typography>
+								</CardContent>
+							</Card>
+							<ButtonGroup variant="contained" aria-label="outlined button group">
+								<Button onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
+									New DM
+								</Button>
+								{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
+								<Button onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
+									New Channel
+								</Button>
+								<Button onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false); setShowChat(false)}}>
+									Join Channel
+								</Button>
+							</ButtonGroup>
+							<Card>
+								<CardContent>
+									<Typography variant="body1" color="text.secondary" component="div">
+										Active chats
+									</Typography>
+								<Divider variant="middle" />
+								{!channels.length && !directMessage.length && <p><br/>No chats</p>}
+								<List sx={{ width: '100%', maxWidth: 360, overflow: 'auto', maxHeight: 200 }}>
+									{channels.length !== 0 && channels.map((item)=> 
+									<ListItem>
+										<ListItemButton sx={{display: "flex", justifyContent: "center"}} onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
+											{item.name}
+										</ListItemButton>
+										<IconButton aria-label="channel">
+											<ForumIcon onClick={()=> {changeCurrentChat(item); setShowChat(true)}} />
+										</IconButton>
+									</ListItem>
+									)}
+									{directMessage.length !== 0 && directMessage.map((item)=>
+									<ListItem>
+										<ListItemButton sx={{display: "flex", justifyContent: "center"}} onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
+											{item.users[0].id === user.id ? item.users[1].login : item.users[0].login}
+										</ListItemButton>
+										<IconButton aria-label="channel">
+											<ChatIcon onClick={()=> {changeCurrentChat(item); setShowChat(true)}} />
+										</IconButton>
+									</ListItem>
+									)}
+								</List>
+								</CardContent>
+							</Card>
 						</Stack>
 				</div>
-				{/* {newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>} */}
+				{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}
 				{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
 				{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
 				{showChat && <Chat user={user} changeUser={changeUser} currentChat={currentChat} changeCurrentChat={changeCurrentChat} changeGame={changeGame} logout={logout}/>}
