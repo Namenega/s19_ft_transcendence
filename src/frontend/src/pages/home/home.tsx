@@ -10,6 +10,7 @@ import Profile from "../profile/UserAccount";
 import Play from "../play/Play";
 import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
+import { SettingsInputAntennaTwoTone } from "@mui/icons-material";
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void, logout: () => void}> = ({user, changeMenuPage, logout}) => {
 
@@ -75,7 +76,7 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => void}> = ({ user, changeUser }) => {
 	const [menuPage, setMenuPage] = useState<string>("home");
 	const [game, setGame] = useState<GameDto | null>(null);
-	const [forward, setForward] = useState<string>("home");
+	const [state, setState] = useState<boolean>(true);
 
 	/*
 	**Goal: Perform actions before user quits unexpectedly (close tabs, refresh, goes to other link...), especially set user status as offline...
@@ -161,29 +162,20 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 
 	const buttonEvent = async (e: any) => {
 		e.preventDefault();
-		console.log(e.state);
-		console.log(menuPage);
-		// if (e.state === -1 && menuPage === "home")
-		// 	logout();
-		if (e.state === -1 && menuPage !== "home")
-		{
-			setForward(menuPage);
-			changeMenuPage("home");
-		}
-		else if (e.state === 1)
-			changeMenuPage(forward);
+		setState(false);
+		if (e.state === "home" || e.state === "profile" || e.state === "chat" || e.state === "play")
+			changeMenuPage(e.state);
+		else
+			logout();
 	}
 	
 	useEffect(() => {
-		// window.history.pushState(null, "", window.location.pathname);
-		window.history.pushState(-1, ""); // back state
-		window.history.pushState(0, ""); // main state
-		window.history.pushState(1, ""); // forward state
-		window.history.go(-1); // start in main state
+		if (state === true)
+			window.history.pushState(menuPage, "");
+		setState(true);
 		window.addEventListener('popstate', buttonEvent);
-		console.log("Garreth");
 		return () => {
-			window.removeEventListener('popstate', buttonEvent);  
+			window.removeEventListener('popstate', buttonEvent);
 		};
 	}, [menuPage]);
 

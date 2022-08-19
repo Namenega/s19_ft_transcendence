@@ -1,4 +1,3 @@
-- browser history
 - handle axios error (comme taille image avatar)
 - ChatView : le premier useEffect est bugé (destroy error)
 - enlever les console.log
