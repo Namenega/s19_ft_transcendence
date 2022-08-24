@@ -135,7 +135,7 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
         <div className='extension-ctn'>
 			<h2 className='profile-title'>Settings</h2>
 			<Stack spacing={2}>
-				<TextField id="outlined-basic" label="New login" variant="outlined" onChange={(e)=>setLogin(e.target.value)}/>
+				<TextField inputProps={{maxLength: 15}} id="outlined-basic" label="New login" variant="outlined" onChange={(e)=>setLogin(e.target.value)}/>
 				<Button variant="contained" type="submit" onClick={()=>newLogin(login)}>Submit</Button>
 				{loginAlreadyInUse && <span>This login is already in use</span>}
 				<Divider variant="middle" />

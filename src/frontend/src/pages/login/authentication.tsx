@@ -22,7 +22,6 @@ interface logFormProps {
 
 const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alreadyConnected, changeAlreadyConnected, changeTwoFA }) => {
 	let [accountAlreadyInUse, setAccountAlreadyInUse] = useState<boolean>(false);
-	let [nameLengthWrong, setNameLengthWrong] = useState<boolean>(false);
 	let [nonExistingAccount, setNonExistingAccount] = useState<boolean>(false);
 	let [wrongPassword, setWrongPassword] = useState<boolean>(false);
 	let [name, setName] = useState<string>('');
@@ -63,25 +62,18 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 		if (password === "" || name === "" || login === "") return ;
 		let userInDatabaseByName = await getUserByName(name);
 		let userInDatabaseByLogin = await getUserByLogin(login);
-		if (name.length > 15 || login.length > 15) {
-			setNameLengthWrong(true);
-			setName('');
-			setLogin('');
-			setAvatar('');
-			setPassword('');
-		} else if (userInDatabaseByName === null && userInDatabaseByLogin === null) {
+		if (userInDatabaseByName === null && userInDatabaseByLogin === null) {
 			await addUser(createNewUser(name, login, avatar, password));
 			let userInDatabase = await getUserByName(name);
-			setNameLengthWrong(false);
 			setAccountAlreadyInUse(false);
 			changeTwoFA(userInDatabase!.has2FA);
 			changeUser(userInDatabase);
 		} else {
 			setAccountAlreadyInUse(true);
-			setName('');
-			setLogin('');
-			setAvatar('');
-			setPassword('');
+			// setName('');
+			// setLogin('');
+			// setAvatar('');
+			// setPassword('');
 		}
 	}
 
@@ -100,13 +92,12 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 			<div className='start-ctn'>
 				{!signup ? <h2>Log in</h2> : <h2>Sign up</h2>}
 				<Stack spacing={2}>
-					<TextField required label="Name" id="outlined-required" placeholder="Required" onChange={(e)=>setName(e.target.value)}/>
-					{signup && <TextField required id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
+					<TextField inputProps={{maxLength: 15}} required label="Name" id="outlined-required" placeholder="Required" onChange={(e)=>setName(e.target.value)}/>
+					{signup && <TextField inputProps={{maxLength: 15}} required id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
 					<TextField required id="outlined-required" label="Password" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
 					{signup && <Button component="label" className='game-button-text' variant="outlined"> 
 						Upload Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
 					</Button>}
-					{nameLengthWrong && <p>Name and login length must be max 15 characters</p>}
 					{accountAlreadyInUse && <p>This account already exists</p>}
 					{nonExistingAccount && <p>This account does not exist</p>}
 					{alreadyConnected && <p>User is already connected</p>}
@@ -136,7 +127,7 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 	}
 
 	const keyPress: (e: any) => void = (e) => {
-		if(e.keyCode == 13){
+		if(e.keyCode === 13){
 			verify2FAuth();
 		// put the login here
 		}

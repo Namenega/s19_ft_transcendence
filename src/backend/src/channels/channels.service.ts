@@ -55,7 +55,7 @@ export class ChannelsService {
 	 * @returns An array of ChannelsEntity objects.
 	 */
 	async findAll(): Promise<ChannelsEntity[]> {
-		return await this.chan.find();
+		return await this.chan.find({ relations: ['users', 'channel_users', 'messages'] });
 	}
 
 	/**
@@ -65,7 +65,7 @@ export class ChannelsService {
 	 * @returns The channel with the given id.
 	 */
 	async findOne(id: number): Promise<ChannelsEntity> {
-		return await this.chan.findOne({ where: { id } });
+		return await this.chan.findOne({ where: { id }, relations: ['users', 'channel_users', 'messages'] });
 	}
 
 	/**
@@ -108,7 +108,7 @@ export class ChannelsService {
 	 * @returns An array of ChannelsMessagesEntity objects.
 	 */
 	async findAllMessages(): Promise<ChannelsMessagesEntity[]> {
-		return await this.chanMsg.find();
+		return await this.chanMsg.find({ relations: ['user', 'channel'] });
 	}
 
 	/**
@@ -117,7 +117,7 @@ export class ChannelsService {
 	 * @returns A single message from the database.
 	 */
 	async findOneMessage(id: number): Promise<ChannelsMessagesEntity> {
-		return await this.chanMsg.findOne({ where: { id } });
+		return await this.chanMsg.findOne({ where: { id }, relations: ['user', 'channel'] });
 	}
 
 	/**
@@ -157,7 +157,7 @@ export class ChannelsService {
 	 * @returns An array of ChannelsUsersEntity objects.
 	 */
 	async findAllUsers(): Promise<ChannelsUsersEntity[]> {
-		return await this.chanUser.find();
+		return await this.chanUser.find({ relations: ['user', 'channel'] });
 	}
 	
 	/**
@@ -166,7 +166,7 @@ export class ChannelsService {
 	 * @returns The channel user with the given id.
 	 */
 	async findOneUser(id: number): Promise<ChannelsUsersEntity> {
-		return await this.chanUser.findOne({ where: { id } });
+		return await this.chanUser.findOne({ where: { id }, relations: ['user', 'channel'] });
 	}
 	
 	/**
