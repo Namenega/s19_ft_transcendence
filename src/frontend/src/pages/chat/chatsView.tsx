@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Chat from "../../../../../../s19_ft_transcendence/src/frontend/src/pages/chat/Chat"
+import Chat from "./Chat"
 import { addDm, createNewDm } from "../../api/dms/dms.api"
 import { addChannel, addChannelUser, channelPasswordVerification, createNewChannelUser, getAllChannels, getChannel, createNewChannel } from "../../api/channel/channels.api"
 import { getAllUsers, getCompleteUser } from "../../api/user/user.api"
@@ -303,7 +303,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 				<br/>
 				<span>{item.login}</span><>&nbsp;&nbsp;</>
 				<Button variant='outlined' onClick={(e)=> {onSubmit(item)}}>
-					Submit
+					New dm
 				</Button>
 				<br/><br/>
 				<Divider variant="middle" />
@@ -346,8 +346,11 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [channels, setChannels] = useState<ChannelDto[]>([]);
 	const [currentChat, setCurrentChat] = useState<DmDto | ChannelDto | null>(null);
 	const [showChat, setShowChat] = useState<boolean>(false);
+	const [showOptions, setShowOptions] = useState<boolean>(true);
 
-	useEffect(() => { getChats();}, [currentChat]);															//c'est ca qui fait blank screen
+	useEffect(() => { getChats();},
+	[currentChat]);															//c'est ca qui fait blank screen
+	
 	useEffect(() => {
 		const interval = setInterval(getChats, 2000);
 		return () => clearInterval(interval);
@@ -373,6 +376,8 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	}
 	
 	const changeCurrentChat: (newChat: DmDto | ChannelDto | null) => void = (newChat) => {
+		if (newChat === null)
+			setShowChat(false);
 		setNewchannel(false);
 		setNewdm(false);
 		setJoinchannel(false);
@@ -405,6 +410,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 				<div className='chat-ctn'>
 					<h2 className='chat-title'>Message</h2>
 						<Stack spacing={2}>
+							{showChat &&
 							<Card>
 								<CardContent>
 									<Typography variant="body1" color="text.secondary" component="div">
@@ -419,18 +425,21 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 									</Typography>
 								</CardContent>
 							</Card>
-							<ButtonGroup variant="contained" aria-label="outlined button group">
-								<Button onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
+							}
+							{!showChat && <>
+								<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
 									New DM
 								</Button>
 								{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
-								<Button onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
+								<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
 									New Channel
 								</Button>
-								<Button onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false); setShowChat(false)}}>
+								<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false); setShowChat(false)}}>
 									Join Channel
 								</Button>
-							</ButtonGroup>
+								</>
+							}
+							{!showChat &&
 							<Card>
 								<CardContent>
 									<Typography variant="body1" color="text.secondary" component="div">
@@ -438,14 +447,14 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 									</Typography>
 								<Divider variant="middle" />
 								{!channels.length && !directMessage.length && <p><br/>No chats</p>}
-								<List sx={{ width: '100%', maxWidth: 360, overflow: 'auto', maxHeight: 200 }}>
+								<List sx={{ width: '100%', minWidth: 300, maxWidth: 300, minHeight: 250, maxHeight: 250, overflow: 'auto' }}>
 									{channels.length !== 0 && channels.map((item)=> 
 									<ListItem>
 										<ListItemButton sx={{display: "flex", justifyContent: "center"}} onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
 											{item.name}
 										</ListItemButton>
-										<IconButton aria-label="channel">
-											<ForumIcon onClick={()=> {changeCurrentChat(item); setShowChat(true)}} />
+										<IconButton aria-label="channel" onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
+											<ForumIcon />
 										</IconButton>
 									</ListItem>
 									)}
@@ -454,20 +463,21 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 										<ListItemButton sx={{display: "flex", justifyContent: "center"}} onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
 											{item.users[0].id === user.id ? item.users[1].login : item.users[0].login}
 										</ListItemButton>
-										<IconButton aria-label="channel">
-											<ChatIcon onClick={()=> {changeCurrentChat(item); setShowChat(true)}} />
+										<IconButton aria-label="channel" onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
+											<ChatIcon/>
 										</IconButton>
 									</ListItem>
 									)}
 								</List>
 								</CardContent>
 							</Card>
+							}
 						</Stack>
 				</div>
 				{newdm && <NewDm user={user} dms={directMessage} changeCurrentChat={changeCurrentChat}/>}
 				{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
 				{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
-				{showChat && <Chat user={user} changeUser={changeUser} currentChat={currentChat} changeCurrentChat={changeCurrentChat} changeGame={changeGame} logout={logout}/>}
+				{showChat && <Chat setShowOptions={setShowOptions} showOptions={showOptions} user={user} changeUser={changeUser} currentChat={currentChat} changeCurrentChat={changeCurrentChat} changeGame={changeGame} logout={logout}/>}
 			</div>
 		</div>
 		);

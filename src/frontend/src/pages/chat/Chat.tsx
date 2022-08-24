@@ -20,7 +20,8 @@ import { UserDto } from "../../api/user/dto/user.dto";
 import Authentication from '../login/authentication';
 import Profile from '../profile/UserAccount';
 import './chatsView.css'
-import { Button } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardContent, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, TextField, Typography } from '@mui/material';
+import ForumIcon from '@mui/icons-material/Forum';
 
 
 //const Chat = () => {
@@ -61,7 +62,7 @@ interface channelSettingsprops {
 }
 
 interface channelInfoProps {
-	channelUser: ChannelUserDto,
+	channelUser: any,
 	changeUser: (newUser: UserDto | null) => void,
 	changeCurrentChat: (newChat: DmDto | ChannelDto | null) => void,
 	currentChat: ChannelDto,
@@ -79,6 +80,8 @@ interface messageProps {
 }
 
 interface chatProps {
+	setShowOptions: any,
+	showOptions: boolean,
 	user: UserDto,
 	changeUser: (newUser: UserDto | null) => void,
 	currentChat: any, //type narrowing does not function correctly and typescript gives faulty type errors back, use any to avoid typescript type checking
@@ -297,8 +300,10 @@ const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, chan
 const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, currentChatLatestUpdates, dm, socket, currUser }) => {
 	const [message, setMessage] = useState<string>('');
 	const Maps = ['black', 'white', 'winter', 'summer', 'night'];
+	const [render, setRender] = useState<boolean>(false);
 
-	useEffect(() => currentChatLatestUpdates(), []);
+	useEffect(() => { currentChatLatestUpdates()}
+	, []);
 
 	const submitMessage: () => void = async () => {
 		await currentChatLatestUpdates();
@@ -324,56 +329,87 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 		await currentChatLatestUpdates();
 	}
 
-	const ChatMessage: React.FC<{message: ChannelMessageDto | DmMessageDto}> = ({message}) => {
+	const keyPress: (e: any) => void = (e) => {
+		if(e.keyCode === 13)
+		{
+			submitMessage();
+			setMessage("");
+		// put the login here
+		}
+	}
+
+	const ChatMessage: React.FC<{render: boolean, message: ChannelMessageDto | DmMessageDto}> = ({render, message}) => {
 		let game = {speed: 1, map: "black", random: false};
+
+		useEffect(() => {
+			if (!render && (message.user !== undefined))
+				setRender(true);
+		}
+		, [message.user]);
 
 		const ChatCommands: React.FC<{}> = () => {
 			if (message.content.substring(0,6) === "*PLAY*") {
-				if (message.content.substring(7,13) === "random") {
+				if (message.content.substring(7,13) === "random")
+				{
 					game.random = true;
-					return(<div>This is Chat return 5</div>)
-					// return (<><span>{`random game --- `}</span><button className={styles.playRandomButton} onClick={()=>createGame(message, game)}>PLAY</button></>)
-				} else if (message.content.length > 6) {
+					return (<><span>{`random game --- `}</span><Button onClick={()=>createGame(message, game)}>PLAY</Button></>)
+				}
+				else if (message.content.length > 6)
+				{
 					game.speed = Number(message.content.substring(7,8));
 					game.map = message.content.substring(9, message.content.length);
-					if (!(game.speed > 0 && game.speed < 4) || !(Maps.find((_map: string) => _map === game.map))) return <></>;
-					return(<div>This is Chat return 6</div>)
-					// return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><button className={styles.playCustomButton} onClick={()=>createGame(message, game)}>PLAY</button></>)
+					if (!(game.speed > 0 && game.speed < 4) || !(Maps.find((_map: string) => _map === game.map)))
+						return <></>;
+					return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button onClick={()=>createGame(message, game)}>PLAY</Button></>)
 				}
-				return(<div>This is Chat return 7</div>)
-				// return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><button className={styles.playDefaultButton} onClick={()=>createGame(message, game)}>PLAY</button></>)
-			} else if (message.content === "/*PLAY*") { //If game is finished change message so that score is appended to it and show it in the chat!!!!!!!!!
-				return(<div>This is Chat return 8</div>)
-				// return (<><button className={styles.playDisabledButton} disabled>PLAY</button></>)
-			} else {
-				return(<div>This is Chat return 9</div>)
-				// return (<span>{message.content}</span>);
+				return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button onClick={()=>createGame(message, game)}>PLAY</Button></>)
+			}
+			else if (message.content === "/*PLAY*")
+			{ //If game is finished change message so that score is appended to it and show it in the chat!!!!!!!!!
+				return (<><Button disabled>PLAY</Button></>)
+			}
+			else
+			{
+				return (<span>{message.content}</span>);
 			}
 		}
-		return(<div>This is Chat return 10</div>)
+		// return(<div>This is Chat return 10</div>)
 
-		// return (<>
-		// 	<div className={message.user.id === currUser ? cs.currUserChatMessageClass : cs.chatMessageClass}>
-		// 		<div className={cs.chatUserNameClass}>
-		// 			{`${message.user.login}`}
-		// 		</div>
-		// 		<div className={cs.chatUserMessageClass}>
-		// 			<ChatCommands/>
-		// 		</div>
-		// 	</div>
-		// 	<br/>
-		// 	<br/>
-		// 	</>); //css jules
-	// }
+		return (
+			<div>
+				{render && `${message.user.name}`}
+				<br/>
+				<ChatCommands/>	
+			</div>
+		);
 	}
 
 	return (
 		<div>
-			This is Chat return 11
+			<Card>
+				<CardContent>
+					<List sx={{ display: "flex", flexDirection: "column", width: '100%', minWidth: 360, maxWidth: 360, minHeight: 500, maxHeight: 500, overflow: 'auto' }}>
+					{currentChat.messages.length ? currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=>
+						<ListItem>
+							<ListItemText sx={{display: "flex"}}>
+								<ChatMessage render={render} message={message}/>
+							</ListItemText>
+						</ListItem>
+						) : <p>No messages</p>}
+					</List>
+				</CardContent>
+			</Card>
+			{/* {currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=><ChatMessage message={message}/>)} */}
+			<br/>
+			<TextField label="Message" disabled={((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) ? true : false} value={message} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setMessage(e.target.value)}/>
+			{/* <input type="text" value={message} onChange={(e)=>setMessage(e.target.value)}/> */}
+			{/* {((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) && <input type="submit" value="Message" disabled/>} */}
+			{/* {((dm && !currentChat.block) || (!dm && !userOrchannelUser.mute)) && <input type="submit" value="Message" onClick={(e)=>submitMessage()}/>} */}
 		</div>
 	)
 
-// 	return (<>
+// 	return (
+//	<>
 // 		<div className={cs.chatMessageBoxClass}>
 // 		<h2 className={cs.chatTitle}>Messages</h2><br/>
 // {currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=><ChatMessage message={message}/>)}
@@ -382,13 +418,14 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 // {((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) && <input className={styles.messageDisabledButton} type="submit" value="Message" disabled/>}
 // 		{((dm && !currentChat.block) || (!dm && !userOrchannelUser.mute)) && <input className={styles.messageButton} type="submit" value="Message" onClick={(e)=>submitMessage()}/>}
 // 		</div>
-// </>);
+// </>
+//);
 }
 
 /***************************/
 
-const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurrentChat, changeGame, logout }) => {
-	let dm: boolean = ("block" in currentChat);
+const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUser, currentChat, changeCurrentChat, changeGame, logout }) => {
+	let dm: boolean = (currentChat && "block" in currentChat);
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
 
@@ -404,7 +441,7 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 			leaveRoom(connectedSocket, currentChat.id);
 			disconnect(connectedSocket);
 		}
-	}, [])
+	}, []);
 
 	//constant cjeck if the user has been banned/muted
 	useEffect(() => {
@@ -435,7 +472,7 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 		await currentChatLatestUpdates();
 		currentChat.block = !currentChat.block;
 		if  (currentChat.block === true)
-			currentChat.user_id_who_initiated_blocking = user.id;
+			currentChat.blockerUserId = user.id;
 		await addDm(currentChat);
 		changeCurrentChat(currentChat);
 	}
@@ -445,6 +482,7 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 		currentChat.users = currentChat.users.filter((channelUser: UserDto) => channelUser.id !== user.id);
 		currentChat.channels_users = currentChat.channel_users.filter((channelUser: ChannelUserDto) => channelUser.user.id !== user.id);
 		await addChannel(currentChat);
+		console.log(currentChat.id);
 		if (currentChat.users.length === 0) {
 			await removeChannel(currentChat.id);
 			changeCurrentChat(null);
@@ -461,6 +499,7 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 	}
 
 	const changeViewProfile: (profile: UserDto) => void = (profile) => {
+		setShowOptions(false);
 		setViewProfile(profile);
 	}
 
@@ -468,20 +507,95 @@ const Chat: React.FC<chatProps> = ({ user, changeUser, currentChat, changeCurren
 		setViewProfile(undefined);
 	}
 
+	const debug: (dm: boolean) => void = (dm) => {
+		console.log(dm);
+	}
+
+	const findChannelUser: () => Promise<void> = async () => {
+		let channelUser = await currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id);
+		
+		return (channelUser);
+	}
+
 	if (viewProfile !== undefined)
-		return <Profile user={viewProfile} changeUser={changeUser} back={backFromViewProfile}
-			myAccount={false} changeGame={changeGame} logout={logout}/>;
+		return (
+			<div className='chat-extension-ctn'>
+					<Button onClick={() => {setViewProfile(undefined); setShowOptions(true)}} >Close</Button>
+					<h2 className='chat-title'>Profile</h2>
+					<Stack spacing={2}>
+							<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
+								<Avatar sx={{ width: 100, height: 100}} src={viewProfile.avatar} />
+							</Box>
+							<Card>
+								<CardContent>
+									<Typography variant="h5" component="div">
+										{viewProfile.name}
+									</Typography>
+									<Typography variant="h5" component="div" color="text.secondary">
+										{viewProfile.login}
+									</Typography>
+								</CardContent>
+							</Card>
+							<Card>
+								<CardContent>
+        							<Typography variant="h5" component="div">
+										Status
+									</Typography>
+									<Typography sx={{ fontSize: 14 }} color={viewProfile.status === "Offline" ? {color: "red"} : {color: "green"}} gutterBottom>
+										{viewProfile.status}
+									</Typography>
+									<Typography variant="h5" component="div">
+										Ratio
+									</Typography>
+									<Typography sx={{ fontSize: 14 }} color="text.secondary">
+										{(`${viewProfile.numberOfWin} / ${viewProfile.numberOfLoss}`) ? (`${viewProfile.numberOfWin} / ${viewProfile.numberOfLoss}`) : 0}
+									</Typography>
+									<Typography variant="h5" component="div">
+										Wins
+									</Typography>
+									<Typography sx={{ fontSize: 14 }} color="text.secondary">
+										{viewProfile.numberOfWin}
+									</Typography>
+									<Typography variant="h5" component="div">
+										Losses
+									</Typography>
+									<Typography sx={{ fontSize: 14 }} color="text.secondary">
+										{viewProfile.numberOfLoss}
+									</Typography>
+								</CardContent>
+							</Card>
+							<ButtonGroup variant="contained" aria-label="outlined button group">
+								{/* <Button onClick={() => changeExtension("matchs")}>Match History</Button> */}
+							</ButtonGroup>
+					</Stack>
+				</div>
+		);
+	
+	// console.log(currentChat.channel_users);
+	// console.log("xd");
 
 	//MODIFY
 	return (
 		<div className='chat-extension-ctn'>
-			<h2 className='chat-title'>Chat</h2>
+			<ButtonGroup>
+				<Button onClick={()=>changeCurrentChat(null)}>Close</Button>
+				{!dm && <><Button onClick={()=>leaveChannel()}>Leave</Button></>}
+			</ButtonGroup>
+			{dm && <br/>}
+			<ButtonGroup>
+				{dm && <Button variant="outlined" onClick={()=>changeViewProfile(currentChat.users.find((userDm: UserDto) => userDm.id !== user.id))}> {currentChat.users.find((userDm: UserDto) => userDm.id !== user.id).login}</Button>}
+				{dm && (!currentChat.block || (currentChat.block && currentChat.blockerUserId === user.id)) && <Button variant="contained" onClick={()=>setBlock()}>{currentChat.block === false ? "Block" : "Unblock"}</Button>}
+			</ButtonGroup>
+			{!dm && <h1> {currentChat.name}</h1>}
+			{!dm && <ChannelInfo channelUser={findChannelUser()} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
+			<br/>
+			<Message userOrchannelUser={dm ? user : findChannelUser()} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>
 		</div>
 	)
 
 	// return (<div className={cs.chatRootClass}>
 	// 	<button className={cs.backButton} onClick={()=>changeCurrentChat(null)}>Back</button>
-	// 	{dm && (!currentChat.block || (currentChat.block && currentChat.user_id_who_initiated_blocking === user.id))
+	// 	{dm && (!currentChat.block || (currentChat.block && currentChat.blockerUserId === user.id))
 	// 					&& <><>&nbsp;&nbsp;</><button className={styles.blockButton} onClick={()=>setBlock()}>{currentChat.block === false ? "Block" : "Unblock"}</button></>}
 	// 	{!dm && <><>&nbsp;&nbsp;</><button className={styles.leaveChannelButton} onClick={()=>leaveChannel()}>Leave</button></>}
 	// 				{dm && <h1 className={cs.clickable} onClick={()=>changeViewProfile(currentChat.users.find((userDm: UserDto) => userDm.id !== user.id))}> {currentChat.users.find((userDm: UserDto) => userDm.id !== user.id).login}</h1>}
