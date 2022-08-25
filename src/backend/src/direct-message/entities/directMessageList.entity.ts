@@ -12,7 +12,7 @@ export class DirectMessageListEntity {
 	id: number
 
 	/* Telling the database that the user is a user entity. */
-	@ManyToOne(() => UserEntity, UserEntity => UserEntity.dms_messages, {eager: true})
+	@ManyToOne(() => UserEntity, {eager: true})
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => UserEntity)

@@ -66,7 +66,7 @@ export class UsersService {
 	 */
 	async findCompleteOne(id: number): Promise<UserEntity> {
 		return await this.UserRepo.findOne({ where: { id },
-			relations: ['matchHistory', 'friends', 'dms', 'dms_messages', 'channels', 'channels_messages', 'channels_users']
+			relations: ['matchHistory', 'friends', 'dms', 'channels']
 		});
 	}
 

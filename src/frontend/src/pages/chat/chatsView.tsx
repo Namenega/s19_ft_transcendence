@@ -209,44 +209,6 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 //			 	<button className={cs.submitButton} type="submit" onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>Submit</button>
 // 			</div>
 //	)
-	
-	// return (<div>
-	// 			<br/>
-	// 			<label>Channel name: </label>
-	// 			<br/><br/>
-	// 			<input className="textInput" type="text" maxLength={20}
-	// 				value={name} name="channelname"
-	// 				onChange={(e)=>setName(e.target.value)} required/>
-	// 			<br/><br/>
-	// 			<input type="radio" name="channeltype" onChange={()=>setType("public")} required/>
-	// 			<Button variant="contained"
-	// 					sx={{margin: 1}}
-	// 					color={type === "public" ? "secondary" : "primary"}>public</Button>
-	// 			<br/>
-	// 			<input type="radio" name="channeltype" onChange={()=>setType("private")} required/>
-	// 			<Button variant="contained"
-	// 					sx={{margin: 1}}
-	// 					color={type === "private" ? "secondary" : "primary"}>private</Button>
-	// 			<br/>
-	// 			<input type="radio" name="channeltype" onChange={()=>setType("password")} required/>
-	// 			<Button variant="contained"
-	// 					sx={{margin: 1}}
-	// 					color={type === "password" ? "secondary" : "primary"}>password</Button>
-	// 			{type === "password" &&
-	// 				<>
-	// 					<input className="textInput" placeholder={"Password..."}
-	// 						type="password" maxLength={20} value={password}
-	// 						onChange={(e)=>setPassword(e.target.value)}/>
-	// 				</>
-	// 			}
-	// 			<br/><br/>
-	// 			{nameAlreadyInUse && <p>Name already exists, try another one.</p> && <br/>}
-	// 			<Button variant="contained" type="submit"
-	// 					onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>
-	// 				Submit
-	// 			</Button>
-	// 			<br/><br/>
-	// 		</div>);
 }
 
 const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {

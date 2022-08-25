@@ -10,7 +10,7 @@ export class ChannelsMessagesEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@ManyToOne(() => UserEntity, UserEntity => UserEntity.channels_messages, {eager: true})
+	@ManyToOne(() => UserEntity, {eager: true})
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => UserEntity)

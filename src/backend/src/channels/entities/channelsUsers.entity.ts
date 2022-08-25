@@ -11,13 +11,13 @@ export class ChannelsUsersEntity {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@ManyToOne(() => UserEntity, (user) => user.channels_users, {eager: true})
+	@ManyToOne(() => UserEntity, {eager: true})
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => UserEntity)
 	user: UserEntity
 
-	@ManyToOne(() => ChannelsEntity, (channel) => channel.channel_users, { onDelete: "CASCADE" })
+	@ManyToOne(type => ChannelsEntity, ChannelsEntity => ChannelsEntity.channel_users)
 	@JoinColumn()
 	@ValidateNested()
 	@Type(() => ChannelsEntity)

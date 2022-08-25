@@ -35,7 +35,7 @@ export class DirectMessageService {
 	 * @returns An array of DirectMessageEntity objects.
 	 */
 	async findAll(): Promise<DirectMessageEntity[]> {
-		return await this.dm.find({ relations: ['users', 'messages'] });
+		return await this.dm.find();
 	}
 	
 	/**
@@ -44,7 +44,7 @@ export class DirectMessageService {
 	 * @returns A promise of a DirectMessageEntity
 	 */
 	async findOne(id: number): Promise<DirectMessageEntity> {
-		return await this.dm.findOne({ where: { id }, relations: ['users', 'messages'] });
+		return await this.dm.findOne({ where: { id } });
 	}
 	
 	/**
@@ -82,7 +82,7 @@ export class DirectMessageService {
 	 * @returns An array of DirectMessageListEntity objects.
 	 */
 	async findAllList(): Promise<DirectMessageListEntity[]> {
-		return await this.dmList.find({ relations: ['user', 'dm'] });
+		return await this.dmList.find();
 	}
 
 	/**
@@ -91,7 +91,7 @@ export class DirectMessageService {
 	 * @returns A DirectMessageListEntity
 	 */
 	async findOneList(id: number): Promise<DirectMessageListEntity> {
-		return await this.dmList.findOne({ where: { id }, relations: ['user', 'dm'] });
+		return await this.dmList.findOne({ where: { id } });
 	}
 
 	/**

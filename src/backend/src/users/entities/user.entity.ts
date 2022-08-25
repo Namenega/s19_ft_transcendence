@@ -3,9 +3,6 @@ import { MatchHistoryEntity } from "src/match-history/entities/matchHistory.enti
 import { FriendsEntity } from "src/friends/entities/friends.entity";
 import { ChannelsEntity } from "src/channels/entities/channels.entity";
 import { DirectMessageEntity } from "src/direct-message/entities/directMessage.entity";
-import { DirectMessageListEntity } from "src/direct-message/entities/directMessageList.entity";
-import { ChannelsUsersEntity } from "src/channels/entities/channelsUsers.entity";
-import { ChannelsMessagesEntity } from "src/channels/entities/channelsMessages.entity";
 import { ValidateNested, IsNotEmpty, IsString, IsBoolean, IsInt, Min, IsArray, IsOptional, IsNumberString, IsIn } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -94,19 +91,11 @@ export class UserEntity {
 	/* Creating a many to many relationship between the UserEntity and the
 	DirectMessageEntity. */
 	@ManyToMany(() => DirectMessageEntity, (dms) => dms.users)
-	@JoinTable()
 	@IsOptional()
 	@IsArray()
 	@ValidateNested({ each: true })
 	@Type(() => DirectMessageEntity)
 	dms: DirectMessageEntity[];
-
-	@OneToMany(() => DirectMessageListEntity, (dms_messages) => dms_messages.user)
-	@IsOptional()
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => DirectMessageListEntity)
-	dms_messages: DirectMessageListEntity[];
 
 	/* Creating a many to many relationship between the UserEntity and the
 	ChannelsEntity. */
@@ -117,20 +106,6 @@ export class UserEntity {
 	@ValidateNested({ each: true })
 	@Type(() => ChannelsEntity)
 	channels: ChannelsEntity[];
-
-	@OneToMany(() => ChannelsMessagesEntity, (channels_messages) => channels_messages.user)
-	@IsOptional()
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => ChannelsMessagesEntity)
-	channels_messages: ChannelsMessagesEntity[];
-
-	@OneToMany(() => ChannelsUsersEntity, (channels_users) => channels_users.user)
-	@IsOptional()
-	@IsArray()
-	@ValidateNested({ each: true })
-	@Type(() => ChannelsUsersEntity)
-	channels_users: ChannelsUsersEntity[];
 
 	/* A column in the database called latestTimeOnline, and it is a string. */
 	@Column()
