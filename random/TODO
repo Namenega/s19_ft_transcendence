@@ -1,8 +1,5 @@
 - handle axios error (comme taille image avatar)
-- ChatView : le premier useEffect est bugé (destroy error)
 - enlever les console.log
-- match history friends
-- offline après profil ami
 - slice texte trop large chat
-- multiple DM change
-- channel private? ca fait quoi?
+- accéder match history dans chat?
+- password hashed

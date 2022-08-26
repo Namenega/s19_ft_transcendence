@@ -16,3 +16,17 @@
     width: 340px;
     font-weight: bold;
   }
+
+  .home-ctn {
+    width: 500px;
+    height: 350px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.493);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /*position verticale */
+    align-items: center;  /*position horizontale */
+    text-align: center;
+    padding: 20px;
+  }

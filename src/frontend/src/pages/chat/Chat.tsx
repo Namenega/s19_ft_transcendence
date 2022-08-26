@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import _ from 'underscore';
 import { connect, listen, joinRoom, leaveRoom, send, disconnect } from "../../socket/chat/chat.socket";
-
 import { addChannel, removeChannel, updateChannel, updateChannelUser, getChannel, addChannelMessage, createNewChannelMessage, addChannelUser, createNewChannelUser, updateChannelMessage } from "../../api/channel/channels.api";
 import { ChannelDto } from '../../api/channel/dto/channel.dto';
 import { ChannelUserDto } from '../../api/channel/dto/channel_user.dto';
 import { ChannelMessageDto } from "../../api/channel/dto/channel_message.dto";
-
 import { addDm, getDm, addDmMessage, createNewDmMessage, updateDmMessage } from "../../api/dms/dms.api";
 import { DmDto } from '../../api/dms/dto/dm.dto';
 import { DmMessageDto } from "../../api/dms/dto/dm_message.dto";
-
 import { addGame } from "../../api/games/games.api";
 import { GameDto } from '../../api/games/dto/game.dto';
-
 import { getAllUsers, addUser, getCompleteUser, getUser } from "../../api/user/user.api";
 import { UserDto } from "../../api/user/dto/user.dto";
-
 import Authentication from '../login/authentication';
-import Profile from '../profile/UserAccount';
+import Profile from '../profile/profile';
 import './chatsView.css'
 import { Avatar, Box, Button, ButtonGroup, Card, CardContent, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, TextField, Typography } from '@mui/material';
 import ForumIcon from '@mui/icons-material/Forum';
-
+import { CompleteMatchHistoryDto, MatchHistoryDto } from '../../api/match-history/dto/match-history.dto';
+import { getMatchHistoryOfUser } from '../../api/match-history/match-history.api';
 
 //const Chat = () => {
 
@@ -456,6 +452,9 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
 	const [channelExt, setChannelExt] = useState<"info" | "settings" | "messages" | "user">("messages");
+	const [matchH, setMatchH] = useState<boolean>(false);
+	const [showInfos, setShowInfos] = useState<boolean>(true);
+	const [userMatchHistory, setUserMatchHistory] = useState<CompleteMatchHistoryDto[]>([]);
 
 	useEffect(() => {
 		const connectedSocket = connect()
@@ -546,6 +545,26 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 		return (channelUser);
 	}
 
+	const createCompleteMatchHistory: (match: MatchHistoryDto) => Promise<CompleteMatchHistoryDto | null> = async (match) => {
+		const opponent = await getUser(match.opponentId);
+		if (opponent === null) return null;
+		return {
+			id: match.id,
+			user: match.user,
+			userScore: match.userScore,
+			opponent: opponent,
+			opponentScore: match.opponentScore
+		};
+	}
+
+	const getUserMatchHistory: (profile: UserDto) => void = async (profile) => {
+		let matchHistory: MatchHistoryDto[]  = await getMatchHistoryOfUser(profile.login);
+		let matchHistory1: (CompleteMatchHistoryDto | null)[] = await Promise.all(matchHistory.map(async (item) => { return await createCompleteMatchHistory(item); }));
+		// @ts-ignore
+		let matchHistory2: CompleteMatchHistoryDto[] = matchHistory1.filter((match) => match !== null);
+		setUserMatchHistory(matchHistory2);
+	}
+
 	if (viewProfile !== undefined)
 		return (
 			<div className='chat-extension-ctn'>
@@ -565,7 +584,8 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 									</Typography>
 								</CardContent>
 							</Card>
-							<Card>
+							<Card sx={{ minWidth: 350 }}>
+								{showInfos &&
 								<CardContent>
         							<Typography variant="h5" component="div">
 										Status
@@ -592,12 +612,21 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 										{viewProfile.numberOfLoss}
 									</Typography>
 								</CardContent>
+								}
+								{matchH &&
+									<table style={{"margin": "auto"}}>
+									{userMatchHistory.length ? userMatchHistory.map((elem)=><tr>
+									<td>{`${elem.user.login} VS ${elem.opponent.login}`}</td>
+									<td>|</td>
+									<td>{`${elem.userScore} : ${elem.opponentScore}`}</td>
+									</tr>) : <p>No matches</p>}
+									</table>
+								}
 							</Card>
-							<ButtonGroup variant="contained" aria-label="outlined button group">
-								{/* <Button onClick={() => changeExtension("matchs")}>Match History</Button> */}
-							</ButtonGroup>
+							{/* <Button variant="contained" onClick={() =>{setMatchH(!matchH); setShowInfos(!showInfos)}}>Match History</Button> */}
 					</Stack>
 				</div>
+				// {matchH && <MatchHistory user={currentChat.users.find((userDm: UserDto) => userDm.id !== user.id)}/>}
 		);
 	
 	// console.log(currentChat.channel_users);

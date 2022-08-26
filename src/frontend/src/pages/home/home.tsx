@@ -6,43 +6,12 @@ import { getAllGames, removeGame } from "../../api/games/games.api";
 import { UserDto } from "../../api/user/dto/user.dto";
 import { getUser, updateUser } from "../../api/user/user.api";
 import ChatsView from "../chat/chatsView";
-import Profile from "../profile/UserAccount";
+import Profile from "../profile/profile";
 import Play from "../play/Play";
 import MenuIcon from '@mui/icons-material/Menu';
 import './home.css'
-import { SettingsInputAntennaTwoTone } from "@mui/icons-material";
 
 const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string) => void, logout: () => void}> = ({user, changeMenuPage, logout}) => {
-
-	// const isLogout = () => {
-	// 	window.location.href = 'http://localhost:3000'
-	// }
-
-	// const logout: () => void = async () => {
-	// 	if (profile.status === "Online") await updateUser(profile.id, {status: "Offline"});
-	// 	changeUser(null);
-	// }
-
-	// return (
-	// 	<Box sx={{ flexGrow: 1 }}>
-	// 	<AppBar position="static">
-	// 	  <Toolbar >
-	// 		<Typography variant="h6" component="div">
-	// 		  Transcendence
-	// 		</Typography>
-	// 		<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-	// 		  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("play")}>PLAY</Button>
-	// 		  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("chat")}>CHAT</Button>
-	// 		  <Button variant="contained" sx={{marginRight: '10px'}} onClick={() => changeMenuPage("profile")}>PROFILE</Button>
-	// 		  <Button variant="contained" onClick={() => changeMenuPage("watch")}>WATCH</Button>
-	// 		</Box>
-	// 		{/* <Avatar alt="Remy Sharp" src="url('')" /> */}
-	// 		{/* Avatar 19 a chercher sur l'api */}
-	// 	  </Toolbar>
-	// 	</AppBar>
-	//   </Box>
-	// );
-	// <Button color="inherit" onClick={() => isLogout()}>Logout</Button>				// à placer au dessus de <Avatar alt="Remy Sharp" src="url('')" />
 
 	return (
 		<div className='full-menu-main-ctn'>
@@ -60,8 +29,9 @@ const HomeDisplay: React.FC<{user: UserDto, changeMenuPage: (newMenuPage: string
 				</AppBar>
 			</Box>
 			<div className='start-main-ctn'>
-				<div className='start-ctn'>
+				<div className='home-ctn'>
 					<h2 className='start-title'>Menu</h2>
+					<br/>
 					<Stack spacing={2}>
 						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("play")}>PONG</Button>
 						<Button className='game-button-text' variant="contained" onClick={() => changeMenuPage("chat")}>MESSAGE</Button>
@@ -91,6 +61,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	**If user just connected and has an active game in its name, delete that game...
 	** Documentation: https://stackoverflow.com/questions/37900110/how-to-set-offline-a-user-in-the-db-when-it-closes-the-browser
 	*/
+
 	useEffect(() => {
 			const removeActiveGame: () => void = async () => { //Call in an async function
 				//Remove all games associated with the user that have not been finished yet
@@ -186,7 +157,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	} else if (menuPage === "chat") {
 		return <ChatsView user={user} changeUser={changeUser} changeMenuPage={changeMenuPage} changeGame={changeGame} back={back} logout={logout}/>;
 	} else if (menuPage === "profile") {
-		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} changeGame={changeGame} logout={logout}/>;
+		return <Profile user={user} changeUser={changeUser} back={back} myAccount={true} logout={logout}/>;
 	} else {
 		return <h1>Home Error</h1>;
 	}

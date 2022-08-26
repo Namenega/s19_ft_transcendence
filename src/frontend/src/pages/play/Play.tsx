@@ -12,8 +12,6 @@ const Maps = ['black', 'white', 'winter', 'summer', 'night'];
 
 interface preGamePageProps {
   getGame: "create" | "join" | null
-  user: UserDto
-  changeUser: (newUser: UserDto | null) => void
   changeGetGame: (page: "create" | "join" | null) => void
   changeMenuPage: (newMenuPage: string) => void
   game: GameDto
@@ -23,20 +21,13 @@ interface preGamePageProps {
 
 interface joinGameProps {
   user: UserDto
-  changeUser: (newUser: UserDto | null) => void
-  changeGetGame: (page: "create" | "join" | null) => void
-  changeMenuPage: (newMenuPage: string) => void
   changeGame: (newGame: GameDto | null) => void
   logout: () => void
 }
 
 interface createGameProps {
   user: UserDto
-  changeUser: (newUser: UserDto | null) => void
-  changeGetGame: (page: "create" | "join" | null) => void
-  changeMenuPage: (newMenuPage: string) => void
   changeGame: (newGame: GameDto | null) => void
-  logout: () => void
 }
 
 interface playProps {
@@ -66,7 +57,7 @@ interface rankingProps {
   rankingUsers: UserDto[]
 }
 
-const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser, back, player, logout}) => {
+const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser, back, logout}) => {
 
   const returnToMenu = () => {
     back();
@@ -97,7 +88,7 @@ const Pong: React.FC<PongProps> = ({gameInfos, user, changeMenuPage, changeUser,
   );
 }
 
-const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, changeGetGame, changeMenuPage, game, changeGame, logout }) => {
+const PreGamePage: React.FC<preGamePageProps> = ({ getGame, changeGetGame, changeMenuPage, game, changeGame, logout }) => {
   const [waitingEffect, setWaitingEffect] = useState<number>(0);
 
   useEffect(()=>{
@@ -161,28 +152,9 @@ const PreGamePage: React.FC<preGamePageProps> = ({ getGame, user, changeUser, ch
       </div>
     </div>
 	);
-
-  // <br/>
-  // &nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => {changeGame(null); removeGame(game.id); (getGame === "join" && changeGetGame(null))}}>Back</Button>
-  // <br/>
-  //       <h1 style={{display: 'inline', marginLeft: '33%'}}>Waiting for a second player</h1>
-  //       {waitingEffect === 1 && <h1 style={{display: 'inline'}}>.</h1>}
-  //       {waitingEffect === 2 && <h1 style={{display: 'inline'}}>..</h1>}
-  //       {waitingEffect === 3 && <h1 style={{display: 'inline'}}>...</h1>}
-  //       <br/><br/>
-  // <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-  //         <h3>Game options:</h3>
-  // </Box>
-  // <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-  //         <span style={{color:"#507255"}}>ball speed: </span><span style={{color:"#4AAD52"}}>{game.ballspeed}</span>
-  //       </Box>
-  // <br/>
-  // <Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-  //         <span style={{color:"#507255"}}>map: </span><span style={{color:"#4AAD52"}}>{game.map}</span>
-  // </Box>
 }
 
-const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, changeMenuPage, changeGame }) => {
+const JoinGame: React.FC<joinGameProps> = ({ user, changeGame }) => {
   const [waitingEffect, setWaitingEffect] = useState<number>(0);
 
   useEffect(()=>{
@@ -219,7 +191,7 @@ const JoinGame: React.FC<joinGameProps> = ({ user, changeUser, changeGetGame, ch
   );
 }
 
-const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame, changeMenuPage, changeGame, logout }) => {
+const CreateGame: React.FC<createGameProps> = ({ user, changeGame }) => {
   const [ballSpeed, setBallSpeed] = useState<number>(1);
   const [map, setMap] = useState<string>("black");
 
@@ -253,28 +225,6 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeUser, changeGetGame
       </Stack>
     </div>
   );
-
-  {/* <br/>
-			&nbsp;&nbsp;&nbsp;&nbsp;<Button variant="contained" onClick={() => changeGetGame(null)}>Back</Button>
-			<Box sx={{marginRight:'100px'}}>
-				<h1>Create&nbsp;Game</h1>
-			</Box>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-				<label>Ball Speed: </label>
-				<input type="number" step="1" min="1" max="3" value={ballSpeed} onChange={(e)=>setBallSpeed(Number(e.target.value))} required/>
-			</Box>
-				<br/><br/>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-				<label>Map: </label>
-				<select onChange={(e)=>setMap(e.target.value)} required>
-					{Maps.map((item)=> <option>{item}</option>)}
-				</select>
-			</Box>
-				<br/><br/>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-				<button type="submit" onClick={()=>onSubmit()}>Create Game</button>
-			</Box>
-    </div> */}
 }
 
 const Ranking: React.FC<rankingProps> = ({ rankingUsers }) => {
@@ -356,34 +306,6 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
     changeGetGame(null);
   }
 
-  const showR: () => void = () => {
-		if (showRanking)
-			setShowRanking(false);
-		else
-      setShowRanking(true);
-	}
-
-	const showL: () => void = () => {
-		if (showLive)
-			setShowLive(false);
-		else
-      setShowLive(true);
-	}
-
-  const showJoinGame: () => void = () => {
-		if (showJoin)
-			setShowJoin(false);
-		else
-			setShowJoin(true);
-	}
-
-	const showCreateGame: () => void = () => {
-		if (showCreate)
-			setShowCreate(false);
-		else
-			setShowCreate(true);
-	}
-
   const changeExtension: (ext: string) => void = (ext) => {
 		if (ext === "create")
 		{
@@ -391,7 +313,7 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 			setShowJoin(false);
       setShowRanking(false);
       setShowLive(false);
-			showCreateGame();
+			setShowCreate(!showCreate);
 		}
 		else if (ext === "join")
 		{
@@ -399,21 +321,21 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 			setShowCreate(false);
       setShowRanking(false);
       setShowLive(false);
-			showJoinGame();
+			setShowJoin(!showJoin);
 		}
     else if (ext === "live")
     {
 			setShowCreate(false);
       setShowJoin(false);
       setShowRanking(false);
-			showL();
+			setShowLive(!showLive);
     }
     else if (ext === "ranking")
     {
 			setShowCreate(false);
       setShowJoin(false);
       setShowLive(false);
-			showR();
+			setShowRanking(!showRanking);
     }
 	}
 
@@ -421,7 +343,7 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
     return (<Pong gameInfos={game} user={user} changeMenuPage={changeMenuPage} changeUser={changeUser} back={quitGame} player={(game.user1.id === user.id || game.user2.id === user.id)} logout={logout}/>);
   }
   else if (game !== null) {
-    return <PreGamePage getGame={getGame} user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame} logout={logout} />;
+    return <PreGamePage getGame={getGame} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} game={game} changeGame={changeGame} logout={logout} />;
   }
   else {
     return (
@@ -449,8 +371,8 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
               <Button variant="contained" onClick={()=>changeExtension("live")}> Watch live </Button>
             </Stack>
           </div>
-          {showCreate && <CreateGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame} logout={logout} />}
-          {showJoin && <JoinGame user={user} changeUser={changeUser} changeGetGame={changeGetGame} changeMenuPage={changeMenuPage} changeGame={changeGame} logout={logout} />}
+          {showCreate && <CreateGame user={user} changeGame={changeGame} />}
+          {showJoin && <JoinGame user={user} changeGame={changeGame} logout={logout} />}
           {showLive && <Live changeGame={changeGame} activeGames={activeGames}/>}
           {showRanking && <Ranking rankingUsers={rankingUsers}/>}
         </div>
@@ -460,13 +382,3 @@ const Play: React.FC<playProps> = ({ user, changeUser, changeMenuPage, game, cha
 }
 
 export default Play
-
-
-{/* <br/>
-			<br/>
-            <h1>Play Pong</h1>
-			<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>
-            	<Button variant="contained" onClick={()=>changeGetGame("create")}> Create Game </Button><>&nbsp;&nbsp;</>
-            	<Button variant="contained" onClick={()=>changeGetGame("join")}> Join Game </Button>
-			</Box>
-        </div> */}

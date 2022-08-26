@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { UserDto } from "../../api/user/dto/user.dto";
-import { Button, Divider, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { addUser, createNewUser, getUserByLogin, getUserByName, userPasswordVerification, verify2FA } from "../../api/user/user.api";
 import { OAuth42_access_token, OAuth42_user } from "../../OAuth42/login";
 import './authentication.css';
 import Home from "../home/home";
-import { Input } from '@mui/material';
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
 interface logFormProps {
-	changePage: (newPage: string) => void
 	changeUser: (newUser: UserDto | null) => void
 	signup: boolean
 	alreadyConnected: boolean
@@ -20,7 +18,7 @@ interface logFormProps {
 	changeTwoFA: any
 }
 
-const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alreadyConnected, changeAlreadyConnected, changeTwoFA }) => {
+const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected, changeAlreadyConnected, changeTwoFA }) => {
 	let [accountAlreadyInUse, setAccountAlreadyInUse] = useState<boolean>(false);
 	let [nonExistingAccount, setNonExistingAccount] = useState<boolean>(false);
 	let [wrongPassword, setWrongPassword] = useState<boolean>(false);
@@ -70,10 +68,10 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 			changeUser(userInDatabase);
 		} else {
 			setAccountAlreadyInUse(true);
-			// setName('');
-			// setLogin('');
-			// setAvatar('');
-			// setPassword('');
+			setName('');
+			setLogin('');
+			setAvatar('');
+			setPassword('');
 		}
 	}
 
@@ -87,14 +85,15 @@ const LogForm: React.FC<logFormProps> = ({ changePage, changeUser, signup, alrea
 	 	reader.readAsDataURL(event.target.files[0]);
  }
 
+
 	return (
 		<div className='start-main-ctn' style={{backgroundImage:"url('./img/main-bg.jpg')"}}>
 			<div className='start-ctn'>
 				{!signup ? <h2>Log in</h2> : <h2>Sign up</h2>}
 				<Stack spacing={2}>
-					<TextField inputProps={{maxLength: 15}} required label="Name" id="outlined-required" placeholder="Required" onChange={(e)=>setName(e.target.value)}/>
-					{signup && <TextField inputProps={{maxLength: 15}} required id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
-					<TextField required id="outlined-required" label="Password" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
+					<TextField inputProps={{maxLength: 15}} required value={name} label="Name" id="outlined-required" placeholder="Required" onChange={(e)=>setName(e.target.value)}/>
+					{signup && <TextField inputProps={{maxLength: 15}} required value={login} id="outlined-required" label="Login" placeholder="Required" onChange={(e)=>setLogin(e.target.value)}/>}
+					<TextField required id="outlined-required" value={password} label="Password" placeholder="Required" onChange={(e)=>setPassword(e.target.value)}/>
 					{signup && <Button component="label" className='game-button-text' variant="outlined"> 
 						Upload Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
 					</Button>}
@@ -155,6 +154,7 @@ const Start: React.FC<{changePage: (newPage: string) => void, alreadyConnected: 
 		<div className='start-ctn'>
 			<h2 className='start-title'>Welcome to my transcendence</h2>
 			<p>I am the best pong player</p>
+			<br/>
 			<Stack spacing={2}>
 				<Button className='game-button-text' variant="contained" onClick={()=>{changePage('login')}}>
 					Log in
@@ -232,7 +232,7 @@ const Authentication: React.FC = () => {
 		return (<Start changePage={changePage} alreadyConnected={alreadyConnected}/>);
 	}
     else if (page === "signup" || page === "login") {
-		return (<LogForm changePage={changePage} changeUser={changeUser}
+		return (<LogForm changeUser={changeUser}
 			signup={page === "signup" ? true : false} alreadyConnected={alreadyConnected}
 			changeAlreadyConnected={changeAlreadyConnected} changeTwoFA={changeTwoFA}/>);
 	}

@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-	connect,
-	startGame,
-	joinRoom,
-	stopGame,
-	disconnect } from "../../../socket/game/game.socket";
+import { connect, startGame, joinRoom, stopGame, disconnect } from "../../../socket/game/game.socket";
 import { GameDto } from "../../../api/games/dto/game.dto";
 import { UserDto } from "../../../api/user/dto/user.dto";
 import { updateUser } from "../../../api/user/user.api";
@@ -14,8 +9,6 @@ import { addMatchHistory, createNewMatchHistory, getMatchHistoryOfUser } from ".
 import { getUser } from "../../../api/user/user.api";
 import { removeGame } from "../../../api/games/games.api";
 import { Button } from '@mui/material';
-
-
 
 const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUser: UserDto | null) => void, back: () => void, player: boolean}) => {
 	const [endGame, setEndGame] = useState<boolean>(false);

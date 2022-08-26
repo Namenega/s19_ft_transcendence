@@ -58,7 +58,7 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 		const finder = channels ? channels.find((myChannel) => myChannel.name === channel.name) : undefined;
 
 		// CHECK FINDER (A ENLEVER)
-		console.log(finder);
+		// console.log(finder);
 
 		return (finder !== undefined);
 	}
@@ -223,7 +223,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 		const finder = dms ? dms.find((dm) => dm.users.some((user) => user.id === account.id)) : undefined;
 
 		// CHECK FINDER
-		console.log(finder);
+		// console.log(finder);
 
 		return (finder !== undefined);
 	}
@@ -232,9 +232,9 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 		let search: UserDto[] = [];
 		const allUsers = await getAllUsers();
 
-		console.log(allUsers)
-		console.log(searchValue)
-		console.log(isPartOfDms(allUsers[1]))
+		// console.log(allUsers)
+		// console.log(searchValue)
+		// console.log(isPartOfDms(allUsers[1]))
 
 		allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfDms(item)
 				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item) && console.log(item.login))
@@ -346,12 +346,12 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		setCurrentChat(newChat);
 	}
 
-	const debug: (channels: ChannelDto[], directMessage: DmDto[]) => void = (channels, directMessage) => {
-		console.log(channels);
-		console.log(channels.length);
-		console.log(directMessage);
-		console.log(directMessage.length);
-	}
+	// const debug: (channels: ChannelDto[], directMessage: DmDto[]) => void = (channels, directMessage) => {
+	// 	console.log(channels);
+	// 	console.log(channels.length);
+	// 	console.log(directMessage);
+	// 	console.log(directMessage.length);
+	// }
 
 	return (
 		<div className='full-chat-main-ctn'>
@@ -364,7 +364,7 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						ft_transcendence
 					</Typography>
-					<Button variant="contained" color="primary" onClick={() => debug(channels, directMessage)}>Logout</Button>
+					<Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>
