@@ -31,7 +31,11 @@ export class UsersService {
 	 * @returns The user entity that was created.
 	 */
 	async create(createUserDto: CreateUserDto): Promise<UserEntity> {
-		return await this.UserRepo.save(createUserDto);
+		try {
+			return await this.UserRepo.save(createUserDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -39,7 +43,11 @@ export class UsersService {
 	 * @returns An array of UserEntity objects
 	 */
 	async findAll(): Promise<UserEntity[]> {
-		return await this.UserRepo.find();
+		try {
+			return await this.UserRepo.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -47,7 +55,11 @@ export class UsersService {
 	 * @returns An array of UserEntity
 	 */
 	async findAllRank(): Promise<UserEntity[]> {
-		return await this.UserRepo.find({order: {elo: "DESC"}});
+		try {
+			return await this.UserRepo.find({order: {elo: "DESC"}});
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -56,7 +68,11 @@ export class UsersService {
 	 * @returns A promise of a UserEntity
 	 */
 	async findOne(id: number): Promise<UserEntity> {
-		return await this.UserRepo.findOne({ where: { id } });
+		try {
+			return await this.UserRepo.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -65,9 +81,13 @@ export class UsersService {
 	 * @returns The user with the given id, with all of the relations loaded.
 	 */
 	async findCompleteOne(id: number): Promise<UserEntity> {
-		return await this.UserRepo.findOne({ where: { id },
-			relations: ['matchHistory', 'friends', 'dms', 'channels']
-		});
+		try {
+			return await this.UserRepo.findOne({ where: { id },
+				relations: ['matchHistory', 'friends', 'dms', 'channels']
+			});
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -76,7 +96,11 @@ export class UsersService {
 	 * @returns A promise of a UserEntity
 	 */
 	async findOneByName(name: string): Promise<UserEntity> {
-		return await this.UserRepo.findOne({ where: { name: name }});
+		try {
+			return await this.UserRepo.findOne({ where: { name: name }});
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -85,12 +109,20 @@ export class UsersService {
 	 * @returns The user entity with the matching login.
 	 */
 	async findOneByLogin(login: string): Promise<UserEntity> {
-		return await this.UserRepo.findOne({ where: { login: login }});
+		try {
+			return await this.UserRepo.findOne({ where: { login: login }});
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/* Updating the user's information in the database. */
 	async update(id: number, updateUserDto: UpdateUserDto): Promise<void> {
-		await this.UserRepo.update(id, updateUserDto);
+		try {
+			await this.UserRepo.update(id, updateUserDto);
+		} catch (error) {
+			throw error;
+		}
 	} //"TypeORM bug: Cannot query across many-to-many for property channels" | .update method often bugs and does not return, .save may be a better alternative
 
 	/**
@@ -101,7 +133,11 @@ export class UsersService {
 	 * @param {number} id - number - The id of the user to delete
 	 */
 	async remove(id: number): Promise<void> {
-		await this.UserRepo.delete(id);
+		try {
+			await this.UserRepo.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -109,7 +145,11 @@ export class UsersService {
 	 * @returns A secret key for two-factor authentication.
 	 */
 	twoFactorAuthenticationSecret(): any {
-		return speakeasy.generateSecret({ name: 'Pong Game' });
+		try {
+			return speakeasy.generateSecret({ name: 'Pong Game' });
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -121,12 +161,18 @@ export class UsersService {
 	 * @returns A boolean value.
 	 */
 	verifyTwoFactorAuthentication(secret: string, token: string): boolean {
-		const res = speakeasy.totp.verify({
-			secret: secret,
-			encoding: 'ascii',
-			token: token
-		});
-		return res;
+		try {
+			const res = speakeasy.totp.verify({
+				secret: secret,
+				encoding: 'ascii',
+				token: token
+			});
+
+			return res;
+		}
+		catch (error) {
+			throw error;
+		}
 	}
 
 	/**

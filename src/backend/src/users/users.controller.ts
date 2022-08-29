@@ -13,68 +13,112 @@ export class UsersController {
   /* This is a method that is called when a user wants to create an account. */
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.user.create(createUserDto);
+    try { 
+      return this.user.create(createUserDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* This is a method that is called when a user wants to find all the accounts. */
   @Get()
   findAll() {
-    return this.user.findAll();
+    try { 
+      return this.user.findAll();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
  /* This is a method that is called when a user wants to find their account by id. */
   @Get('/rank')
   findAllRank() {
-    return this.user.findAllRank();
+    try { 
+      return this.user.findAllRank();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* This is a method that is called when a user wants to find their account by id. */
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.user.findOne(+id);
+    try {
+      return this.user.findOne(+id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* This is a method that is called when a user wants to find their account by id. */
   @Get('/complete/:id')
   findCompleteOne(@Param('id', ParseIntPipe) id: number) {
-    return this.user.findCompleteOne(+id);
+    try {
+      return this.user.findCompleteOne(+id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* This is a method that is called when a user wants to find their account by
   name. */
   @Get('/name/:name')
   findOneByName(@Param('name') name: string) {
-    return this.user.findOneByName(name);
+    try {
+      return this.user.findOneByName(name);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* A method that is called when a user wants to find their account by login. */
   @Get('/login/:login')
   findOneByLogin(@Param('login') login: string) {
-    return this.user.findOneByLogin(login);
+    try {
+      return this.user.findOneByLogin(login);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* A method that is called when a user wants to update their account. */
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
-    this.user.update(+id, updateUserDto);
+    try {
+      this.user.update(+id, updateUserDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* A method that is called when a user wants to delete their account. */
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    this.user.remove(+id);
+    try {
+      this.user.remove(+id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* A method that is called when a user wants to verify their password. */
   @Get('2fa/secret')
   getTwoFactorAuthenticationSecret() {
-    return this.user.twoFactorAuthenticationSecret();
+    try {
+      return this.user.twoFactorAuthenticationSecret();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* A method that is called when a user wants to verify their password. */
   @Post('2fa/verify')
   verifyTwoFactorAuthentication(@Body() obj: { secret: string, token: string }) {
-    return this.user.verifyTwoFactorAuthentication(obj.secret, obj.token);
+    try {
+      return this.user.verifyTwoFactorAuthentication(obj.secret, obj.token);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /* A method that is called when a user wants to verify their password. */
