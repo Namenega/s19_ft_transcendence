@@ -19,60 +19,100 @@ export class DirectMessageController {
 	/* This is a post request that is creating a message in the database. */
 	@Post()
 	create(@Body() createDmDto: CreateDirectMessageDto) {
-		return this.dmService.create(createDmDto);
+		try {
+			return this.dmService.create(createDmDto);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a get request that is getting all the messages from the database. */
 	@Get()
 	findAll() {
-		return this.dmService.findAll();
+		try {
+			return this.dmService.findAll();
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a get request that is getting a message from the database. */
 	@Get(':id')
 	findOne(@Param('id', ParseIntPipe) id: number) {
-		return this.dmService.findOne(+id);
+		try {
+			return this.dmService.findOne(+id);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a patch request that is updating a message in the database. */
 	@Patch(':id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateDmDto: UpdateDirectMessageDto) {
-		this.dmService.update(+id, updateDmDto);
+		try {
+			this.dmService.update(+id, updateDmDto);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a delete request that is deleting a message from the database. */
 	@Delete(':id')
 	remove(@Param('id', ParseIntPipe) id: number) {
-		this.dmService.remove(+id);
+		try {
+			this.dmService.remove(+id);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a post request that is creating a message in the database. */
 	@Post('/message')
 	createMessage(@Body() createDmListDto: CreateDirectMessageListDto) {
-		this.dmService.createList(createDmListDto);
+		try {
+			this.dmService.createList(createDmListDto);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a get request that is getting all the messages from the database. */
 	@Get('/message')
 	findAllMessages() {
-		return this.dmService.findAllList();
+		try {
+			return this.dmService.findAllList();
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a get request that is getting a message from the database. */
 	@Get('/message/:id')
 	findOneMessage(@Param('id', ParseIntPipe) id: number) {
-		return this.dmService.findOneList(+id);
+		try {
+			return this.dmService.findOneList(+id);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a patch request that is updating a message in the database. */
 	@Patch('/message/:id')
 	updateMessage(@Param('id', ParseIntPipe) id: number, @Body() updateDmListDto: UpdateDirectMessageListDto) {
-		this.dmService.updateList(+id, updateDmListDto);
+		try {
+			this.dmService.updateList(+id, updateDmListDto);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* This is a delete request that is deleting a message from the database. */
 	@Delete('/message/:id')
 	removeMessage(@Param('id', ParseIntPipe) id: number) {
-		this.dmService.removeList(+id);
+		try {
+			this.dmService.removeList(+id);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }

@@ -21,7 +21,11 @@ export class GamesService {
      * @returns The game that was created.
      */
     async create(createGameDto: CreateGameDto): Promise<GamesEntity> {
-        return await this.GamesRepo.save(createGameDto);
+        try {
+            return await this.GamesRepo.save(createGameDto);
+		} catch (error) {
+			throw error;
+		}
     }
 
     /**
@@ -31,7 +35,11 @@ export class GamesService {
      * @returns An array of GamesEntity objects.
      */
     async findAll(): Promise<GamesEntity[]> {
-        return await this.GamesRepo.find({ relations: ["user1", "user2"] });
+        try {
+            return await this.GamesRepo.find({ relations: ["user1", "user2"] });
+		} catch (error) {
+			throw error;
+		}
     }
 
     /**
@@ -43,9 +51,13 @@ export class GamesService {
      * game.
      */
     async findOne(id: number): Promise<GamesEntity> {
-        return await this.GamesRepo.findOne({ where:{id}, 
-	      	  relations: ["user1", "user2"] }
-	      );
+        try {
+            return await this.GamesRepo.findOne({ where:{id}, 
+                    relations: ["user1", "user2"] }
+            );
+		} catch (error) {
+			throw error;
+		}
     }
 
     /**
@@ -56,7 +68,11 @@ export class GamesService {
      * earlier.
      */
     async update(id: number, updateGameDto: UpdateGameDto): Promise<void> {
-        await this.GamesRepo.update(id, updateGameDto);
+        try {
+            await this.GamesRepo.update(id, updateGameDto);
+		} catch (error) {
+			throw error;
+		}
     }
 
     /**
@@ -64,6 +80,10 @@ export class GamesService {
      * @param {number} id - number - The id of the game to be deleted.
      */
     async remove(id: number): Promise<void> {
-        await this.GamesRepo.delete(id);
+        try {
+            await this.GamesRepo.delete(id);
+		} catch (error) {
+			throw error;
+		}
     }
 }

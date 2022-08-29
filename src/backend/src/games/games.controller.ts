@@ -18,7 +18,11 @@ export class GamesController {
      */
     @Post()
     create(@Body() createGameDto: CreateGameDto) {
-        return this.gamesService.create(createGameDto);
+        try {
+            return this.gamesService.create(createGameDto);
+		} catch (error) {
+			console.log(error);
+		}
     }
 
     /**
@@ -28,7 +32,11 @@ export class GamesController {
      */
     @Get()
     findAll() {
-        return this.gamesService.findAll();
+        try {
+            return this.gamesService.findAll();
+		} catch (error) {
+			console.log(error);
+		}
     }
 
     /**
@@ -39,7 +47,11 @@ export class GamesController {
      */
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id: number) {
-        return this.gamesService.findOne(+id);
+        try {
+            return this.gamesService.findOne(+id);
+		} catch (error) {
+			console.log(error);
+		}
     }
 
     /**
@@ -51,7 +63,11 @@ export class GamesController {
      */
     @Patch(':id')
     update(@Param('id', ParseIntPipe) id: number, @Body() updateGameDto: UpdateGameDto) {
-        this.gamesService.update(+id, updateGameDto);
+        try {
+            this.gamesService.update(+id, updateGameDto);
+		} catch (error) {
+			console.log(error);
+		}
     }
 
     /**
@@ -61,6 +77,10 @@ export class GamesController {
      */
     @Delete(':id')
     remove(@Param('id', ParseIntPipe) id: number) {
-        this.gamesService.remove(+id);
+        try {
+            this.gamesService.remove(+id);
+		} catch (error) {
+			console.log(error);
+		}
     }
 }

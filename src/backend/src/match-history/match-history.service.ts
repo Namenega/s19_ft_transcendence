@@ -25,7 +25,11 @@ export class MatchHistoryService {
 	 * @param {CreateMatchHistoryDto} createMatchHistoryDto - CreateMatchHistoryDto
 	 */
 	async create(createMatchHistoryDto: CreateMatchHistoryDto): Promise<void> {
-		await this.MatchHistoryRepo.save(createMatchHistoryDto);
+		try {
+			await this.MatchHistoryRepo.save(createMatchHistoryDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -33,7 +37,11 @@ export class MatchHistoryService {
 	 * @returns An array of MatchHistoryEntity objects.
 	 */
 	async findAll(): Promise<MatchHistoryEntity[]>  {
-		return await this.MatchHistoryRepo.find();
+		try {
+			return await this.MatchHistoryRepo.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -44,10 +52,14 @@ export class MatchHistoryService {
 	 * @returns An array of MatchHistoryEntity objects.
 	 */
 	async findMatchHistoryOfUser(login: string): Promise<MatchHistoryEntity[]> {
-		return await this.MatchHistoryRepo.find({
-			relations: ['user'],
-			where: { user: {login: login} }}
-		);
+		try {
+			return await this.MatchHistoryRepo.find({
+				relations: ['user'],
+				where: { user: {login: login} }}
+			);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -57,7 +69,11 @@ export class MatchHistoryService {
 	 * @returns The MatchHistoryEntity
 	 */
 	async findOne(id: number): Promise<MatchHistoryEntity> {
-		return await this.MatchHistoryRepo.findOne({ where: { id } });
+		try {
+			return await this.MatchHistoryRepo.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -67,7 +83,11 @@ export class MatchHistoryService {
 	 * we created earlier.
 	 */
 	async update(id: number, updateMatchHistoryDto: UpdateMatchHistoryDto): Promise<void>  {
-		await this.MatchHistoryRepo.update(id, updateMatchHistoryDto);
+		try {
+			await this.MatchHistoryRepo.update(id, updateMatchHistoryDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -75,6 +95,10 @@ export class MatchHistoryService {
 	 * @param {number} id - number - The id of the match history to delete
 	 */
 	async remove(id: number): Promise<void> {
-		await this.MatchHistoryRepo.delete(id);
+		try {
+			await this.MatchHistoryRepo.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 }

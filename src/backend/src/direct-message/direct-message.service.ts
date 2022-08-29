@@ -27,7 +27,11 @@ export class DirectMessageService {
 	 * @returns The DirectMessageEntity is being returned.
 	 */
 	async create(createDmDto: CreateDirectMessageDto): Promise<DirectMessageEntity> {
-		return await this.dm.save(createDmDto);
+		try {
+			return await this.dm.save(createDmDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -35,7 +39,11 @@ export class DirectMessageService {
 	 * @returns An array of DirectMessageEntity objects.
 	 */
 	async findAll(): Promise<DirectMessageEntity[]> {
-		return await this.dm.find();
+		try {
+			return await this.dm.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -44,7 +52,11 @@ export class DirectMessageService {
 	 * @returns A promise of a DirectMessageEntity
 	 */
 	async findOne(id: number): Promise<DirectMessageEntity> {
-		return await this.dm.findOne({ where: { id } });
+		try {
+			return await this.dm.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -55,7 +67,11 @@ export class DirectMessageService {
 	 * earlier.
 	 */
 	async update(id: number, updateDmDto: UpdateDirectMessageDto): Promise<void> {
-		await this.dm.update(id, updateDmDto);
+		try {
+			await this.dm.update(id, updateDmDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -63,7 +79,11 @@ export class DirectMessageService {
 	 * @param {number} id - number - The id of the entity to delete.
 	 */
 	async remove(id: number): Promise<void> {
-		await this.dm.delete(id);
+		try {
+			await this.dm.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/*	******************** Direct Message List Methods ******************** */
@@ -74,7 +94,11 @@ export class DirectMessageService {
 	 * CreateDirectMessageListDto
 	 */
 	async createList(createDmListDto: CreateDirectMessageListDto): Promise<void> {
-		await this.dmList.save(createDmListDto);
+		try {
+			await this.dmList.save(createDmListDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -82,7 +106,11 @@ export class DirectMessageService {
 	 * @returns An array of DirectMessageListEntity objects.
 	 */
 	async findAllList(): Promise<DirectMessageListEntity[]> {
-		return await this.dmList.find();
+		try {
+			return await this.dmList.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -91,7 +119,11 @@ export class DirectMessageService {
 	 * @returns A DirectMessageListEntity
 	 */
 	async findOneList(id: number): Promise<DirectMessageListEntity> {
-		return await this.dmList.findOne({ where: { id } });
+		try {
+			return await this.dmList.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -102,7 +134,11 @@ export class DirectMessageService {
 	 * created earlier.
 	 */
 	async updateList(id: number, updateDmListDto: UpdateDirectMessageListDto): Promise<void> {
-		await this.dmList.update(id, updateDmListDto);
+		try {
+			await this.dmList.update(id, updateDmListDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -110,6 +146,10 @@ export class DirectMessageService {
 	 * @param {number} id - number - The id of the list to remove
 	 */
 	async removeList(id: number): Promise<void> {
-		await this.dmList.delete(id);
+		try {
+			await this.dmList.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 }

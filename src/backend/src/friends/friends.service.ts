@@ -24,7 +24,11 @@ export class FriendsService {
 	 * earlier.
 	 */
 	async create(CreateFriendsDto: CreateFriendsDto): Promise<void> {
-		await this.FriendsRepo.save(CreateFriendsDto);
+		try {
+			await this.FriendsRepo.save(CreateFriendsDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -32,7 +36,11 @@ export class FriendsService {
 	 * @returns An array of FriendsEntity objects.
 	 */
 	async findAll(): Promise<FriendsEntity[]> {
-		return await this.FriendsRepo.find();
+		try {
+			return await this.FriendsRepo.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -45,10 +53,14 @@ export class FriendsService {
 	 * @returns A single friend entity
 	 */
 	async findOne(userId: number, friendId: number): Promise<FriendsEntity> {
-		return await this.FriendsRepo.findOne({
-			relations: ['user'],
-			where: { user: { id: userId }, friendId: friendId }
-		});
+		try {
+			return await this.FriendsRepo.findOne({
+				relations: ['user'],
+				where: { user: { id: userId }, friendId: friendId }
+			});
+		} catch (error) {
+			throw error;
+		}
 	}	
 
 	/**
@@ -60,10 +72,14 @@ export class FriendsService {
 	 * @returns An array of FriendsEntity objects.
 	 */
 	async findUserFriends(login: string): Promise<FriendsEntity[]> {
-		return await this.FriendsRepo.find({
-			relations: ['user'],
-			where: { user: {login: login}}
-		});
+		try {
+			return await this.FriendsRepo.find({
+				relations: ['user'],
+				where: { user: {login: login}}
+			});
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -75,7 +91,11 @@ export class FriendsService {
 	 * earlier.
 	 */
 	async update(id: number, updateFriendsDto: UpdateFriendsDto): Promise<void> {
-		await this.FriendsRepo.update(id, updateFriendsDto);
+		try {
+			await this.FriendsRepo.update(id, updateFriendsDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -84,6 +104,10 @@ export class FriendsService {
 	 * earlier.
 	 */
 	async remove(id: number): Promise<void> {
-		await this.FriendsRepo.delete(id);
+		try {
+			await this.FriendsRepo.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 }

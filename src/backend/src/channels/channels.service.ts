@@ -47,7 +47,11 @@ export class ChannelsService {
 	 * @returns The channel that was created.
 	 */
 	async create(createChannelDto: CreateChannelDto): Promise<ChannelsEntity> {
-		return await this.chan.save(createChannelDto);
+		try {
+			return await this.chan.save(createChannelDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -55,7 +59,11 @@ export class ChannelsService {
 	 * @returns An array of ChannelsEntity objects.
 	 */
 	async findAll(): Promise<ChannelsEntity[]> {
-		return await this.chan.find();
+		try {
+			return await this.chan.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -65,7 +73,11 @@ export class ChannelsService {
 	 * @returns The channel with the given id.
 	 */
 	async findOne(id: number): Promise<ChannelsEntity> {
-		return await this.chan.findOne({ where: { id } });
+		try {
+			return await this.chan.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -76,7 +88,11 @@ export class ChannelsService {
 	 * (DTO) that contains the data that we want to update.
 	 */
 	async update(id: number, updateChannelDto: UpdateChannelDto): Promise<void> {
-		await this.chan.update(id, updateChannelDto);
+		try {
+			await this.chan.update(id, updateChannelDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -88,7 +104,11 @@ export class ChannelsService {
 	 * @param {number} id - The id of the channel to remove.
 	 */
 	async remove(id: number): Promise<void> {
-		await this.chan.delete(id);
+		try {
+			await this.chan.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/* ****************************** ChannelMessage ************************ */
@@ -99,7 +119,11 @@ export class ChannelsService {
 	 * that we created earlier.
 	 */
 	async createMessage(createChannelMessageDto: CreateChannelMessagesDto): Promise<void> {
-		await this.chanMsg.save(createChannelMessageDto);
+		try {
+			await this.chanMsg.save(createChannelMessageDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -108,7 +132,11 @@ export class ChannelsService {
 	 * @returns An array of ChannelsMessagesEntity objects.
 	 */
 	async findAllMessages(): Promise<ChannelsMessagesEntity[]> {
-		return await this.chanMsg.find();
+		try {
+			return await this.chanMsg.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -117,7 +145,11 @@ export class ChannelsService {
 	 * @returns A single message from the database.
 	 */
 	async findOneMessage(id: number): Promise<ChannelsMessagesEntity> {
-		return await this.chanMsg.findOne({ where: { id } });
+		try {
+			return await this.chanMsg.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -129,7 +161,11 @@ export class ChannelsService {
 	 */
 	async updateMessage(id: number, updateChannelMessageDto: UpdateChannelMessagesDto):
 			Promise<void> {
-		await this.chanMsg.update(id, updateChannelMessageDto);
+		try {
+			await this.chanMsg.update(id, updateChannelMessageDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/**
@@ -137,7 +173,11 @@ export class ChannelsService {
 	 * @param {number} id - The ID of the message to remove.
 	 */
 	async removeMessage(id: number): Promise<void> {
-		await this.chanMsg.delete(id);
+		try {
+			await this.chanMsg.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	/* ****************************** ChannelUser *************************** */
@@ -149,7 +189,11 @@ export class ChannelsService {
 	 * will be passing to the function.
 	 */
 	async createUser(createChannelUserDto: CreateChannelUserDto): Promise<void> {
-		await this.chanUser.save(createChannelUserDto);
+		try {
+			await this.chanUser.save(createChannelUserDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -157,7 +201,11 @@ export class ChannelsService {
 	 * @returns An array of ChannelsUsersEntity objects.
 	 */
 	async findAllUsers(): Promise<ChannelsUsersEntity[]> {
-		return await this.chanUser.find();
+		try {
+			return await this.chanUser.find();
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -166,7 +214,11 @@ export class ChannelsService {
 	 * @returns The channel user with the given id.
 	 */
 	async findOneUser(id: number): Promise<ChannelsUsersEntity> {
-		return await this.chanUser.findOne({ where: { id } });
+		try {
+			return await this.chanUser.findOne({ where: { id } });
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -177,7 +229,11 @@ export class ChannelsService {
 	 * created earlier.
 	 */
 	async updateUser(id: number, updateChannelUserDto: UpdateChannelUserDto): Promise<void> {
-		await this.chanUser.update(id, updateChannelUserDto);
+		try {
+			await this.chanUser.update(id, updateChannelUserDto);
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -185,7 +241,11 @@ export class ChannelsService {
 	 * @param {number} id - The id of the user to remove.
 	 */
 	async removeUser(id: number): Promise<void> {
-		await this.chanUser.delete(id);
+		try {
+			await this.chanUser.delete(id);
+		} catch (error) {
+			throw error;
+		}
 	}
 	
 	/**
@@ -196,7 +256,11 @@ export class ChannelsService {
 	 * @returns A boolean value.
 	 */
 	async passwordVerification(id: number, password: string): Promise<boolean> {
-		const channel = await this.chan.findOne({ where: { id } });
-		return await bcrypt.compare(password, channel.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
+		try {
+			const channel = await this.chan.findOne({ where: { id } });
+			return await bcrypt.compare(password, channel.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
+		} catch (error) {
+			throw error;
+		}
 	}
 }

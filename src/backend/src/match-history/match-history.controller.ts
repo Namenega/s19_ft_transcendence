@@ -13,37 +13,61 @@ export class MatchHistoryController {
 	the body. */
 	@Post()
 	create(@Body() createMatchHistoryDto: CreateMatchHistoryDto) {
-	  this.matchHistoryService.create(createMatchHistoryDto);
+		try {
+			this.matchHistoryService.create(createMatchHistoryDto);
+		} catch (error) {
+			console.log(error);
+		}
 	}
   
 	/* This is a get request that returns all the match histories. */
 	@Get()
 	findAll() {
-	  return this.matchHistoryService.findAll();
+		try {
+			return this.matchHistoryService.findAll();
+		} catch (error) {
+			console.log(error);
+		}
 	}
   
 	/* This is a get request that takes in a login and returns the match history of
 	the user with that login. */
 	@Get('/users/:login')
 	findMatchHistoryOfUser(@Param('login') login: string) {
-	  return this.matchHistoryService.findMatchHistoryOfUser(login);
+		try {
+			return this.matchHistoryService.findMatchHistoryOfUser(login);
+		} catch (error) {
+			console.log(error);
+		}
 	}
   
 	/* A get request that takes in an id and returns the match history with that id. */
 	@Get(':id')
 	findOne(@Param('id', ParseIntPipe) id: number) {
-	  return this.matchHistoryService.findOne(+id);
+		try {
+			return this.matchHistoryService.findOne(+id);
+		} catch (error) {
+			console.log(error);
+		}
 	}
   
 	/* Updating the match history with the id of the match history. */
 	@Patch(':id')
 	update(@Param('id', ParseIntPipe) id: number, @Body() updateMatchHistoryDto: UpdateMatchHistoryDto) {
-	  this.matchHistoryService.update(+id, updateMatchHistoryDto);
+		try {
+			this.matchHistoryService.update(+id, updateMatchHistoryDto);
+		} catch (error) {
+			console.log(error);
+		}
 	}
   
 	/* Deleting the match history with the id of the match history. */
 	@Delete(':id')
 	remove(@Param('id', ParseIntPipe) id: number) {
-	  this.matchHistoryService.remove(+id);
+		try {
+			this.matchHistoryService.remove(+id);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 }
