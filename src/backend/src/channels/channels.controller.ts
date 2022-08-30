@@ -11,52 +11,6 @@ import { UpdateChannelUserDto } from "./dto/updateChannelUser.dto";
 export class ChannelsController {
 	constructor(private readonly channelsService: ChannelsService) {}
 
-	/* ****************************** Channel ******************************* */
-	@Post()
-	create(@Body() createChannelDto: CreateChannelDto) {
-		try {
-			return this.channelsService.create(createChannelDto);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	@Get()
-	findAll() {
-		try {
-			return this.channelsService.findAll();
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	@Get(':id')
-	findOne(@Param('id', ParseIntPipe) id: number) {
-		try {
-			return this.channelsService.findOne(+id);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	@Patch(':id')
-	update(@Param('id', ParseIntPipe) id: number, @Body() updateChannelDto: UpdateChannelDto) {
-		try {
-			return this.channelsService.update(+id, updateChannelDto);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	@Delete(':id')
-	remove(@Param('id', ParseIntPipe) id: number) {
-		try {
-			return this.channelsService.remove(+id);
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
 	/* ****************************** ChannelMessage ************************ */
 	@Post('/message')
 	createMessage(@Body() createChannelMessageDto: CreateChannelMessagesDto) {
@@ -155,6 +109,52 @@ export class ChannelsController {
 	passwordVerification(@Param('id', ParseIntPipe) id: number, @Param('password') password: string) {
 		try {
 			return this.channelsService.passwordVerification(+id, password);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	/* ****************************** Channel ******************************* */
+	@Post()
+	create(@Body() createChannelDto: CreateChannelDto) {
+		try {
+			return this.channelsService.create(createChannelDto);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	@Get()
+	findAll() {
+		try {
+			return this.channelsService.findAll();
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	@Get(':id')
+	findOne(@Param('id', ParseIntPipe) id: number) {
+		try {
+			return this.channelsService.findOne(+id);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	@Patch(':id')
+	update(@Param('id', ParseIntPipe) id: number, @Body() updateChannelDto: UpdateChannelDto) {
+		try {
+			return this.channelsService.update(+id, updateChannelDto);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	@Delete(':id')
+	remove(@Param('id', ParseIntPipe) id: number) {
+		try {
+			return this.channelsService.remove(+id);
 		} catch (error) {
 			console.log(error);
 		}

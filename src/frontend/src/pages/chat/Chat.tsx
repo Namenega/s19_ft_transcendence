@@ -192,7 +192,6 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 	// 		This is Chat return 2
 	// 	</div>
 	// )
-
 	return (<>
 		<AddUsers currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
 		<h3>Users</h3>
@@ -333,7 +332,10 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 		if (dm)
 			await addDmMessage(createNewDmMessage(userOrchannelUser, currentChat, message, currentChat.messages.length + 1));
 		else
-			await addChannelMessage(createNewChannelMessage(userOrchannelUser.user, currentChat, message, currentChat.messages.length + 1));
+		{
+			let wow = await currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === currUser);
+			await addChannelMessage(createNewChannelMessage(wow.user, currentChat, message, currentChat.messages.length + 1));
+		}
 		setMessage('');
 		send(socket, {room: currentChat.id, content: "new message"});
 		await currentChatLatestUpdates();
@@ -539,9 +541,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 	}
 
 	const findChannelUser: () => Promise<void> = async () => {
-		console.log(currentChat.channel_users[1].user.login);
 		let channelUser = await currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id);
-		
 		return (channelUser);
 	}
 
@@ -656,7 +656,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 			</ButtonGroup>
 			}
 			<br/>
-			{channelExt === "messages" && <Message userOrchannelUser={dm ? user : findChannelUser()} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>}
+			{channelExt === "messages" && <Message userOrchannelUser={user} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>}
 			{channelExt === "info" && <ChannelInfo channelUser={findChannelUser()} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
 			{channelExt === "settings" && <ChannelSettings channelUser={findChannelUser()} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>}
 			{channelExt === "user" && <ChannelViewUsers channelUser={findChannelUser()} changeUser={changeUser} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}

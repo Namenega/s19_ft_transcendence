@@ -50,6 +50,7 @@ interface mhProps {
 const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => {
 	let [login, setLogin] = useState<string>('');
 	let [loginAlreadyInUse, setLoginAlreadyInUse] = useState<boolean>(false);
+	let [avatarTooBig, setAvatarTooBig] = useState<boolean>(false);
 	let [qrcode, setQrcode] = useState<string>('');
 	let [activate2FA, setActivate2FA] = useState<boolean>(user.has2FA);
 	let [token, setToken] = useState<string>('');
@@ -108,7 +109,13 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 	}
 
 	const changeAvatar: (event: any) => void = async (event) => {
+		setAvatarTooBig(false);
 		if (!event.target.files) return ;
+		if (event.target.files[0].size > 16384)
+		{
+			setAvatarTooBig(true);
+			return ;
+		}
 		let reader = new FileReader();
 	 	reader.onload = async (e) => {
 			if (e === null || e!.target!.result === null) return ;
@@ -143,6 +150,7 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 				<Button component="label" className='game-button-text' variant="outlined"> 
 					Change Avatar <input hidden type="file" accept="image/*" onChange={(e)=>changeAvatar(e)}/>
 				</Button>
+				{avatarTooBig && <p>Avatar too large</p>}
 			</Stack>
         </div>
 	);

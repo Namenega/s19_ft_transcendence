@@ -22,6 +22,7 @@ const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected,
 	let [accountAlreadyInUse, setAccountAlreadyInUse] = useState<boolean>(false);
 	let [nonExistingAccount, setNonExistingAccount] = useState<boolean>(false);
 	let [wrongPassword, setWrongPassword] = useState<boolean>(false);
+	let [avatarTooBig, setAvatarTooBig] = useState<boolean>(false);
 	let [name, setName] = useState<string>('');
 	let [login, setLogin] = useState<string>('');
 	let [avatar, setAvatar] = useState<string>('');
@@ -34,10 +35,10 @@ const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected,
 		if (userInDatabase === null) {
 			setNonExistingAccount(true);
 			setWrongPassword(false);
-			setName('');
-			setLogin('');
-			setAvatar('');
-			setPassword('');
+			// setName('');
+			// setLogin('');
+			// setAvatar('');
+			// setPassword('');
 		} else {
 			setNonExistingAccount(false);
 			if (!(await userPasswordVerification(userInDatabase.id, password))) {
@@ -68,15 +69,21 @@ const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected,
 			changeUser(userInDatabase);
 		} else {
 			setAccountAlreadyInUse(true);
-			setName('');
-			setLogin('');
-			setAvatar('');
-			setPassword('');
+			// setName('');
+			// setLogin('');
+			// setAvatar('');
+			// setPassword('');
 		}
 	}
 
 	const changeAvatar: (event: any) => void = async (event) => {
+		setAvatarTooBig(false);
 		if (!event.target.files) return ;
+		if (event.target.files[0].size > 16384)
+		{
+			setAvatarTooBig(true);
+			return ;
+		}
 		let reader = new FileReader();
 	 	reader.onload = async (e) => {
 			if (e === null || e!.target!.result === null) return ;
@@ -101,6 +108,7 @@ const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected,
 					{nonExistingAccount && <p>This account does not exist</p>}
 					{alreadyConnected && <p>User is already connected</p>}
 					{wrongPassword && <p>Wrong Password</p>}
+					{avatarTooBig && <p>Avatar too large</p>}
 					<Button className='game-button-text' variant="contained" onClick={()=> signup ? onSubmitSignup() : onSubmitLogin()}> 
 						Submit
 					</Button>
