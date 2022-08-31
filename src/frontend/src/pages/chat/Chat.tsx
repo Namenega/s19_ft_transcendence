@@ -192,26 +192,28 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 	// 		This is Chat return 2
 	// 	</div>
 	// )
+
+		let bruh = currentChat.channel_users.find((channelUsr: ChannelUserDto)=> channelUsr.user.id === channelUser.id);
+
 	return (<>
 		<AddUsers currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
 		<h3>Users</h3>
 			{userId && currentChat.channel_users.length === 1 ? <p>No other users</p> :
 				currentChat.channel_users.map((item: ChannelUserDto) => {
-					if (item.user.id === channelUser.user.id) 
+					if (item.user.id === bruh!.user.id)
 						return "";
 					if (item.owner)
 						return (<span onClick={()=>changeViewProfile(item.user)}><span>{item.user.login}</span><span>{" --- owner"}</span><br/><br/></span>);
 					return (<div>
 						<span onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" --- " + (item.administrator ? "administrator" : "user") + (item.mute ? " --- mute   " : "   ")}</span>
-						{channelUser.owner && <button onClick={(e)=>changeStatus(item.id, !item.administrator)}>Change Status</button>}
-						{(channelUser.owner || (channelUser.administrator && !item.administrator)) && <button onClick={(e)=>ban(item)}>Ban</button>}
-						{(channelUser.owner || (channelUser.administrator && !item.administrator)) && <button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</button>}
+						{bruh!.owner && <button onClick={(e)=>changeStatus(item.id, !item.administrator)}>Change Status</button>}
+						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>ban(item)}>Ban</button>}
+						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</button>}
 					<br/><br/></div>);
 				})
 			}
   </>);
 }
-
 /***************************/
 
 const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCurrentChat, currentChat, currentChatLatestUpdates }) => {
@@ -507,13 +509,12 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 	}
 
 	const leaveChannel: () => void = async () => {
-		await currentChatLatestUpdates();
+		currentChatLatestUpdates();
+		currentChat.channel_users = currentChat.channel_users.filter((channelUser: ChannelUserDto) => channelUser.user.id !== user.id);
 		currentChat.users = currentChat.users.filter((channelUser: UserDto) => channelUser.id !== user.id);
-		currentChat.channels_users = currentChat.channel_users.filter((channelUser: ChannelUserDto) => channelUser.user.id !== user.id);
 		await addChannel(currentChat);
-		console.log(currentChat.id);
 		if (currentChat.users.length === 0) {
-			await removeChannel(currentChat.id);
+			removeChannel(currentChat.id);
 			changeCurrentChat(null);
 			return ;
 		}
@@ -522,7 +523,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 			let newOwner: ChannelUserDto | undefined = currentChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.administrator === true);
 			if (newOwner === undefined)
 				newOwner = currentChat.channel_users[0];
-			await updateChannelUser(newOwner!.id, {owner: true, administrator: true});
+			updateChannelUser(newOwner!.id, {owner: true, administrator: true});
 		}
 		changeCurrentChat(null);
 	}
@@ -659,7 +660,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 			{channelExt === "messages" && <Message userOrchannelUser={user} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>}
 			{channelExt === "info" && <ChannelInfo channelUser={findChannelUser()} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
 			{channelExt === "settings" && <ChannelSettings channelUser={findChannelUser()} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>}
-			{channelExt === "user" && <ChannelViewUsers channelUser={findChannelUser()} changeUser={changeUser} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
+			{channelExt === "user" && <ChannelViewUsers channelUser={user} changeUser={changeUser} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
 		</div>
 	)
 

@@ -1,4 +1,3 @@
-- handle axios error (comme taille image avatar)
 - enlever les console.log
 - slice texte trop large chat
 - accéder match history dans chat?
