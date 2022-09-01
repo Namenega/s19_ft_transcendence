@@ -397,7 +397,7 @@ const Profile: React.FC<profileProps> = ({ user, changeUser, back, myAccount, lo
 			</Box>
 			<div className='profile-main-ctn'>
 				<div className='profile-ctn'>
-					{!ownAccount && <Button onClick={() => {changeProfile(user); setOwnAccount(true)}} >Close</Button>}
+					{!ownAccount && <Button onClick={() => {changeProfile(user); setOwnAccount(true); setShowMH(false)}} >Close</Button>}
 					<h2 className='profile-title'>Profile</h2>
 					<Stack spacing={2}>
 							<Box sx={{flexGrow: 1, display:'flex', justifyContent: 'center'}}>

@@ -147,28 +147,6 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 /***************************/
 
 const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, changeUser, currentChat, currentChatLatestUpdates, changeViewProfile }) => {
-	const [userId, setUserId] = useState<boolean>(false);
-	// const [channelUsers, setChannelUsers] = useState<ChannelUserDto[] | null>(null);
- 
-	// useEffect(() => {
-	// 	if (currentChat.channel_users !== undefined)
-	// 	{
-	// 		console.log(currentChat.channel_users[1].user.id);
-	// 		setChannelUsers(currentChat.channel_users);
-	// 	}
-	// 	while (channelUsers && channelUsers.length)
-	// }
-	// , [currentChat.channel_users, channelUsers]);
-
-	// useEffect(() => {
-	// 	if (channelUser.user !== undefined)
-	// 	{
-	// 		console.log("lolilol");
-	// 		console.log(channelUser.user.id);
-	// 		setUserId(true);
-	// 	}
-	// }
-	// , [channelUser.user]);
 
 	const changeStatus: (id: number, newValue: boolean) => void = async (id, newValue) => {
 		await updateChannelUser(id, { administrator: newValue });
@@ -193,12 +171,12 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 	// 	</div>
 	// )
 
-		let bruh = currentChat.channel_users.find((channelUsr: ChannelUserDto)=> channelUsr.user.id === channelUser.id);
+	let bruh = currentChat.channel_users.find((channelUsr: ChannelUserDto)=> channelUsr.user.id === channelUser.id);
 
 	return (<>
 		<AddUsers currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
 		<h3>Users</h3>
-			{userId && currentChat.channel_users.length === 1 ? <p>No other users</p> :
+			{currentChat.channel_users.length === 1 ? <p>No other users</p> :
 				currentChat.channel_users.map((item: ChannelUserDto) => {
 					if (item.user.id === bruh!.user.id)
 						return "";
@@ -291,9 +269,13 @@ const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCu
 /***************************/
 
 const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, changeCurrentChat, currentChat, currentChatLatestUpdates, changeViewProfile }) => {
+	const [infos, setInfos] = useState<boolean>(true);
+
+	let bruh = currentChat.channel_users.find((channelUsr: ChannelUserDto)=> channelUsr.user.id === channelUser.id);
 
 	return (<div>
 		<Card>
+			{infos &&
 			<CardContent>
 				<List sx={{ display: "flex", flexDirection: "column", width: '100%', minWidth: 360, maxWidth: 360, maxHeight: 500, overflow: 'auto' }}>
 					<ListItem>
@@ -306,7 +288,7 @@ const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, chan
 							<span style={{color:"#507255"}}>{`Owner: `}</span><span style={{color:"#4AAD52"}}>{currentChat.channel_users.find((channel_user: ChannelUserDto) => channel_user.owner === true)!.user.login}</span>
 						</ListItemText>
 					</ListItem>
-					{!channelUser.owner && channelUser.administrator && 
+					{!bruh!.owner && bruh!.administrator && 
 					<ListItem>
 						<ListItemText sx={{display: "flex"}}>
 							<span style={{color:"#507255"}}>You are an </span><span style={{color:"#4AAD52"}}>administrator</span>
@@ -315,7 +297,15 @@ const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, chan
 					}
 				</List>
 			</CardContent>
+			}
+			{!infos &&
+			<CardContent>
+				<ChannelSettings channelUser={channelUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
+			</CardContent>
+			}
 		</Card>
+		<br/>
+		{bruh!.owner === true && <Button variant="contained" onClick={()=>{setInfos(!infos)}}>Settings</Button>}
 	  </div>);
 }
 
@@ -329,6 +319,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 	useEffect(() => { currentChatLatestUpdates()}
 	, []);
 
+	
 	const submitMessage: () => void = async () => {
 		await currentChatLatestUpdates();
 		if (dm)
@@ -455,7 +446,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 	let dm: boolean = (currentChat && "block" in currentChat);
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
-	const [channelExt, setChannelExt] = useState<"info" | "settings" | "messages" | "user">("messages");
+	const [channelExt, setChannelExt] = useState<"info" | "messages" | "user">("messages");
 	const [matchH, setMatchH] = useState<boolean>(false);
 	const [showInfos, setShowInfos] = useState<boolean>(true);
 	const [userMatchHistory, setUserMatchHistory] = useState<CompleteMatchHistoryDto[]>([]);
@@ -653,13 +644,11 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 				<Button onClick={()=>{setChannelExt("messages")}}>Messages</Button>
 				<Button onClick={()=>{setChannelExt("info")}}>Info</Button>
 				<Button onClick={()=>{setChannelExt("user")}}>Users</Button>
-				{/* {channelUser.owner === true && <Button onClick={()=>{}}>Settings</Button>} */}
 			</ButtonGroup>
 			}
 			<br/>
 			{channelExt === "messages" && <Message userOrchannelUser={user} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>}
-			{channelExt === "info" && <ChannelInfo channelUser={findChannelUser()} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
-			{channelExt === "settings" && <ChannelSettings channelUser={findChannelUser()} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>}
+			{channelExt === "info" && <ChannelInfo channelUser={user} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
 			{channelExt === "user" && <ChannelViewUsers channelUser={user} changeUser={changeUser} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
 		</div>
 	)
