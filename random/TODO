@@ -1,4 +1,7 @@
 - enlever les console.log
 - slice texte trop large chat
-- accéder match history dans chat?
+- (accéder match history dans chat?)
 - password hashed
+- mute someone in channel not working
+- disable PLAY button in chat pour celui qui écrit la commande
+- add user channel payload too large

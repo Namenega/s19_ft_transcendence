@@ -15,7 +15,7 @@ import { UserDto } from "../../api/user/dto/user.dto";
 import Authentication from '../login/authentication';
 import Profile from '../profile/profile';
 import './chatsView.css'
-import { Avatar, Box, Button, ButtonGroup, Card, CardContent, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, ButtonGroup, Card, CardContent, Checkbox, Divider, FormControlLabel, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, TextField, Typography } from '@mui/material';
 import ForumIcon from '@mui/icons-material/Forum';
 import { CompleteMatchHistoryDto, MatchHistoryDto } from '../../api/match-history/dto/match-history.dto';
 import { getMatchHistoryOfUser } from '../../api/match-history/match-history.api';
@@ -112,36 +112,31 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
     	currentChatLatestUpdates();
 	}
 
-	// return (
-	// 	<div> This is chat return 1 </div>
-	// )
+	return (
+		<div>
+			<Stack spacing={1}>
+				<TextField id="outlined-basic" label="Search user" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
+				</TextField>
+			</Stack>
+			{searchResults.map((item) => <div>
+			<br/>
+			<span>{item.login}</span><>&nbsp;&nbsp;</>
+			<Button variant='outlined' onClick={(e)=> {onSubmit(item.id)}}>
+				Add user
+			</Button>
+			</div>)}
+		</div>
+	);
 
-	// return (
-	// 	<div>
-	// 		This is Chat return 1
-	// 		<br />
-	// 		<input className="textInput" placeholder={"Add users..."} type="text" value={searchText}
-	// 				onChange={(e) => handleSearch(e.target.value)}/>
-	// 		<br />
-	// 		{searchResults.map((item) =>
-	// 			<div>
-	// 				<br/>
-	// 				<span>{item.login}</span><>&nbsp;&nbsp;</>
-	// 				<Button variant="contained" onClick={(e)=> {onSubmit(item.id)}}>Add User</Button>
-	// 			</div>)
-	// 		}
-	// 	</div>
-	// );
-
-	return (<div>
-		<br/>
-		<input placeholder={"Add users..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
-		{searchResults.map((item) => <div>
-		<br/>
-		<span>{item.login}</span><>&nbsp;&nbsp;</>
-		<button onClick={(e)=> {onSubmit(item.id)}}>Add User</button>
-		</div>)}
-	  </div>);
+	// return (<div>
+	// 	<br/>
+	// 	<input placeholder={"Add users..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
+	// 	{searchResults.map((item) => <div>
+	// 	<br/>
+	// 	<span>{item.login}</span><>&nbsp;&nbsp;</>
+	// 	<button onClick={(e)=> {onSubmit(item.id)}}>Add User</button>
+	// 	</div>)}
+	//   </div>);
 }
 
 /***************************/
@@ -181,14 +176,16 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 					if (item.user.id === bruh!.user.id)
 						return "";
 					if (item.owner)
-						return (<span onClick={()=>changeViewProfile(item.user)}><span>{item.user.login}</span><span>{" --- owner"}</span><br/><br/></span>);
+						return (<span onClick={()=>changeViewProfile(item.user)}><span>{item.user.login}</span><span>{" [owner]"}</span><br/><br/></span>);
 					return (<div>
-						<span onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" --- " + (item.administrator ? "administrator" : "user") + (item.mute ? " --- mute   " : "   ")}</span>
-						{bruh!.owner && <button onClick={(e)=>changeStatus(item.id, !item.administrator)}>Change Status</button>}
-						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>ban(item)}>Ban</button>}
-						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "Mute"}</button>}
-					<br/><br/></div>);
-				})
+								<span onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" [" + (item.administrator ? "admin" : "user") + "]" + (item.mute ? " [mute] " : " ")}</span>
+								<ButtonGroup>
+									{bruh!.owner && <Button onClick={(e)=>changeStatus(item.id, !item.administrator)}>{item.administrator ? "User" : "Admin"}</Button>}
+									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>ban(item)}>Ban</Button>}
+									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</Button>}
+								</ButtonGroup>
+							<br/><br/></div>);
+					})
 			}
   </>);
 }
@@ -240,30 +237,46 @@ const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCu
 		resetSettings();
 	}
 
-	// return (
-	// 	<div>
-	// 		This is Chat return 3
-	// 	</div>
-	// )
+	if (type === "")
+	{
+		if (currentChat.type === "public")
+			setType("public");
+		else if (currentChat.type === "private")
+			setType("private");
+		else if (currentChat.type === "password")
+			setType("password");
+	}
 
-	return (<>
-		<br/><br/>
-				<label>public
-					<input type="radio" name="channeltype" onChange={()=>changeType("public")} required/>
-				</label>
-				<>&nbsp;&nbsp;&nbsp;</>
-				<label>private
-					<input type="radio" name="channeltype" onChange={()=>changeType("private")} required/>
-				</label>
-				<>&nbsp;&nbsp;&nbsp;</>
-				<label>password
-					<input type="radio"name="channeltype" onChange={()=>changeType("password")} required/>
-				</label>
-				<br/><br/>
-		{type === "password" && <><input placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>changePassword(e.target.value)} required/><br/><br/></>}
-		<input type="submit" onClick={()=>onSubmitChannel()}/>
-		<br/><br/>
-</>)
+	return (
+		<Stack spacing={2}>
+			<FormControlLabel label="Public" control={<Checkbox checked={type === "public"} disabled={type === "public"} onChange={()=>setType("public")}/>}/>
+			<FormControlLabel label="Private" control={<Checkbox checked={type === "private"} disabled={type === "private"} onChange={()=>setType("private")}/>}/>
+			<FormControlLabel label="Password" control={<Checkbox checked={type === "password"} disabled={type === "password"} onChange={()=>setType("password")}/>}/>
+			{type === "password" && <TextField id="outlined-required" label="password" variant="outlined" placeholder="Required" inputProps={{maxLength: 20}} disabled={currentChat.type === "password"} value={password} onChange={(e)=>setPassword(e.target.value)}/>}
+			<Button variant="contained" onClick={()=>onSubmitChannel()}>
+				Submit
+			</Button>
+		</Stack>
+	);
+
+// 	return (<>
+// 		<br/><br/>
+// 				<label>public
+// 					<input type="radio" name="channeltype" onChange={()=>changeType("public")} required/>
+// 				</label>
+// 				<>&nbsp;&nbsp;&nbsp;</>
+// 				<label>private
+// 					<input type="radio" name="channeltype" onChange={()=>changeType("private")} required/>
+// 				</label>
+// 				<>&nbsp;&nbsp;&nbsp;</>
+// 				<label>password
+// 					<input type="radio"name="channeltype" onChange={()=>changeType("password")} required/>
+// 				</label>
+// 				<br/><br/>
+// 		{type === "password" && <><input placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>changePassword(e.target.value)} required/><br/><br/></>}
+// 		<input type="submit" onClick={()=>onSubmitChannel()}/>
+// 		<br/><br/>
+// </>)
 }
 
 /***************************/
@@ -274,7 +287,7 @@ const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, chan
 	let bruh = currentChat.channel_users.find((channelUsr: ChannelUserDto)=> channelUsr.user.id === channelUser.id);
 
 	return (<div>
-		<Card>
+		<Card sx={{ width: '100%', minWidth: 360 }}>
 			{infos &&
 			<CardContent>
 				<List sx={{ display: "flex", flexDirection: "column", width: '100%', minWidth: 360, maxWidth: 360, maxHeight: 500, overflow: 'auto' }}>
@@ -299,9 +312,9 @@ const ChannelInfo: React.FC<channelInfoProps> = ({ channelUser, changeUser, chan
 			</CardContent>
 			}
 			{!infos &&
-			<CardContent>
-				<ChannelSettings channelUser={channelUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
-			</CardContent>
+				<CardContent>
+					<ChannelSettings channelUser={channelUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates}/>
+				</CardContent>
 			}
 		</Card>
 		<br/>
