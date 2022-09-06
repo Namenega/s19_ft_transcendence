@@ -186,7 +186,7 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 						<span onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" --- " + (item.administrator ? "administrator" : "user") + (item.mute ? " --- mute   " : "   ")}</span>
 						{bruh!.owner && <button onClick={(e)=>changeStatus(item.id, !item.administrator)}>Change Status</button>}
 						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>ban(item)}>Ban</button>}
-						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</button>}
+						{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "Mute"}</button>}
 					<br/><br/></div>);
 				})
 			}
@@ -321,35 +321,43 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 
 	
 	const submitMessage: () => void = async () => {
-		await currentChatLatestUpdates();
+		currentChatLatestUpdates();
 		if (dm)
-			await addDmMessage(createNewDmMessage(userOrchannelUser, currentChat, message, currentChat.messages.length + 1));
+		{
+			if (currentChat.block)
+				return ;
+			addDmMessage(createNewDmMessage(userOrchannelUser, currentChat, message, currentChat.messages.length + 1));
+		}
 		else
 		{
 			let wow = await currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === currUser);
-			await addChannelMessage(createNewChannelMessage(wow.user, currentChat, message, currentChat.messages.length + 1));
+			if (wow.mute)
+				return ;
+			addChannelMessage(createNewChannelMessage(wow.user, currentChat, message, currentChat.messages.length + 1));
 		}
 		setMessage('');
 		send(socket, {room: currentChat.id, content: "new message"});
-		await currentChatLatestUpdates();
+		currentChatLatestUpdates();
 	}
 
 	const createGame: (message: ChannelMessageDto | DmMessageDto, game: {speed: number, map: string, random: boolean}) => void = async (message, game) => {
 		let userMessage = await getUser(message.user.id);
-		if (userMessage !== null && userMessage.id !== (dm ? userOrchannelUser.id : userOrchannelUser.user.id) && userMessage.status === "Online") {
+		let wow = await currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === currUser);
+		if (userMessage !== null && userMessage.id !== (dm ? userOrchannelUser.id : wow.user.id) && userMessage.status === "Online") {
 			if (game.random) {
 				game.speed = Math.floor(Math.random() * 3) + 1;
 				game.map = Maps[Math.floor(Math.random() * 5)];
 			}
-			await addGame({user1: userMessage, user2: (dm ? userOrchannelUser : userOrchannelUser.user), ballspeed: game.speed, map: game.map});
+			await addGame({user1: userMessage, user2: (dm ? userOrchannelUser : wow.user), ballspeed: game.speed, map: game.map});
 		}
-		dm ? await updateDmMessage(message.id, {content: "/*PLAY*"}) : await updateChannelMessage(message.id, {content: "/*PLAY*"});
-		await currentChatLatestUpdates();
+		dm ? updateDmMessage(message.id, {content: "/*PLAY*"}) : updateChannelMessage(message.id, {content: "/*PLAY*"});
+		currentChatLatestUpdates();
 	}
 
 	const keyPress: (e: any) => void = (e) => {
 		if(e.keyCode === 13)
 		{
+
 			submitMessage();
 			setMessage("");
 		// put the login here
@@ -366,11 +374,12 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 		, [message.user]);
 
 		const ChatCommands: React.FC<{}> = () => {
+			currentChatLatestUpdates();
 			if (message.content.substring(0,6) === "*PLAY*") {
 				if (message.content.substring(7,13) === "random")
 				{
 					game.random = true;
-					return (<><span>{`random game --- `}</span><Button onClick={()=>createGame(message, game)}>PLAY</Button></>)
+					return (<><span>{`random game --- `}</span><Button disabled={message.user.id === currUser || message.user.status !== "Online" ? true : false} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 				}
 				else if (message.content.length > 6)
 				{
@@ -378,9 +387,9 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 					game.map = message.content.substring(9, message.content.length);
 					if (!(game.speed > 0 && game.speed < 4) || !(Maps.find((_map: string) => _map === game.map)))
 						return <></>;
-					return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button onClick={()=>createGame(message, game)}>PLAY</Button></>)
+					return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={message.user.id === currUser || message.user.status !== "Online" ? true : false} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 				}
-				return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button onClick={()=>createGame(message, game)}>PLAY</Button></>)
+				return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={message.user.id === currUser || message.user.status !== "Online" ? true : false} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 			}
 			else if (message.content === "/*PLAY*")
 			{ //If game is finished change message so that score is appended to it and show it in the chat!!!!!!!!!
@@ -401,7 +410,6 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 			</div>
 		);
 	}
-
 	return (
 		<div>
 			<Card>
@@ -419,7 +427,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 			</Card>
 			{/* {currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=><ChatMessage message={message}/>)} */}
 			<br/>
-			<TextField label="Message" disabled={((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) ? true : false} value={message} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setMessage(e.target.value)}/>
+			<TextField label="Message" value={message} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setMessage(e.target.value)}/>
 			{/* <input type="text" value={message} onChange={(e)=>setMessage(e.target.value)}/> */}
 			{/* {((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) && <input type="submit" value="Message" disabled/>} */}
 			{/* {((dm && !currentChat.block) || (!dm && !userOrchannelUser.mute)) && <input type="submit" value="Message" onClick={(e)=>submitMessage()}/>} */}
@@ -465,7 +473,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 		}
 	}, []);
 
-	//constant cjeck if the user has been banned/muted
+	//constant check if the user has been banned/muted
 	useEffect(() => {
 		const interval = setInterval(currentChatLatestUpdates, 2000);
 		return () => clearInterval(interval);
@@ -491,7 +499,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 	}
 
 	const setBlock: () => void = async () => {
-		await currentChatLatestUpdates();
+		currentChatLatestUpdates();
 		currentChat.block = !currentChat.block;
 		if  (currentChat.block === true)
 			currentChat.blockerUserId = user.id;
