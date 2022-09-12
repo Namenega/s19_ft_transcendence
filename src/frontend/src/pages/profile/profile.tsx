@@ -197,7 +197,7 @@ const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderF
 				<TextField id="outlined-basic" label="Find Friends" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
 				</TextField>
 			</Stack>
-            {showResult && searchResults.map((item) => <div>
+            {showResult && searchResults.map((item, key) => <div key={key}>
             <br/>
             <span>{item.login}</span><>&nbsp;&nbsp;</>
             <Button variant='outlined' onClick={()=> _addFriend(item)}>
@@ -269,8 +269,8 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
 					</Button>
 					<Card sx={{minWidth: 300}} >
 						<List sx={{ width: '100%', maxWidth: 360, overflow: 'auto', maxHeight: 500 }}>
-							{userFriends.length ? userFriends.map((item)=> 
-							<ListItem>
+							{userFriends.length ? userFriends.map((item, key)=> 
+							<ListItem key={key}>
 								<ListItemAvatar>
 								<Avatar src={item.avatar} onClick={()=> {seeFriendProfile(item); setExt(false)}}/>
 								</ListItemAvatar>
@@ -312,16 +312,23 @@ const MatchHistory: React.FC<mhProps> = ({ user }) => {
 		getUserMatchHistory();
 	}, [profile])
 
+	// <table
 	return (
 		<div className='extension-ctn'>
 			<h2 className='profile-title'>Match History</h2>
-				<table style={{"margin": "auto"}}>
-				{userMatchHistory.length ? userMatchHistory.map((elem)=><tr>
-				<td>{`${elem.user.login} VS ${elem.opponent.login}`}</td>
-				<td>|</td>
-				<td>{`${elem.userScore} : ${elem.opponentScore}`}</td>
-				</tr>) : <p>No matches</p>}
-				</table>
+				<List>
+					{userMatchHistory.length ? userMatchHistory.map((elem, key)=>
+					<ListItem key={key} disablePadding>
+						<ListItemText primary={`${elem.user.login} VS ${elem.opponent.login} | ${elem.userScore} : ${elem.opponentScore}`}/>
+					</ListItem>)
+					:
+					<ListItem disablePadding>
+						<ListItemText primary="No matches"/>
+					</ListItem>
+					}
+					<ListItem disablePadding>
+					</ListItem>
+				</List>
 		</div>
 	);
 }

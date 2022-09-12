@@ -217,7 +217,7 @@ const CreateGame: React.FC<createGameProps> = ({ user, changeGame }) => {
         <FormControl>
           <InputLabel>Map</InputLabel>
           <Select value={map} label="Map" onChange={(e)=>setMap(String(e.target.value))}>
-          {Maps.map((item)=> <MenuItem value={item}>{item}</MenuItem>)}
+          {Maps.map((item, key)=> <MenuItem key={key} value={item}>{item}</MenuItem>)}
           </Select>
           <FormHelperText>Set the map design</FormHelperText>
         </FormControl>
@@ -233,8 +233,8 @@ const Ranking: React.FC<rankingProps> = ({ rankingUsers }) => {
     <h2 className='play-title'>Ranking</h2>
     <Card sx={{minWidth: 300}} >
 						<List sx={{ width: '100%', overflow: 'auto', maxHeight: 500}}>
-							{rankingUsers.length ? rankingUsers.map((item)=> 
-							<ListItem>
+							{rankingUsers.length ? rankingUsers.map((item, key)=> 
+							<ListItem key={key}>
 								<ListItemAvatar>
 								<Avatar src={item.avatar}/>
 								</ListItemAvatar>
@@ -259,7 +259,7 @@ const Live:React.FC<liveProps> = ({ changeGame, activeGames }) => {
     <div className='play-extension-ctn'>
       <h2 className='play-title'>Watch live</h2>
       {!activeGames.length ? <p>No Active Games</p> :
-      activeGames.map((game)=> <Button variant="outlined" onClick={()=>watchGame(game)}><span>
+      activeGames.map((game, key)=> <Button key={key} variant="outlined" onClick={()=>watchGame(game)}><span>
       {<><span >{game.user1.login}</span><span >{' VS '}</span><span >{game.user2 !== null && game.user2.login}</span><span>{` ~ ballspeed: ${game.ballspeed} | map: ${game.map}`}</span></>}</span><br/><br/></Button>)}
     </div>
   );

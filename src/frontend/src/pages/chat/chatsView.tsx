@@ -95,8 +95,8 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 			<Stack spacing={1}>
 				<TextField id="outlined-basic" label="Search channel" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
 				</TextField>
-				{showResult && searchResults.map((item) => 
-					<div>
+				{showResult && searchResults.map((item, key) => 
+					<div key={key}>
 						<br/>
 						<Button onClick={() => setValue(item)}>{item.name}</Button><>&nbsp;&nbsp;</>
 						<br/><br/>
@@ -112,39 +112,6 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 			</Stack>
 		</div>
 	);
-	
-		// return (<div>
-	// 			<br/>
-	// 			<input className={cs.textInput} placeholder={"Search channel..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
-	// 			{searchResults.map((item) =>
-	// 				<div>
-	// 					<br/>
-	// 					<span>{item.name}</span><>&nbsp;&nbsp;</>
-	// 					{item.type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/><>&nbsp;&nbsp;</></>}
-	// 					<button className={styles.startChannelButton} onClick={(e)=>{onSubmit(item)}}>Join</button><>&nbsp;&nbsp;</>
-	// 				</div>)}
-	// 		</div>);
-
-
-	// return (
-	// 	<div>
-	// 		<br/>
-	// 		<input className="textInput" placeholder={"Search channel..."} type="text" value={searchText}
-	// 			onChange={(e) => handleSearch(e.target.value)}/>
-	// 		<br/>
-	// 		{searchResults.map((item) =>
-	// 			<div>
-	// 				<br/>
-	// 				<span>{item.name}</span><>&nbsp;&nbsp;</>
-	// 				{item.type === "password" && <><input className="textInput" placeholder={"Password..."} type="password" value={password}
-	// 						onChange={(e)=>setPassword(e.target.value)}/><>&nbsp;&nbsp;</></>}
-	// 				<Button variant="contained" className="startChannelButton" onClick={(e)=>{onSubmit(item)}}>
-	// 					Join
-	// 				</Button>
-	// 				<br/>
-	// 			</div>)}
-	// 	</div>
-	// );
 }
 
 const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
@@ -237,7 +204,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 		// console.log(isPartOfDms(allUsers[1]))
 
 		allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfDms(item)
-				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item) && console.log(item.login))
+				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item))
 		setSearchText(searchValue);
 		setSearchResults(search);
 		showResultList();
@@ -261,7 +228,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 					<TextField id="outlined-basic" label="Search user" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
 					</TextField>
 				</Stack>
-				{showResult && searchResults.map((item) => <div>
+				{showResult && searchResults.map((item, key) => <div key={key}>
 				<br/>
 				<span>{item.login}</span><>&nbsp;&nbsp;</>
 				<Button variant='outlined' onClick={(e)=> {onSubmit(item)}}>
@@ -272,31 +239,6 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 				</div>)}
 			</div>
 	);
-
-  	// return (<div>
-	// 			<br/>
-	// 			<input className="textInput" placeholder={"Search user..."} type="text" value={searchText}
-	// 				onChange={(e) => handleSearch(e.target.value)}/>
-	// 			<br/><br/>
-	// 			{searchResults.map((item) =>
-	// 				<div>
-	// 					<br/>
-	// 					<span>{item.login}</span><>&nbsp;&nbsp;</>
-	// 					<Button className="startDmButton" variant="contained" onClick={(e)=> {onSubmit(item)}}>DM</Button>
-	// 				</div>)}
-	// 		</div>
-	// );
-
-//   return (<div>
-// 		<br/>
-// 		<input className={cs.textInput} placeholder={"Search user..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
-// 		{searchResults.map((item) => <div>
-// 									<br/>
-// 									<span>{item.login}</span><>&nbsp;&nbsp;</>
-// 									<button className={styles.startDmButton} onClick={(e)=> {onSubmit(item)}}>DM</button>
-// 								 </div>)}
-//   	</div>);
-
 }
 
 const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage, changeGame, back, logout }) => {
@@ -410,8 +352,8 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 								<Divider variant="middle" />
 								{!channels.length && !directMessage.length && <p><br/>No chats</p>}
 								<List sx={{ width: '100%', minWidth: 300, maxWidth: 300, minHeight: 250, maxHeight: 250, overflow: 'auto' }}>
-									{channels.length !== 0 && channels.map((item)=> 
-									<ListItem>
+									{channels.length !== 0 && channels.map((item, key)=> 
+									<ListItem key={key}>
 										<ListItemButton sx={{display: "flex", justifyContent: "center"}} onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
 											{item.name}
 										</ListItemButton>
@@ -420,8 +362,8 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 										</IconButton>
 									</ListItem>
 									)}
-									{directMessage.length !== 0 && directMessage.map((item)=>
-									<ListItem>
+									{directMessage.length !== 0 && directMessage.map((item, key)=>
+									<ListItem key={key}>
 										<ListItemButton sx={{display: "flex", justifyContent: "center"}} onClick={()=> {changeCurrentChat(item); setShowChat(true)}}>
 											{item.users[0].id === user.id ? item.users[1].login : item.users[0].login}
 										</ListItemButton>
@@ -443,30 +385,6 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 			</div>
 		</div>
 		);
-
-
-		{/* // 		return (<div className={cs.chatRootClass}>
-		// 			<button className={cs.backButton} onClick={()=>{changeMenuPage('home')}}>Back</button>
-		// 							<h1>Chat</h1>
-		// 			<button className={!newdm ? styles.newDmButton : styles.newDmButtonOn} onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false);}}>New DM</button><>&nbsp;&nbsp;</>
-		// 			<button className={!newchannel ? styles.newChannelButton : styles.newChannelButtonOn} onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false);}}>New Channel</button><>&nbsp;&nbsp;</>
-		// 			<button className={!joinchannel ? styles.joinChannelButton : styles.joinChannelButtonOn} onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false);}}>Join Channel</button><>&nbsp;&nbsp;</>
-		// 							<button className={!viewChatCommands ? styles.viewChatCommandsButton : styles.viewChatCommandsButtonOn} onClick={()=> {setViewChatCommands(!viewChatCommands); setNewchannel(false); setNewdm(false); setJoinchannel(false);}}>Chat Commands</button>
-		// 			{newdm && <NewDm user={user} dms={dms} changeCurrentChat={changeCurrentChat}/>}
-		// 			{newchannel && <NewChannel user={user} changeCurrentChat={changeCurrentChat}/>}
-		// 			{joinchannel && <JoinChannel user={user} channels={channels} changeCurrentChat={changeCurrentChat}/>}
-		// 			{viewChatCommands && <><br/><br/><span style={{color:"#507255"}}>Propose to play a default game: </span><span style={{color:"#4AAD52"}}>*PLAY*</span>
-		// 								<br/><br/><span style={{color:"#507255"}}>Play a random game: </span><span style={{color:"#4AAD52"}}>*PLAY* random</span>
-		// 								<br/><br/><span style={{color:"#507255"}}>Play a game with custom settings: </span><span style={{color:"#4AAD52"}}>*PLAY* 3 night</span><br/></>}
-		// 			<br/><br/>
-		// 			<h3>Active Chats</h3>
-		// 			{channels.map((item)=><p className={cs.clickable} onClick={()=>changeCurrentChat(item)}>{`${item.name} -- channel`}</p>)}
-		//----------------------------------------------------- DONE UP
-		// 							{dms.map((item)=><p className={cs.clickable} onClick={()=>changeCurrentChat(item)}>{`${item.users[0].id === user.id ? item.users[1].login : item.users[0].login} -- dm`}</p>)}
-		// 							{!channels.length && !dms.length && <p>No chats</p>}
-		// 		  </div>);
-		// }
-		//} */}
 }
 
 export default ChatsView;

@@ -118,7 +118,7 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 				<TextField id="outlined-basic" label="Search user" variant="standard" onChange={(e) => handleSearch(e.target.value)}>
 				</TextField>
 			</Stack>
-			{searchResults.map((item) => <div>
+			{searchResults.map((item, key) => <div key={key}>
 			<br/>
 			<span>{item.login}</span><>&nbsp;&nbsp;</>
 			<Button variant='outlined' onClick={(e)=> {onSubmit(item.id)}}>
@@ -127,16 +127,6 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 			</div>)}
 		</div>
 	);
-
-	// return (<div>
-	// 	<br/>
-	// 	<input placeholder={"Add users..."} type="text" value={searchText} onChange={(e) => handleSearch(e.target.value)}/><br/>
-	// 	{searchResults.map((item) => <div>
-	// 	<br/>
-	// 	<span>{item.login}</span><>&nbsp;&nbsp;</>
-	// 	<button onClick={(e)=> {onSubmit(item.id)}}>Add User</button>
-	// 	</div>)}
-	//   </div>);
 }
 
 /***************************/
@@ -148,7 +138,7 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 		currentChatLatestUpdates();
 	}
 
-	const ban: (target: ChannelUserDto) => void = async (target) => {
+	const kick: (target: ChannelUserDto) => void = async (target) => {
 		currentChat.users = currentChat.users.filter((item: UserDto) => item.id !== target.user.id);
 		currentChat.channel_users = currentChat.channel_users.filter((channelUser: ChannelUserDto) => channelUser.id !== target.id);
 		await addChannel(currentChat); //updateChannel should be used but bugs... Thus addChannel which calls save is used as it can update too if element already exists... And it works!!
@@ -176,12 +166,12 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 					if (item.user.id === bruh!.user.id)
 						return "";
 					if (item.owner)
-						return (<span onClick={()=>changeViewProfile(item.user)}><span>{item.user.login}</span><span>{" [owner]"}</span><br/><br/></span>);
-					return (<div>
+						return (<span key={item.id} onClick={()=>changeViewProfile(item.user)}><span>{item.user.login}</span><span>{" [owner]"}</span><br/><br/></span>);
+					return (<div key={item.id}>
 								<span onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" [" + (item.administrator ? "admin" : "user") + "]" + (item.mute ? " [mute] " : " ")}</span>
 								<ButtonGroup>
 									{bruh!.owner && <Button onClick={(e)=>changeStatus(item.id, !item.administrator)}>{item.administrator ? "User" : "Admin"}</Button>}
-									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>ban(item)}>Ban</Button>}
+									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>kick(item)}>kick</Button>}
 									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</Button>}
 								</ButtonGroup>
 							<br/><br/></div>);
@@ -438,27 +428,10 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 					</List>
 				</CardContent>
 			</Card>
-			{/* {currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=><ChatMessage message={message}/>)} */}
 			<br/>
 			<TextField label="Message" value={message} onKeyDown={(e)=>keyPress(e)} onChange={(e)=>setMessage(e.target.value)}/>
-			{/* <input type="text" value={message} onChange={(e)=>setMessage(e.target.value)}/> */}
-			{/* {((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) && <input type="submit" value="Message" disabled/>} */}
-			{/* {((dm && !currentChat.block) || (!dm && !userOrchannelUser.mute)) && <input type="submit" value="Message" onClick={(e)=>submitMessage()}/>} */}
 		</div>
 	)
-
-// 	return (
-//	<>
-// 		<div className={cs.chatMessageBoxClass}>
-// 		<h2 className={cs.chatTitle}>Messages</h2><br/>
-// {currentChat.messages.map((message: ChannelMessageDto | DmMessageDto)=><ChatMessage message={message}/>)}
-// 		<br/>
-// <input className={cs.textInput} type="text" value={message} onChange={(e)=>setMessage(e.target.value)}/>
-// {((dm && currentChat.block) || (!dm && userOrchannelUser.mute)) && <input className={styles.messageDisabledButton} type="submit" value="Message" disabled/>}
-// 		{((dm && !currentChat.block) || (!dm && !userOrchannelUser.mute)) && <input className={styles.messageButton} type="submit" value="Message" onClick={(e)=>submitMessage()}/>}
-// 		</div>
-// </>
-//);
 }
 
 /***************************/
@@ -626,7 +599,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 									</Typography>
 								</CardContent>
 								}
-								{matchH &&
+								{/* {matchH &&
 									<table style={{"margin": "auto"}}>
 									{userMatchHistory.length ? userMatchHistory.map((elem)=><tr>
 									<td>{`${elem.user.login} VS ${elem.opponent.login}`}</td>
@@ -634,7 +607,7 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 									<td>{`${elem.userScore} : ${elem.opponentScore}`}</td>
 									</tr>) : <p>No matches</p>}
 									</table>
-								}
+								} */}
 							</Card>
 							{/* <Button variant="contained" onClick={() =>{setMatchH(!matchH); setShowInfos(!showInfos)}}>Match History</Button> */}
 					</Stack>
