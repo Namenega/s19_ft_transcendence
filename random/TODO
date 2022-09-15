@@ -1,6 +1,5 @@
 - enlever les console.log
 - slice texte trop large chat
-- password hashed
 - add user channel payload too large
 - channel useEffect is very laggy after a while
 - kick/ban, hide messages when blocked

@@ -188,13 +188,7 @@ export class UsersService {
 			let user = await this.UserRepo.findOne({ where: { id } });
 			// user = undefined;
 
-			//////////////////////////////////// à remodifier
-			if (password === user.password)
-				return true;
-			else
-				return false;
-			// return await bcrypt.compare(password, user.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
-			////////////////////////////////////
+			return await bcrypt.compare(password, user.password); //compare non-encrypted-password with encrypted-password-in-database using bcrypt
 			
 		} catch (error) {
 			throw error; 
