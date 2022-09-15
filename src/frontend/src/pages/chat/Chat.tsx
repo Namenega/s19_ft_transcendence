@@ -318,6 +318,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 	const [message, setMessage] = useState<string>('');
 	const Maps = ['black', 'white', 'winter', 'summer', 'night'];
 	const [render, setRender] = useState<boolean>(false);
+	const [disabled, setDisabled] = useState<boolean>(true);
 
 	useEffect(() => { currentChatLatestUpdates()}
 	, []);
@@ -377,12 +378,17 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 		, [message.user]);
 
 		const ChatCommands: React.FC<{}> = () => {
-			currentChatLatestUpdates();
+			async function disable()
+			{
+				await currentChatLatestUpdates();
+				setDisabled(message.user === undefined || message.user.id === currUser || message.user.status !== "Online" ? true : false);
+			}
+			disable();
 			if (message.content.substring(0,6) === "*PLAY*") {
 				if (message.content.substring(7,13) === "random")
 				{
 					game.random = true;
-					return (<><span>{`random game --- `}</span><Button disabled={message.user.id === currUser || message.user.status !== "Online" ? true : false} onClick={()=>createGame(message, game)}>PLAY</Button></>)
+					return (<><span>{`random game --- `}</span><Button disabled={disabled} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 				}
 				else if (message.content.length > 6)
 				{
@@ -390,9 +396,9 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 					game.map = message.content.substring(9, message.content.length);
 					if (!(game.speed > 0 && game.speed < 4) || !(Maps.find((_map: string) => _map === game.map)))
 						return <></>;
-					return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={message.user.id === currUser || message.user.status !== "Online" ? true : false} onClick={()=>createGame(message, game)}>PLAY</Button></>)
+					return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={disabled} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 				}
-				return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={message.user.id === currUser || message.user.status !== "Online" ? true : false} onClick={()=>createGame(message, game)}>PLAY</Button></>)
+				return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={disabled} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 			}
 			else if (message.content === "/*PLAY*")
 			{ //If game is finished change message so that score is appended to it and show it in the chat!!!!!!!!!
