@@ -138,7 +138,7 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 		currentChatLatestUpdates();
 	}
 
-	const kick: (target: ChannelUserDto) => void = async (target) => {
+	const ban: (target: ChannelUserDto) => void = async (target) => {
 		currentChat.users = currentChat.users.filter((item: UserDto) => item.id !== target.user.id);
 		currentChat.channel_users = currentChat.channel_users.filter((channelUser: ChannelUserDto) => channelUser.id !== target.id);
 		await addChannel(currentChat); //updateChannel should be used but bugs... Thus addChannel which calls save is used as it can update too if element already exists... And it works!!
@@ -171,7 +171,7 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 								<span onClick={()=>changeViewProfile(item.user)}>{item.user.login}</span><span>{" [" + (item.administrator ? "admin" : "user") + "]" + (item.mute ? " [mute] " : " ")}</span>
 								<ButtonGroup>
 									{bruh!.owner && <Button onClick={(e)=>changeStatus(item.id, !item.administrator)}>{item.administrator ? "User" : "Admin"}</Button>}
-									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>kick(item)}>kick</Button>}
+									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>ban(item)}>ban</Button>}
 									{(bruh!.owner || (bruh!.administrator && !item.administrator)) && <Button onClick={(e)=>mute(item.id, !item.mute)}>{item.mute ? "Unmute" : "mute"}</Button>}
 								</ButtonGroup>
 							<br/><br/></div>);
