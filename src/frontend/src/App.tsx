@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Authentication from './pages/login/authentication';
 
 export default function App() {
@@ -8,24 +8,3 @@ export default function App() {
         </Routes>
 );
 }
-
-// import './App.css';
-// import { useState } from 'react';
-// import Login from './Login';
-// import Home from './Home';
-
-// const App = () => {
-
-//   const [isLoggedIn, setIsLoggedIn] = useState(false)
-
-//   if (isLoggedIn)
-//     return (
-//       <Home setIsLoggedIn={setIsLoggedIn}/>
-//     )
-//   else
-//     return (
-//       <Login setIsLoggedIn={setIsLoggedIn}/>
-//     )
-// }
-
-// export default App;

@@ -12,23 +12,8 @@ import { addGame } from "../../api/games/games.api";
 import { GameDto } from '../../api/games/dto/game.dto';
 import { getAllUsers, addUser, getCompleteUser, getUser } from "../../api/user/user.api";
 import { UserDto } from "../../api/user/dto/user.dto";
-import Authentication from '../login/authentication';
-import Profile from '../profile/profile';
 import './chatsView.css'
-import { Avatar, Box, Button, ButtonGroup, Card, CardContent, Checkbox, Divider, FormControlLabel, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, TextField, Typography } from '@mui/material';
-import ForumIcon from '@mui/icons-material/Forum';
-import { CompleteMatchHistoryDto, MatchHistoryDto } from '../../api/match-history/dto/match-history.dto';
-import { getMatchHistoryOfUser } from '../../api/match-history/match-history.api';
-
-//const Chat = () => {
-
-//    return (
-//        <div className="chat-main-ctn">
-//            <div className="chat-messages-ctn"></div>
-//            <div className="chat-conversation-ctn"></div>
-//        </div>
-//    )
-//}
+import { Avatar, Box, Button, ButtonGroup, Card, CardContent, Checkbox, FormControlLabel, List, ListItem, ListItemText, Stack, TextField, Typography } from '@mui/material';
 
 /* ******************************** INTERFACES ****************************** */
 
@@ -85,7 +70,6 @@ interface chatProps {
 
 const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdates }) => {
 	const [searchResults, setSearchResults] = useState<UserDto[]>([]);
-	const [searchText, setSearchText] = useState<string>('');
 
 	const isPartOfUsers: (account: UserDto) => boolean = (account) => {
 		const find = currentChat.users.find((user) => user.id === account.id);
@@ -98,7 +82,6 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 
 		allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfUsers(item) &&
 			item.login.includes(searchValue) && search.push(item))
-		setSearchText(searchValue);
 		setSearchResults(search);
 	}
 
@@ -107,7 +90,7 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 		if (user === null) return ;
 		user.channels = [...user.channels, currentChat];
 		await addUser(user); //updateUser should be used but bugs... Thus addUser which calls save is used as it can update too if element already exists... And it works!!
-		await addChannelUser(createNewChannelUser(currentChat, user, false, false));
+		addChannelUser(createNewChannelUser(currentChat, user, false, false));
 		handleSearch('');
     	currentChatLatestUpdates();
 	}
@@ -134,7 +117,7 @@ const AddUsers: React.FC<addUsersProps> = ({ currentChat, currentChatLatestUpdat
 const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, changeUser, currentChat, currentChatLatestUpdates, changeViewProfile }) => {
 
 	const changeStatus: (id: number, newValue: boolean) => void = async (id, newValue) => {
-		await updateChannelUser(id, { administrator: newValue });
+		updateChannelUser(id, { administrator: newValue });
 		currentChatLatestUpdates();
 	}
 
@@ -142,19 +125,13 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 		currentChat.users = currentChat.users.filter((item: UserDto) => item.id !== target.user.id);
 		currentChat.channel_users = currentChat.channel_users.filter((channelUser: ChannelUserDto) => channelUser.id !== target.id);
 		await addChannel(currentChat); //updateChannel should be used but bugs... Thus addChannel which calls save is used as it can update too if element already exists... And it works!!
-		await currentChatLatestUpdates();
-	}
-
-	const mute: (id: number, newValue: boolean) => void = async (id, newValue) =>  {
-		await updateChannelUser(id, { mute: newValue });
 		currentChatLatestUpdates();
 	}
 
-	// return (
-	// 	<div>
-	// 		This is Chat return 2
-	// 	</div>
-	// )
+	const mute: (id: number, newValue: boolean) => void = async (id, newValue) =>  {
+		updateChannelUser(id, { mute: newValue });
+		currentChatLatestUpdates();
+	}
 
 	let bruh = currentChat.channel_users.find((channelUsr: ChannelUserDto)=> channelUsr.user.id === channelUser.id);
 
@@ -182,9 +159,6 @@ const ChannelViewUsers: React.FC<channelViewUsersProps> = ({ channelUser, change
 /***************************/
 
 const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCurrentChat, currentChat, currentChatLatestUpdates }) => {
-	const [info, setInfo] = useState<boolean>(false);
-	const [viewUsers, setViewUsers] = useState<boolean>(false);
-	const [settings, setSettings] = useState<boolean>(false);
 	const [type, setType] = useState<"public" | "private" | "password" | ''>('');
 	const [password, setPassword] = useState<string>('');
 
@@ -195,25 +169,6 @@ const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCu
 
 	const changeSettings: (newValue: boolean) => void = (newValue) => {
 		if (newValue === true) currentChatLatestUpdates();
-		setSettings(newValue);
-	}
-
-	const changeViewUsers: (newValue: boolean) => void = (newValue) => {
-		if (newValue === true) currentChatLatestUpdates();
-		setViewUsers(newValue);
-	}
-
-	const changeInfo: (newValue: boolean) => void = (newValue) => {
-		if (newValue === true) currentChatLatestUpdates();
-		setInfo(newValue);
-	}
-
-	const changeType: (newValue: "public" | "private" | "password" | '') => void = (newValue) => {
-		setType(newValue);
-	}
-
-	const changePassword: (newValue: string) => void = (newValue) => {
-		setPassword(newValue);
 	}
 
 	const onSubmitChannel: () => void = async () => {
@@ -221,7 +176,7 @@ const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCu
 			return ;
 		currentChat.type = type;
 		currentChat.password = password;
-		await updateChannel(currentChat.id, {type: type, password: password});
+		updateChannel(currentChat.id, {type: type, password: password});
 		changeCurrentChat(currentChat);
 		changeSettings(false);
 		resetSettings();
@@ -248,25 +203,6 @@ const ChannelSettings: React.FC<channelSettingsprops> = ({ channelUser, changeCu
 			</Button>
 		</Stack>
 	);
-
-// 	return (<>
-// 		<br/><br/>
-// 				<label>public
-// 					<input type="radio" name="channeltype" onChange={()=>changeType("public")} required/>
-// 				</label>
-// 				<>&nbsp;&nbsp;&nbsp;</>
-// 				<label>private
-// 					<input type="radio" name="channeltype" onChange={()=>changeType("private")} required/>
-// 				</label>
-// 				<>&nbsp;&nbsp;&nbsp;</>
-// 				<label>password
-// 					<input type="radio"name="channeltype" onChange={()=>changeType("password")} required/>
-// 				</label>
-// 				<br/><br/>
-// 		{type === "password" && <><input placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>changePassword(e.target.value)} required/><br/><br/></>}
-// 		<input type="submit" onClick={()=>onSubmitChannel()}/>
-// 		<br/><br/>
-// </>)
 }
 
 /***************************/
@@ -321,6 +257,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 	const [disabled, setDisabled] = useState<boolean>(true);
 
 	useEffect(() => { currentChatLatestUpdates()}
+	// eslint-disable-next-line
 	, []);
 
 	
@@ -361,10 +298,8 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 	const keyPress: (e: any) => void = (e) => {
 		if(e.keyCode === 13)
 		{
-
 			submitMessage();
 			setMessage("");
-		// put the login here
 		}
 	}
 
@@ -375,6 +310,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 			if (!render && (message.user !== null) && (message.user !== undefined))
 				setRender(true);
 		}
+		// eslint-disable-next-line
 		, [message.user]);
 
 		const ChatCommands: React.FC<{}> = () => {
@@ -401,7 +337,7 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 				return (<><span>{`speed: ${game.speed} map: ${game.map} --- `}</span><Button disabled={disabled} onClick={()=>createGame(message, game)}>PLAY</Button></>)
 			}
 			else if (message.content === "/*PLAY*")
-			{ //If game is finished change message so that score is appended to it and show it in the chat!!!!!!!!!
+			{
 				return (<><Button disabled>PLAY</Button></>)
 			}
 			else
@@ -409,7 +345,6 @@ const Message: React.FC<messageProps> = ({ userOrchannelUser, currentChat, curre
 				return (<span>{message.content}</span>);
 			}
 		}
-		// return(<div>This is Chat return 10</div>)
 
 		return (
 			<div>
@@ -447,9 +382,8 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 	const [socket, setSocket] = useState<any>(null);
 	const [viewProfile, setViewProfile] = useState<UserDto | undefined>(undefined);
 	const [channelExt, setChannelExt] = useState<"info" | "messages" | "user">("messages");
-	const [matchH, setMatchH] = useState<boolean>(false);
+	// eslint-disable-next-line
 	const [showInfos, setShowInfos] = useState<boolean>(true);
-	const [userMatchHistory, setUserMatchHistory] = useState<CompleteMatchHistoryDto[]>([]);
 
 	useEffect(() => {
 		const connectedSocket = connect()
@@ -457,18 +391,20 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 		joinRoom(connectedSocket, currentChat.id);
 		listen(connectedSocket, async (response: string) => {
 			if (response === "new message")
-				await currentChatLatestUpdates();
+				currentChatLatestUpdates();
 		});
 		return () => {
 			leaveRoom(connectedSocket, currentChat.id);
 			disconnect(connectedSocket);
 		}
+		// eslint-disable-next-line
 	}, []);
 
 	//constant check if the user has been banned/muted
 	useEffect(() => {
 		const interval = setInterval(currentChatLatestUpdates, 2000);
 		return () => clearInterval(interval);
+		// eslint-disable-next-line
 	}, []);
 
 	const currentChatLatestUpdates: () => void = async () => {
@@ -524,39 +460,6 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 		setViewProfile(profile);
 	}
 
-	const backFromViewProfile: () => void = () => {
-		setViewProfile(undefined);
-	}
-
-	const debug: (dm: boolean) => void = (dm) => {
-		console.log(dm);
-	}
-
-	const findChannelUser: () => Promise<void> = async () => {
-		let channelUser = await currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id);
-		return (channelUser);
-	}
-
-	const createCompleteMatchHistory: (match: MatchHistoryDto) => Promise<CompleteMatchHistoryDto | null> = async (match) => {
-		const opponent = await getUser(match.opponentId);
-		if (opponent === null) return null;
-		return {
-			id: match.id,
-			user: match.user,
-			userScore: match.userScore,
-			opponent: opponent,
-			opponentScore: match.opponentScore
-		};
-	}
-
-	const getUserMatchHistory: (profile: UserDto) => void = async (profile) => {
-		let matchHistory: MatchHistoryDto[]  = await getMatchHistoryOfUser(profile.login);
-		let matchHistory1: (CompleteMatchHistoryDto | null)[] = await Promise.all(matchHistory.map(async (item) => { return await createCompleteMatchHistory(item); }));
-		// @ts-ignore
-		let matchHistory2: CompleteMatchHistoryDto[] = matchHistory1.filter((match) => match !== null);
-		setUserMatchHistory(matchHistory2);
-	}
-
 	if (viewProfile !== undefined)
 		return (
 			<div className='chat-extension-ctn'>
@@ -605,26 +508,10 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 									</Typography>
 								</CardContent>
 								}
-								{/* {matchH &&
-									<table style={{"margin": "auto"}}>
-									{userMatchHistory.length ? userMatchHistory.map((elem)=><tr>
-									<td>{`${elem.user.login} VS ${elem.opponent.login}`}</td>
-									<td>|</td>
-									<td>{`${elem.userScore} : ${elem.opponentScore}`}</td>
-									</tr>) : <p>No matches</p>}
-									</table>
-								} */}
 							</Card>
-							{/* <Button variant="contained" onClick={() =>{setMatchH(!matchH); setShowInfos(!showInfos)}}>Match History</Button> */}
 					</Stack>
 				</div>
-				// {matchH && <MatchHistory user={currentChat.users.find((userDm: UserDto) => userDm.id !== user.id)}/>}
 		);
-	
-	// console.log(currentChat.channel_users);
-	// console.log("xd");
-
-	//MODIFY
 	return (
 		<div className='chat-extension-ctn'>
 			<ButtonGroup>
@@ -652,18 +539,6 @@ const Chat: React.FC<chatProps> = ({ setShowOptions, showOptions, user, changeUs
 			{channelExt === "user" && <ChannelViewUsers channelUser={user} changeUser={changeUser} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
 		</div>
 	)
-
-	// return (<div className={cs.chatRootClass}>
-	// 	<button className={cs.backButton} onClick={()=>changeCurrentChat(null)}>Back</button>
-	// 	{dm && (!currentChat.block || (currentChat.block && currentChat.blockerUserId === user.id))
-	// 					&& <><>&nbsp;&nbsp;</><button className={styles.blockButton} onClick={()=>setBlock()}>{currentChat.block === false ? "Block" : "Unblock"}</button></>}
-	// 	{!dm && <><>&nbsp;&nbsp;</><button className={styles.leaveChannelButton} onClick={()=>leaveChannel()}>Leave</button></>}
-	// 				{dm && <h1 className={cs.clickable} onClick={()=>changeViewProfile(currentChat.users.find((userDm: UserDto) => userDm.id !== user.id))}> {currentChat.users.find((userDm: UserDto) => userDm.id !== user.id).login}</h1>}
-	// 	{!dm && <h1> {currentChat.name}</h1>}
-	// 	{!dm && <ChannelInfo channelUser={currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id)} changeUser={changeUser} changeCurrentChat={changeCurrentChat} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} changeViewProfile={changeViewProfile}/>}
-	// 				<br/>
-	// 	<Message userOrchannelUser={dm ? user : currentChat.channel_users.find((channelUser: ChannelUserDto)=> channelUser.user.id === user.id)} currentChat={currentChat} currentChatLatestUpdates={currentChatLatestUpdates} dm={dm} socket={socket} currUser={user.id}/>
-	//   </div>);
 }
 
 export default Chat

@@ -12,7 +12,6 @@ import { Button } from '@mui/material';
 
 const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUser: UserDto | null) => void, back: () => void, player: boolean}) => {
 	const [endGame, setEndGame] = useState<boolean>(false);
-	const [quitPermited, setQuitPermited] = useState<boolean>(!props.player);
 	const [userDisconnected, setUserDisconnected] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -21,7 +20,6 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 			let latestUser2 = await getUser(user2.id);
 			if ((latestUser2 === null || latestUser2.status !== "In a game")) {
 				setUserDisconnected(true);
-				setQuitPermited(true);
 			}
     }
     const interval = setInterval(verifyOtherUserDisconnect, 2000);
@@ -80,7 +78,6 @@ const PongGame = (props : {gameInfos: GameDto, user: UserDto, changeUser: (newUs
 				let latestUser = await getUser(props.user.id);
 				props.changeUser(latestUser);
 				setEndGame(true);
-				setQuitPermited(true);
 			}
 			if (props.player) { scoreToDatabase(); } else { setEndGame(true); }
 		})

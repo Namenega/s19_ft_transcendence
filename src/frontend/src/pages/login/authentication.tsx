@@ -35,10 +35,6 @@ const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected,
 		if (userInDatabase === null) {
 			setNonExistingAccount(true);
 			setWrongPassword(false);
-			// setName('');
-			// setLogin('');
-			// setAvatar('');
-			// setPassword('');
 		} else {
 			setNonExistingAccount(false);
 			if (!(await userPasswordVerification(userInDatabase.id, password))) {
@@ -69,10 +65,6 @@ const LogForm: React.FC<logFormProps> = ({ changeUser, signup, alreadyConnected,
 			changeUser(userInDatabase);
 		} else {
 			setAccountAlreadyInUse(true);
-			// setName('');
-			// setLogin('');
-			// setAvatar('');
-			// setPassword('');
 		}
 	}
 
@@ -136,7 +128,6 @@ const TwoFactorAuthentication: React.FC<{user: UserDto, changeTwoFA: (newValue: 
 	const keyPress: (e: any) => void = (e) => {
 		if(e.keyCode === 13){
 			verify2FAuth();
-		// put the login here
 		}
 	}
 

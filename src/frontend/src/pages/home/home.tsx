@@ -1,4 +1,4 @@
-import { AppBar, Avatar, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import { GameDto } from "../../api/games/dto/game.dto";
@@ -48,26 +48,12 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	const [game, setGame] = useState<GameDto | null>(null);
 	const [state, setState] = useState<boolean>(true);
 
-	/*
-	**Goal: Perform actions before user quits unexpectedly (close tabs, refresh, goes to other link...), especially set user status as offline...
-	** Method 1:
-	** First try to prop the user if he is sure he wants to close the window, this will enable enough time to do the async operations during onbeforeunload event...
-	-> Worked on chrome but not on safari... (even when using onunload or onhiddenpage event)
-	** Method 2: (cleanest method) -> Method used
-	**Onunload method is not very reliable (different browsers can act differently, only functional on single-page-apps, function length can only be short, if server shuts down problem will occur...)
-	**usually a setInterval is used to send time while user is online, once he is offline this will stop and by the difference between actual time and last logged time we can know if the user is online or not...
-	**When searching only start a game with a player that is online too...
-	**If user quits during game... verify if other user is still connected at end of game and if he is not, send his points to the db from the other user or cancel the match and points...
-	**If user just connected and has an active game in its name, delete that game...
-	** Documentation: https://stackoverflow.com/questions/37900110/how-to-set-offline-a-user-in-the-db-when-it-closes-the-browser
-	*/
-
 	useEffect(() => {
-			const removeActiveGame: () => void = async () => { //Call in an async function
+			const removeActiveGame: () => void = async () => {
 				//Remove all games associated with the user that have not been finished yet
 				let myGame = await findMyGame();
 				if (myGame !== null)
-                await removeGame(myGame.id);
+                removeGame(myGame.id);
 		}
 		if (user.status === "Offline")
             removeActiveGame(); //Before user will be set as Online, so only called once at connection
@@ -77,7 +63,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	useEffect(() => {
 		const keepOnline: () => void = async () => {
 			const unixTimeStamp = Math.round(new Date().getTime() / 1000).toString();
-			await updateUser(user.id, {latestTimeOnline: unixTimeStamp});
+			updateUser(user.id, {latestTimeOnline: unixTimeStamp});
 		}
  		const interval = setInterval(keepOnline, 1500);
 		return () => clearInterval(interval);
@@ -99,11 +85,11 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 			if (latestUser === null) return ;
 			let myGame = await findMyGame();
 			if (myGame === null) {
-					if (latestUser.status !== "Online") await updateUser(user.id, {status: "Online"})
+					if (latestUser.status !== "Online") updateUser(user.id, {status: "Online"})
 			} else if (myGame.user2 === null) {
-				if (latestUser.status !== "Searching a game") await updateUser(user.id, {status: "Searching a game"});
+				if (latestUser.status !== "Searching a game") updateUser(user.id, {status: "Searching a game"});
 			} else {
-				if (latestUser.status !== "In a game") await updateUser(user.id, {status: "In a game"});
+				if (latestUser.status !== "In a game") updateUser(user.id, {status: "In a game"});
 				if (latestUser.status === "Online") changeGame(myGame); //If someone accepts game demand from chat launch it...
 			}
         }
@@ -127,7 +113,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 	const logout: () => void = async () => {
 		let profile = user;
 		if (profile.status === "Online") 
-			await updateUser(profile.id, {status: "Offline"});
+			updateUser(profile.id, {status: "Offline"});
 		changeUser(null);
 	}
 
@@ -148,6 +134,7 @@ const Home: React.FC<{user: UserDto, changeUser: (newUser: UserDto | null) => vo
 		return () => {
 			window.removeEventListener('popstate', buttonEvent);
 		};
+		// eslint-disable-next-line
 	}, [menuPage]);
 
 	if (menuPage === "home") {

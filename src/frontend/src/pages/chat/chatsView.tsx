@@ -9,10 +9,9 @@ import { ChannelDto } from "../../api/channel/dto/channel.dto"
 import { CreateChannelDto } from "../../api/channel/dto/create-channel.dto"
 import { CreateDmDto } from "../../api/dms/dto/create-dm.dto"
 import { GameDto } from "../../api/games/dto/game.dto"
-import _, { any } from "underscore"
+import _ from "underscore"
 import './chatsView.css'
-import { AppBar, Box, Button, ButtonGroup, Card, CardContent, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, IconButton, InputLabel, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, MenuItem, Select, Stack, TextField, Toolbar, Typography } from "@mui/material"
-import { Filter, Filter1Outlined } from "@mui/icons-material"
+import { AppBar, Box, Button, Card, CardContent, Checkbox, Divider, FormControlLabel, IconButton, List, ListItem, ListItemButton, Stack, TextField, Toolbar, Typography } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatIcon from '@mui/icons-material/Chat';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -46,19 +45,12 @@ interface chatsViewProps {
 
 const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrentChat }) => {
 	const [searchResults, setSearchResults] = useState<ChannelDto[]>([]);
-	const [searchText, setSearchText] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
 	const [showResult, setResult] = useState<boolean>(false);
 	const [value, setValue] = useState<ChannelDto | null>(null);
 	
 	const isPartOfChannels: (channel: ChannelDto) => boolean = (channel) => {
-		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
-		// https://bobbyhadz.com/blog/javascript-cannot-read-property-find-of-undefined
-		// const finder = channels.find((myChannel) => myChannel.name === channel.name);
 		const finder = channels ? channels.find((myChannel) => myChannel.name === channel.name) : undefined;
-
-		// CHECK FINDER (A ENLEVER)
-		// console.log(finder);
 
 		return (finder !== undefined);
 	}
@@ -69,7 +61,6 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 		
 		allChannels.forEach((item) => searchValue.length !== 0 && item.type !== "private"
 			&& !isPartOfChannels(item) && item.name.includes(searchValue) && search.push(item))
-		setSearchText(searchValue);
 		setSearchResults(search);
 		setResult(true);
 		setValue(null);
@@ -85,7 +76,7 @@ const JoinChannel: React.FC<joinChannelProps> = ({ user, channels, changeCurrent
 		}
 		channel.users = [...channel.users, user]
 		await addChannel(channel)
-		await addChannelUser(createNewChannelUser(channel, user, false, false));
+		addChannelUser(createNewChannelUser(channel, user, false, false));
 		changeCurrentChat((await getChannel(channel.id)));
 	}
 
@@ -132,7 +123,7 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 			setNameAlreadyInUse(true);
 		} else {
 			let NewChannel: ChannelDto = await addChannel(newChannel);
-			await addChannelUser(createNewChannelUser(NewChannel, user, true, true));
+			addChannelUser(createNewChannelUser(NewChannel, user, true, true));
 			changeCurrentChat((await getChannel(NewChannel.id)));
 		}
 	}
@@ -153,44 +144,14 @@ const NewChannel: React.FC<newChannelProps> = ({ user, changeCurrentChat }) => {
 			</Stack>
 		</div>
 	);
-
-//   return (
-//		<div>
-// 				<br/>
-// 				<label>Channel name: </label>
-// 				<input className={cs.textInput} type="text" maxLength={20} value={name} name="channelname" onChange={(e)=>setName(e.target.value)} required/><br/><br/>
-// 				<label className={type === "public" ? cs.radioButtonOn : cs.radioButton}>public
-// 					<input type="radio" name="channeltype" onChange={()=>setType("public")} required/>
-// 							  </label>
-// 							  <>&nbsp;&nbsp;&nbsp;</>
-// 				<label className={type === "private" ? cs.radioButtonOn : cs.radioButton}>private
-// 					<input type="radio" name="channeltype" onChange={()=>setType("private")} required/>
-// 							  </label>
-// 							  <>&nbsp;&nbsp;&nbsp;</>
-// 				<label className={type === "password" ? cs.radioButtonOn : cs.radioButton}>password
-// 					<input type="radio"name="channeltype" onChange={()=>setType("password")} required/>
-// 							  </label>
-// 							  <br/><br/>
-// 				{type === "password" && <><input className={cs.textInput} placeholder={"Password..."} type="password" maxLength={20} value={password} onChange={(e)=>setPassword(e.target.value)}/><br/><br/></>}
-//			 	{nameAlreadyInUse && <p>Name already exists try another one</p>}
-//			 	<button className={cs.submitButton} type="submit" onClick={()=>onSubmit(createNewChannel([user], name, type, password))}>Submit</button>
-// 			</div>
-//	)
 }
 
 const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 	const [searchResults, setSearchResults] = useState<UserDto[]>([]);
-	const [searchText, setSearchText] = useState<string>('');
 	const [showResult, setResult] = useState<boolean>(false);
 
 	const isPartOfDms: (account: UserDto) => boolean = (account) => {
-		//!ENLEVER LE TERNAIRE ET REMETTRE LIGNE EN DESSOUS
-		// https://bobbyhadz.com/blog/javascript-cannot-read-property-find-of-undefined
-		// const finder = dms.find((dm) => dm.users.some((user) => user.id === account.id));
 		const finder = dms ? dms.find((dm) => dm.users.some((user) => user.id === account.id)) : undefined;
-
-		// CHECK FINDER
-		// console.log(finder);
 
 		return (finder !== undefined);
 	}
@@ -199,13 +160,8 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 		let search: UserDto[] = [];
 		const allUsers = await getAllUsers();
 
-		// console.log(allUsers)
-		// console.log(searchValue)
-		// console.log(isPartOfDms(allUsers[1]))
-
 		allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfDms(item)
 				&& item.login.includes(searchValue) && item.login !== user.login && search.push(item))
-		setSearchText(searchValue);
 		setSearchResults(search);
 		showResultList();
 	}
@@ -231,7 +187,7 @@ const NewDm: React.FC<newDmProps> = ({ user, dms, changeCurrentChat }) => {
 				{showResult && searchResults.map((item, key) => <div key={key}>
 				<br/>
 				<span>{item.login}</span><>&nbsp;&nbsp;</>
-				<Button variant='outlined' onClick={(e)=> {onSubmit(item)}}>
+				<Button variant='outlined' onClick={()=> {onSubmit(item)}}>
 					New dm
 				</Button>
 				<br/><br/>
@@ -245,7 +201,6 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [newdm, setNewdm] = useState<boolean>(false);
 	const [newchannel, setNewchannel] = useState<boolean>(false);
 	const [joinchannel, setJoinchannel] = useState<boolean>(false);
-	const [viewChatCommands, setViewChatCommands] = useState<boolean>(false);
 	const [directMessage, setDms] = useState<DmDto[]>([]);
 	const [channels, setChannels] = useState<ChannelDto[]>([]);
 	const [currentChat, setCurrentChat] = useState<DmDto | ChannelDto | null>(null);
@@ -253,7 +208,8 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 	const [showOptions, setShowOptions] = useState<boolean>(true);
 
 	useEffect(() => { getChats();},
-	[currentChat]);															//c'est ca qui fait blank screen
+	// eslint-disable-next-line
+	[currentChat]);
 	
 	useEffect(() => {
 		const interval = setInterval(getChats, 2000);
@@ -287,13 +243,6 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 		setJoinchannel(false);
 		setCurrentChat(newChat);
 	}
-
-	// const debug: (channels: ChannelDto[], directMessage: DmDto[]) => void = (channels, directMessage) => {
-	// 	console.log(channels);
-	// 	console.log(channels.length);
-	// 	console.log(directMessage);
-	// 	console.log(directMessage.length);
-	// }
 
 	return (
 		<div className='full-chat-main-ctn'>
@@ -331,14 +280,13 @@ const ChatsView: React.FC<chatsViewProps> = ({ user, changeUser, changeMenuPage,
 							</Card>
 							}
 							{!showChat && <>
-								<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
+								<Button variant="contained" onClick={()=> {setNewdm(!newdm); setNewchannel(false); setJoinchannel(false); setShowChat(false)}}>
 									New DM
 								</Button>
-								{/* GO TO NEWDM IF CLICK ON "NEW DM" BUTTON */}
-								<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setViewChatCommands(false); setShowChat(false)}}>
+								<Button variant="contained" onClick={()=>{setNewchannel(!newchannel); setNewdm(false); setJoinchannel(false); setShowChat(false)}}>
 									New Channel
 								</Button>
-								<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setViewChatCommands(false); setShowChat(false)}}>
+								<Button variant="contained" onClick={()=> {setJoinchannel(!joinchannel); setNewchannel(false); setNewdm(false); setShowChat(false)}}>
 									Join Channel
 								</Button>
 								</>

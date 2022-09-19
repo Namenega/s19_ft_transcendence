@@ -98,7 +98,7 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 		if (correct) {
 			setQrcode('');
 			setWrongToken(false);
-			await updateUser(user.id, {has2FA: true});
+			updateUser(user.id, {has2FA: true});
 			user.has2FA = true;
 			changeUser(user);
 			renderPage();
@@ -119,7 +119,7 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 		let reader = new FileReader();
 	 	reader.onload = async (e) => {
 			if (e === null || e!.target!.result === null) return ;
-			let error = await updateUser(user.id, {avatar: e!.target!.result as string});
+			updateUser(user.id, {avatar: e!.target!.result as string});
 			user.avatar = e!.target!.result as string;
 			changeUser(user);
 			renderPage();
@@ -128,9 +128,8 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
  }
 
 		const keyPress: (e: any) => void = (e) => {
-			if(e.keyCode == 13){
+			if(e.keyCode === 13){
 				verify2FAuth();
-			// put the login here
 			}
 		}
 
@@ -158,7 +157,6 @@ const Settings: React.FC<settingsProps> = ({ user, changeUser, renderPage }) => 
 
 const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderFriends, changeFriendsPage }) => {
 	const [searchResults, setSearchResults] = useState<UserDto[]>([]);
-  	const [searchText, setSearchText] = useState<string>('');
 	const [showResult, setResult] = useState<boolean>(false);
 
 	const isPartOfFriends: (account: UserDto) => boolean = (account) => {
@@ -172,7 +170,6 @@ const FindFriends: React.FC<FindFriendsProps> = ({ profile, userFriends, renderF
 
     allUsers.forEach((item) => searchValue.length !== 0 && !isPartOfFriends(item)
                               && item.login.includes(searchValue) && item.login !== profile.login && search.push(item))
-    setSearchText(searchValue);
     setSearchResults(search);
 	showResultList();
   }
@@ -246,8 +243,8 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
   }
 
 	const _removeFriend: (id: number) => void = async (id) => {
-		await removeFriend(profile.id, id);
-		await removeFriend(id, profile.id);
+		removeFriend(profile.id, id);
+		removeFriend(id, profile.id);
 		renderFriends();
 	}
 
@@ -286,6 +283,7 @@ const Friends: React.FC<FriendsProps> = ({ profile, changeProfile, ownAccount, c
 }
 
 const MatchHistory: React.FC<mhProps> = ({ user }) => {
+	// eslint-disable-next-line
 	const [profile, setProfile] = useState<UserDto>(user);
 	const [userMatchHistory, setUserMatchHistory] = useState<CompleteMatchHistoryDto[]>([]);
 
@@ -312,7 +310,6 @@ const MatchHistory: React.FC<mhProps> = ({ user }) => {
 		getUserMatchHistory();
 	}, [profile])
 
-	// <table
 	return (
 		<div className='extension-ctn'>
 			<h2 className='profile-title'>Match History</h2>

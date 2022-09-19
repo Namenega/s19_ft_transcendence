@@ -4,8 +4,8 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
-import { createTheme, Theme, ThemeProvider } from '@mui/material/styles';
-import { green, orange, yellow } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { green } from '@mui/material/colors';
 
 const outerTheme = createTheme({
   palette: {
@@ -18,7 +18,6 @@ const outerTheme = createTheme({
     },
     error: {
       main: "#66bb6a",
-      //writing: "#1f4e60"
     },
   },
 });

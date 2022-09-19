@@ -4,7 +4,7 @@ import { addGame, getAllGames, getGame, getGame as GetGame, removeGame, updateGa
 import { UserDto } from "../../api/user/dto/user.dto";
 import PongGame from "./gameFunc/PongGame";
 import { AppBar, Box, Button, Toolbar, Typography, IconButton, Stack, FormControl, InputLabel, Select, MenuItem, FormHelperText, List, Card, ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
-import { getAllUsersRank, updateUser } from "../../api/user/user.api";
+import { getAllUsersRank } from "../../api/user/user.api";
 import MenuIcon from '@mui/icons-material/Menu';
 import "./Play.css";
 
